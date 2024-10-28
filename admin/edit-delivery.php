@@ -91,6 +91,49 @@ $result = json_decode($response);
 													<input type="text"  name="commision" value="<?php echo $result->records[$i]->email;?>" class="span8 tip" required>
 												</div>
 											</div>
+											<div class="control-group">
+												<label class="control-label" for="basicinput">Working Address</label>
+												<div class="controls">
+													<input type="text"  name="workingAddress" value="<?php echo $result->records[$i]->workingAddress;?>" class="span8 tip" required>
+												</div>
+											</div>
+
+											<div class="control-group">
+												<label class="control-label" for="basicinput">Regidence Address</label>
+												<div class="controls">
+													<input type="text"  name="regidenceAddress" value="<?php echo $result->records[$i]->regidenceAddress;?>" class="span8 tip" required>
+												</div>
+											</div>
+
+											<div class="control-group">
+												<label class="control-label" for="basicinput">Pin Code</label>
+												<div class="controls">
+													<input type="text"  name="workingPincode" value="<?php echo $result->records[$i]->workingPincode;?>" class="span8 tip" required>
+												</div>
+											</div>
+
+											<div class="control-group">
+												<label class="control-label" for="basicinput">Aadhar</label>
+												<div class="controls">
+													<input type="text"  name="aadhar" value="<?php echo $result->records[$i]->aadhar;?>" class="span8 tip" required>
+												</div>
+											</div>
+
+
+											<div class="control-group">
+												<label class="control-label" for="basicinput">Pan</label>
+												<div class="controls">
+													<input type="text"  name="pan" value="<?php echo $result->records[$i]->pan;?>" class="span8 tip" required>
+												</div>
+											</div>
+
+
+											<div class="control-group">
+												<label class="control-label" for="basicinput">Profile</label>
+												<div class="controls">
+													<input type="file"  name="profile" value="<?php echo $result->records[$i]->image;?>" class="span8 tip" required>
+												</div>
+											</div>
                                          <?php 
 										}?>										
 
