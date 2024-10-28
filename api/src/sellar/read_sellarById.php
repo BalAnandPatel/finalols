@@ -78,6 +78,7 @@ if($num>0){
             "email"=>$email,
             "pan"=>$pan,
             "id"=>$id,
+            "gst"=>$gst,
             "city"=>$city,
             "pincode"=>$pincode,
             "address"=>$address,
