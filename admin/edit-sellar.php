@@ -4,7 +4,7 @@ $id=$_POST["id"];
 $url = $URL . "sellar/read_sellarById.php";
 //$url="http://localhost/onlinesabjimandiapi/api/src/category/readCategory.php";
 $data = array("id" => $id);
-print_r($data);
+//print_r($data);
 $postdata = json_encode($data);
 $client = curl_init();
 curl_setopt( $client, CURLOPT_URL,$url);
@@ -13,7 +13,7 @@ curl_setopt($client, CURLOPT_RETURNTRANSFER, 1);
 curl_setopt($client, CURLOPT_POST, 5);
 curl_setopt($client, CURLOPT_POSTFIELDS, $postdata);
 $response = curl_exec($client);
-print_r($response);
+//print_r($response);
 $result = json_decode($response);
 //print_r($result);
 ?>
@@ -64,9 +64,16 @@ $result = json_decode($response);
 										?>	
 									
 											<div class="control-group">
+												<label class="control-label" for="basicinput">Seller Id:</label>
+												<div class="controls">
+												<input type="text"  name="sellerName" value="<?php echo $result->records[$i]->id;?>" class="span8 tip" readonly>
+												</div>
+											</div>
+
+											<div class="control-group">
 												<label class="control-label" for="basicinput">Sellar Name</label>
 												<div class="controls">
-													<input type="text"  name="name" value="<?php echo $result->records[$i]->sellarName;?>" class="span8 tip" required>
+													<input type="text"  name="sellerName" value="<?php echo $result->records[$i]->sellarName;?>" class="span8 tip" required>
 												</div>
 											</div>
 
@@ -74,21 +81,60 @@ $result = json_decode($response);
 											<div class="control-group">
 												<label class="control-label" for="basicinput">Counter Name</label>
 												<div class="controls">
-													<input type="text"  name="commision" value="<?php echo $result->records[$i]->counterName;?>" class="span8 tip" required>
+													<input type="text"  name="counterName" value="<?php echo $result->records[$i]->counterName;?>" class="span8 tip" required>
 												</div>
 											</div>
 
 											<div class="control-group">
 												<label class="control-label" for="basicinput">Mobile No</label>
 												<div class="controls">
-													<input type="text"  name="commision" value="<?php echo $result->records[$i]->phoneNo;?>" class="span8 tip" required>
+													<input type="text"  name="phoneNo" value="<?php echo $result->records[$i]->phoneNo;?>" class="span8 tip" required>
 												</div>
 											</div>
 
 											<div class="control-group">
 												<label class="control-label" for="basicinput">Email Id</label>
 												<div class="controls">
-													<input type="text"  name="commision" value="<?php echo $result->records[$i]->email;?>" class="span8 tip" required>
+													<input type="text"  name="email" value="<?php echo $result->records[$i]->email;?>" class="span8 tip" required>
+												</div>
+											</div>
+
+
+									
+											<div class="control-group">
+												<label class="control-label" for="basicinput">Reg Fee</label>
+												<div class="controls">
+													<input type="text"  name="regFee" value="<?php echo $result->records[$i]->regFee;?>" class="span8 tip" required>
+												</div>
+											</div>
+											<div class="control-group">
+												<label class="control-label" for="basicinput">GST</label>
+												<div class="controls">
+													<input type="text"  name="gst" value="<?php echo $result->records[$i]->gst;?>" class="span8 tip" required>
+												</div>
+											</div>
+											<div class="control-group">
+												<label class="control-label" for="basicinput">Aadhar</label>
+												<div class="controls">
+													<input type="text"  name="aadhar" value="<?php echo $result->records[$i]->aadhar;?>" class="span8 tip" required>
+												</div>
+											</div>
+											<div class="control-group">
+												<label class="control-label" for="basicinput">Pan</label>
+												<div class="controls">
+													<input type="text"  name="pan" value="<?php echo $result->records[$i]->pan;?>" class="span8 tip" required>
+												</div>
+											</div>
+											<div class="control-group">
+												<label class="control-label" for="basicinput">Owner Image</label>
+												<div class="controls">
+													<input type="file"  name="upload" value="<?php echo $result->records[$i]->image;?>" class="span8 tip" required>
+												</div>
+											</div>
+											<div class="control-group">
+												<label class="control-label" for="basicinput">Shop Image</label>
+												<div class="controls">
+													<input type="file"  name="shopupload" value="<?php echo $result->records[$i]->image;?>" class="span8 tip" required>
 												</div>
 											</div>
                                          <?php 
