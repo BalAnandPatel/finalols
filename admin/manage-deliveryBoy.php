@@ -70,6 +70,7 @@ $result = json_decode($response);
 												<th>Working Pincode</th>
 												<th>Working Address</th>
 												<th>Reg. Date </th>
+												<th>Action </th>
 
 											</tr>
 										</thead>
@@ -89,6 +90,12 @@ $result = json_decode($response);
 													<td> <?php echo $result->records[$i]->workingPincode;?></td>
 													<td><?php echo $result->records[$i]->workingAddress;?></td>
 													<td><?php echo $result->records[$i]->createdOn;?></td>
+													<td><a href="edit-category.php?id=<?php echo $result->records[$i]->id ?>"><i class="icon-edit"></i></a>
+														<form class="form-horizontal row-fluid"  action="action/deliveryDelete_post.php" name="Category" method="post" enctype="multipart/form-data">
+															<input type="hidden" name="id" value="<?php echo $result->records[$i]->id ?>">
+															<button type="submit" class="icon-remove-sign"></button>
+														</form>
+													</td>	
 
 												<?php $cnt = $cnt + 1;
 											} ?>

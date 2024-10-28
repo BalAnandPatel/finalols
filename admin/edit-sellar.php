@@ -1,14 +1,10 @@
 <?php
-//session_start();
-// $jwt="123";
-// $request_headers = [
-//   'Authorization:' . $jwt
-// ];
 include "../constant.php";
-$url = $URL . "product/readproductdetails.php";
+$id=$_POST["id"];
+$url = $URL . "sellar/read_sellarById.php";
 //$url="http://localhost/onlinesabjimandiapi/api/src/category/readCategory.php";
-$data = array();
-// //print_r($data);
+$data = array("id" => $id);
+print_r($data);
 $postdata = json_encode($data);
 $client = curl_init();
 curl_setopt( $client, CURLOPT_URL,$url);
@@ -21,14 +17,13 @@ print_r($response);
 $result = json_decode($response);
 //print_r($result);
 ?>
-
 	<!DOCTYPE html>
 	<html lang="en">
 
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<title>Admin| Manage Products</title>
+		<title>Admin| Category</title>
 		<link type="text/css" href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
 		<link type="text/css" href="bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet">
 		<link type="text/css" href="css/theme.css" rel="stylesheet">
@@ -48,59 +43,68 @@ $result = json_decode($response);
 
 							<div class="module">
 								<div class="module-head">
-									<h3>Manage Products</h3>
+									<h3>Category</h3>
 								</div>
-								<div class="module-body table">
-									<?php if (isset($_GET['del'])) { ?>
-										<div class="alert alert-error">
+								<div class="module-body">
+
+									<?php if (isset($_POST['submit'])) { ?>
+										<div class="alert alert-success">
 											<button type="button" class="close" data-dismiss="alert">×</button>
-											<strong>Oh snap!</strong> <?php echo htmlentities($_SESSION['delmsg']); ?><?php echo htmlentities($_SESSION['delmsg'] = ""); ?>
+											<strong>Well done!</strong> <?php echo htmlentities($_SESSION['msg']); ?><?php echo htmlentities($_SESSION['msg'] = ""); ?>
 										</div>
 									<?php } ?>
 
+
 									<br />
 
-
-									<table cellpadding="0" cellspacing="0" border="0" class="datatable-1 table table-bordered table-striped	 display" width="100%">
-										<thead>
-											<tr>
-												<th>#</th>
-												<th>Sku-Id</th>
-												<th>Product Name</th>
-												<th>Category </th>
-												<th>Subcategory</th>
-												<th>Quantity</th>
-												<th>Product Creation Date</th>
-												<th>Action</th>
-											</tr>
-										</thead>
-										<tbody>
-
+									<form class="form-horizontal row-fluid" name="Category" method="post" enctype="multipart/form-data" action="action/categoryUpdated_post.php">
 										<?php
-                // print_r($result);
-				$cnt=0;
-                // print_r($result['records']);
-                for($i=0; $i<sizeof($result->records);$i++)
-                { //print_r($result->records[$i]);
-                ?>												<tr>
-													<td><?php echo htmlentities($cnt); ?></td>
-													<td><?php echo $result->records[$i]->skuId;?></td>
-													<td><?php echo $result->records[$i]->name;?></td>
-													<td><?php echo $result->records[$i]->categoriesId;?></td>
-													<td> <?php echo $result->records[$i]->quantity;?></td>
-													<td><?php echo $result->records[$i]->price;?></td>
-													<td><?php echo $result->records[$i]->createdOn;?></td>
-													<td>
-														<a href="edit-products.php?skuId=<?php echo $result->records[$i]->skuId;?>"><i class="icon-edit"></i></a>
-														<a href="manage-products.php?skuId=<?php echo $result->records[$i]->skuId;?>&del=delete" onClick="return confirm('Are you sure you want to delete?')"><i class="icon-remove-sign"></i></a>
-													</td>
-												</tr>
-											<?php $cnt = $cnt + 1;
-											} ?>
+										for($i=0; $i<sizeof($result->records);$i++)
+										{ //print_r($result->records[$i]);
+										?>	
+									
+											<div class="control-group">
+												<label class="control-label" for="basicinput">Sellar Name</label>
+												<div class="controls">
+													<input type="text"  name="name" value="<?php echo $result->records[$i]->sellarName;?>" class="span8 tip" required>
+												</div>
+											</div>
 
-									</table>
+
+											<div class="control-group">
+												<label class="control-label" for="basicinput">Counter Name</label>
+												<div class="controls">
+													<input type="text"  name="commision" value="<?php echo $result->records[$i]->counterName;?>" class="span8 tip" required>
+												</div>
+											</div>
+
+											<div class="control-group">
+												<label class="control-label" for="basicinput">Mobile No</label>
+												<div class="controls">
+													<input type="text"  name="commision" value="<?php echo $result->records[$i]->phoneNo;?>" class="span8 tip" required>
+												</div>
+											</div>
+
+											<div class="control-group">
+												<label class="control-label" for="basicinput">Email Id</label>
+												<div class="controls">
+													<input type="text"  name="commision" value="<?php echo $result->records[$i]->email;?>" class="span8 tip" required>
+												</div>
+											</div>
+                                         <?php 
+										}?>										
+
+										<div class="control-group">
+											<div class="controls">
+												<button type="submit" name="submit" class="btn">Update</button>
+											</div>
+										</div>
+									</form>
 								</div>
 							</div>
+
+
+
 
 
 

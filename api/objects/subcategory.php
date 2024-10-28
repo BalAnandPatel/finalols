@@ -96,8 +96,8 @@ class Subcategories
     function deleteSubcatogory(){
   
         // delete user detatail
-        $query = " DELETE FROM " . $this->subcategories. " 
-        WHERE parentId=:parentId";
+        echo $query = " DELETE FROM " . $this->subcategories. " 
+        WHERE id=:id";
     
         // $query2 = " DELETE FROM " . $this->user_profile . " 
         // WHERE userId=:id";
@@ -119,10 +119,10 @@ class Subcategories
         // $stmt5 = $this->conn->prepare($query5);
       
         // sanitize
-        $this->parentId=htmlspecialchars(strip_tags($this->parentId));
+       // $this->parentId=htmlspecialchars(strip_tags($this->parentId));
       
         // bind id of record to delete
-        $stmt->bindParam(":parentId", $this->parentId);
+        $stmt->bindParam(":id", $this->id);
         // $stmt2->bindParam(":id", $this->id);
         // $stmt3->bindParam(":id", $this->id);
         // $stmt4->bindParam(":id", $this->id);

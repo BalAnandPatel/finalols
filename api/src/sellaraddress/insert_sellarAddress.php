@@ -46,8 +46,8 @@ if(
 
 {
     $insert_sellarAddress->sellarId = $data->sellarId;
-    $insert_sellarAddress->createdOn = $data->createcOn;
-    $insert_sellarAddress->createdBy = $data->createdBy;
+    $insert_sellarAddress->createdOn = date('Y-m-d h:i:sa');
+    $insert_sellarAddress->createdBy = "Admin";
 
        
     //var_dump($exam);

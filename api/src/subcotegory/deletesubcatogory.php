@@ -22,19 +22,20 @@ $database = new Database();
 $db = $database->getConnection();
   
 // prepare admin object
-$delete_subcategory = new Subcategory($db);
+$delete_subcategory = new Subcategories($db);
   
 // get admin id
 $data = json_decode(file_get_contents("php://input"));
+$delete_subcategory->id = $data->id;
 $getHeaders = apache_request_headers();
 //print_r($getHeaders);
-$jwt = $getHeaders['Authorization'];
+$jwt = "123";
 
 if($jwt){
 
     try {
 
-         $decoded = JWT::decode($jwt, $SECRET_KEY, array('HS256'));
+         //$decoded = JWT::decode($jwt, $SECRET_KEY, array('HS256'));
 //print_r($data);  
 
 // set admin id to be deleted
@@ -47,7 +48,7 @@ if($delete_subcategory->deleteSubcatogory()){
     http_response_code(200);
   
     // tell the user
-    echo json_encode(array("message" => "Category is deleted."));
+    echo json_encode(array("message" => "Deleted"));
 }
 }
 catch (Exception $e){

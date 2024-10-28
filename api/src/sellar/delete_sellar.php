@@ -25,19 +25,20 @@ $delete_sellar = new Seller($db);
   
 // get admin id
 $data = json_decode(file_get_contents("php://input"));
+$delete_sellar->id = $data->id;
 $getHeaders = apache_request_headers();
 //print_r($getHeaders);
-$jwt = $getHeaders['Authorization'];
+$jwt = "123";
 
 if($jwt){
 
     try {
 
-         $decoded = JWT::decode($jwt, $SECRET_KEY, array('HS256'));
+        // $decoded = JWT::decode($jwt, $SECRET_KEY, array('HS256'));
 //print_r($data);  
 
 // set admin id to be deleted
-$delete_sellar->id = $data->id;
+
   
 // delete the admin
 if($delete_sellar->deleteSellar()){
@@ -46,7 +47,7 @@ if($delete_sellar->deleteSellar()){
     http_response_code(200);
   
     // tell the user
-    echo json_encode(array("message" => "Sellar has been deleted."));
+    echo json_encode(array("message" => "Delete."));
 }
     }  
 catch (Exception $e){

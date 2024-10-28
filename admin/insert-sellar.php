@@ -108,7 +108,7 @@
 										<div class="control-group">
 											<label class="control-label" for="basicinput">Aadhar</label>
 											<div class="controls">
-												<input type="text" name="aadhar" placeholder="Pincode" cl0ass="span8 tip" required>
+												<input type="text" name="aadhar" placeholder="Adhar no" cl0ass="span8 tip" required>
 											</div>
 										</div>
 										<div class="control-group">

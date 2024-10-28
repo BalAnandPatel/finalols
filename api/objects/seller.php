@@ -6,6 +6,7 @@ class Seller
     private $conn;
     private $sellar = "sellar";
     private $sellaraddress="sellaraddress";
+    private $sellarbankdetails="sellarbankdetails";
     // private $table_payment = "payment";
 
     public function __construct($db)
@@ -20,7 +21,26 @@ class Seller
    
     public function readSellar()
     {
-        echo $query = "Select sellarName,counterName,pan,gst,aadhar,image,phoneNo,regFee,depositAmount,password,email,status from " . $this->sellar .  " as a INNER JOIN " . $this->sellaraddress . " as b ON sellarId=a.id";
+        $query = "Select a.sellarName,a.counterName,a.id,a.pan,a.gst,b.city,b.pincode,a.createdOn,b.address,a.aadhar,image,phoneNo,regFee,depositAmount,password,email,status from " . $this->sellar .  " as a INNER JOIN " . $this->sellaraddress . " as b ON sellarId=a.id";
+         $stmt = $this->conn->prepare($query);
+        // $stmt->bindParam(":userName", $this->userName); 
+        $stmt->execute();
+        return $stmt;
+    }
+
+
+    public function readSellarById()
+    {
+       $query = "Select a.sellarName,a.counterName,a.id,a.pan,a.gst,b.city,b.pincode,b.address,a.aadhar,image,phoneNo,regFee,depositAmount,password,email,status from " . $this->sellar .  " as a INNER JOIN " . $this->sellaraddress . " as b ON sellarId=a.id where a.id=:id";
+         $stmt = $this->conn->prepare($query);
+          $stmt->bindParam(":id", $this->id); 
+        $stmt->execute();
+        return $stmt;
+    }
+
+    public function readSellarmaxId()
+    {
+        $query = "Select max(id) as id from " . $this->sellar;
          $stmt = $this->conn->prepare($query);
         // $stmt->bindParam(":userName", $this->userName); 
         $stmt->execute();
@@ -85,9 +105,14 @@ class Seller
     function deleteSellar(){
   
         // delete user detatail
-        $query = " DELETE FROM " . $this->sellar . " 
+        $query1 = " DELETE FROM " . $this->sellar . " 
         WHERE id=:id";
+        $query2 = " DELETE FROM " . $this->sellaraddress . " 
+        WHERE sellarId=:id";
+        $query3 = " DELETE FROM " . $this->sellarbankdetails . " 
+        WHERE sellarId=:id";
     
+        
         // $query2 = " DELETE FROM " . $this->user_profile . " 
         // WHERE userId=:id";
     
@@ -101,9 +126,9 @@ class Seller
         // WHERE userId=:id";
       
         // prepare query
-        $stmt = $this->conn->prepare($query);
-        // $stmt2 = $this->conn->prepare($query2);
-        // $stmt3 = $this->conn->prepare($query3);
+        $stmt1 = $this->conn->prepare($query1);
+        $stmt2 = $this->conn->prepare($query2);
+        $stmt3 = $this->conn->prepare($query3);
         // $stmt4 = $this->conn->prepare($query4);
         // $stmt5 = $this->conn->prepare($query5);
       
@@ -111,14 +136,14 @@ class Seller
         $this->id=htmlspecialchars(strip_tags($this->id));
       
         // bind id of record to delete
-        $stmt->bindParam(":id", $this->id);
-        // $stmt2->bindParam(":id", $this->id);
-        // $stmt3->bindParam(":id", $this->id);
+        $stmt1->bindParam(":id", $this->id);
+        $stmt2->bindParam(":id", $this->id);
+        $stmt3->bindParam(":id", $this->id);
         // $stmt4->bindParam(":id", $this->id);
         // $stmt5->bindParam(":id", $this->id);
       
         // execute query
-        if ($stmt->execute()){
+        if ($stmt1->execute() && $stmt2->execute() && $stmt3->execute() ){
             return true;
         }
       

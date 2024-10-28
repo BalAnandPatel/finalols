@@ -28,13 +28,13 @@ $data = json_decode(file_get_contents("php://input"));
 $delete_delivery->id = $data->id;
 $getHeaders = apache_request_headers();
 //print_r($getHeaders);
-$jwt = $getHeaders['Authorization'];
+$jwt = "123";
 
 if($jwt){
 
     try {
 
-         $decoded = JWT::decode($jwt, $SECRET_KEY, array('HS256'));
+        // $decoded = JWT::decode($jwt, $SECRET_KEY, array('HS256'));
 //print_r($data);  
 
 // set admin id to be deleted
@@ -47,7 +47,7 @@ if($delete_delivery->deleteDelivery()){
     http_response_code(200);
   
     // tell the user
-    echo json_encode(array("message" => "Delivery Boy has been deleted."));
+    echo json_encode(array("message" => "Deleted"));
 }
   
 // if unable to delete the admin

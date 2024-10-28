@@ -26,7 +26,7 @@ class DeliveryBoy
    
     public function readDeliveryBoy()
     {
-     $query = "Select name,phoneNo,email,status,regidenceAddress,workingPincode,workingAddress,aadhar,pan,image,createdBy,createdOn from " . $this->deliveryboy;
+     $query = "Select name,phoneNo,email,id,status,regidenceAddress,workingPincode,workingAddress,aadhar,pan,image,createdBy,createdOn from " . $this->deliveryboy;
          
         $stmt = $this->conn->prepare($query);
 

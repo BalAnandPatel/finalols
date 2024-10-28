@@ -10,96 +10,102 @@ header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers
 
 // include database and object files
 include_once '../../config/database.php';
-include_once '../../objects/DeliveryBoy.php';
+include_once '../../objects/seller.php';
+//require "../../vendor/autoload.php";
 include_once '../../constant.php';
 require '../../php-jwt/src/JWT.php';
 require '../../php-jwt/src/ExpiredException.php';
 require '../../php-jwt/src/SignatureInvalidException.php';
 require '../../php-jwt/src/BeforeValidException.php';
 use \Firebase\JWT\JWT;
-
-
-  
 // instantiate database and product object
 $database = new Database();
 $db = $database->getConnection();
 //print_r($db);
   
 // initialize object
-$read_deliveryBody = new DeliveryBoy($db);
+$read_sellar = new Seller($db);
   
 $data = json_decode(file_get_contents("php://input"));
-
-//$read_deliveryBody->id = $data->id;
+$read_sellar->id = $data->id;
+// $read_allusers->status = $data->status;
+// $read_allusers->userId = $data->userId;
+// print_r($_SERVER);
 $getHeaders = apache_request_headers();
 //print_r($getHeaders);
-$jwt = "123";
+$jwt ="123";
+
+// $arr = explode(" ", $authHeader);
+
+
+// echo json_encode(array(
+//     "message" => "sd" .$arr[1]
+// ));
+
+// $jwt = $arr[1];
 
 if($jwt){
 
     try {
 
-        //$decoded = JWT::decode($jwt, $SECRET_KEY, array('HS256'));
-// $read_allusers->status = $data->status;
-// $read_allusers->userId = $data->userId;
+         //$decoded = JWT::decode($jwt, $SECRET_KEY, array('HS256'));
+         //$decoded = JWT::decode($jwt, $SECRET_KEY);
 
+    
  //print_r($data);
 
- $stmt = $read_deliveryBody->readDeliveryBoy();
- $num = $stmt->rowCount();
+$stmt = $read_sellar->readSellarById();
+$num = $stmt->rowCount();
   
 // check if more than 0 record found
 if($num>0){
   
     // products array
-    $read_delivery_arr=array();
-    $read_delivery_arr["records"]=array();
+    $read_sellar_arr=array();
+    $read_sellar_arr["records"]=array();
 
 
     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
      
         extract($row);
   
-        $read_delivery_item=array(
+        $read_sellar_item=array(
 
             
-            "name"=>$name,
+            "sellarName"=>$sellarName,
+            "counterName"=>$counterName,
             "phoneNo"=>$phoneNo,
             "email"=>$email,
-            "workingAddress"=>$workingAddress,
-            "regidenceAddress"=>$regidenceAddress,
-            "workingPincode"=>$workingPincode,
-            "status"=>$status,
-            "aadhar"=>$aadhar,
-            "id"=>$id,
             "pan"=>$pan,
-            "image"=>$image,
-            "createdOn"=>$createdOn,
-            "createdBy"=>$createdBy
+            "id"=>$id,
+            "city"=>$city,
+            "pincode"=>$pincode,
+            "address"=>$address,
+            "aadhar"=>$aadhar 
         );
   
-        array_push($read_delivery_arr["records"], $read_delivery_item);
+        array_push($read_sellar_arr["records"], $read_sellar_item);
     }
 
     // show products data in json format
-    echo json_encode($read_delivery_arr);
+    echo json_encode($read_sellar_arr);
 
      // set response code - 200 OK
      http_response_code(200);
 }
-  
+    }
+    catch (Exception $e){
+  // print_r($e);
+        http_response_code(401);
+    
+        echo json_encode(array(
+            "message" => "Access denied.",
+            "error" => $e->getMessage()
+        ));
+    }
+    
 }
-catch (Exception $e){
-    // print_r($e);
-          http_response_code(401);
-      
-          echo json_encode(array(
-              "message" => "Access denied.",
-              "error" => $e->getMessage()
-          ));
-      }
-      
-  }
+
 // no products found will be here
 else{
   

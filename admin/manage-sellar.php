@@ -5,7 +5,7 @@
 //   'Authorization:' . $jwt
 // ];
 include "../constant.php";
-$url = $URL . "sellar/read_sellar.php";
+$url = $URL ."sellar/read_sellar.php";
 //$url="http://localhost/onlinesabjimandiapi/api/src/category/readCategory.php";
 $data = array();
 // //print_r($data);
@@ -17,7 +17,7 @@ curl_setopt($client, CURLOPT_RETURNTRANSFER, 1);
 curl_setopt($client, CURLOPT_POST, 5);
 curl_setopt($client, CURLOPT_POSTFIELDS, $postdata);
 $response = curl_exec($client);
-print_r($response);
+//print_r($response);
 $result = json_decode($response);
 //print_r($result);
 ?>
@@ -71,6 +71,7 @@ $result = json_decode($response);
 												<th>Sellar Address </th>
 												<!-- <th>Billing Address/City/State/Pincode </th> -->
 												<th>Reg. Date </th>
+												<th>Action </th>
 
 											</tr>
 										</thead>
@@ -88,8 +89,19 @@ $result = json_decode($response);
 													<td><?php echo $result->records[$i]->sellarName;?></td>
 													<td><?php echo $result->records[$i]->counterName;?></td>
 													<td> <?php echo $result->records[$i]->phoneNo;?></td>
-													<td><?php echo $result->records[$i]->phoneNo;?></td>
+													<td><?php echo $result->records[$i]->address;?></td>
 													<td><?php echo $result->records[$i]->createdOn;?></td>
+													<td>
+														<form class="form-horizontal row-fluid"  action="action/sellarDelete_post.php" name="Category" method="post" enctype="multipart/form-data">
+															<input type="hidden" name="id" value="<?php echo $result->records[$i]->id ?>">
+															<button type="submit" class="icon-remove-sign"></button>
+															
+														</form>
+														<form class="form-horizontal row-fluid"  action="edit-sellar.php" name="update" method="post" enctype="multipart/form-data">
+															<input type="hidden" name="id" value="<?php echo $result->records[$i]->id ?>">
+															<button type="submit" class="icon-edit"></button>
+														</form>
+													</td>	
 
 												<?php $cnt = $cnt + 1;
 											} ?>

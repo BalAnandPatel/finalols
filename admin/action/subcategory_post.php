@@ -38,7 +38,7 @@ $createdOn=date('Y-m-d h:i:sa');
 $updatedOn=date('Y-m-d h:i:sa');
 $url = $URL."subcotegory/insertsubcatogory.php";
 $data = array( "name" =>$name, "parentId" =>$parentId, "description"=>$description, "subcategoriesImage" =>$maxid, "createdOn" =>$createdOn, "updatedOn"=>$updatedOn);
-print_r($data);
+//print_r($data);
 $postdata = json_encode($data);
 $client = curl_init($url);
 curl_setopt($client, CURLOPT_POSTFIELDS, $postdata);
@@ -56,11 +56,11 @@ $result = (json_decode($response));
 if($result->message="Successfull"){
     
   
-  //header('Location:../category.php');
+ header('Location:../subcategory.php');
  } else
  {
-  //echo "Bad";
-  //header('Location:../category.php?msg='.$result->message);
+  echo "Bad";
+  header('Location:../subcategory.php?msg='.$result->message);
  }
 
 
@@ -69,9 +69,10 @@ if(1){
 
   /* --- get maximum userid -----*/
 
-    $data_maxId=$maxid;
-    $maxId_postdata = json_encode($data_maxId);
+  $maxid=$maxid+1;
+   $maxId_postdata = json_encode($maxid);
    $target_dir = "../img/subcategory"."/".$maxid;
+   //$maxid;
   $path="../img/subcategory"."/".$maxid;
 if (!is_dir($path)){
 mkdir($path, 0777, true);

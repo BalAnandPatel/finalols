@@ -2,11 +2,10 @@
 include '../../constant.php';
 
 /////////////////////
-$name= $_POST["name"];
+
 $id= $_POST["id"];
-$updatedOn=date('Y-m-d h:i:sa');
-echo $url = $URL."subcotegory/updatesubcatogory.php";
-$data = array( "name" =>$name,"id" =>$id,"updatedOn"=>$updatedOn);
+$url = $URL."sellar/delete_sellar.php";
+$data = array("id"=>$id);
 //print_r($data);
 $postdata = json_encode($data);
 $client = curl_init($url);
@@ -19,15 +18,15 @@ curl_close($client);
 print_r($response);
 
 $result = (json_decode($response));
-//print_r($result);
-if($result->message="Update successfully"){
+
+if($result->message="Deleted"){
     
   
-  header('Location:../subcategory.php');
+  //header('Location:../manage-sellar.php');
  } else
  {
   //echo "Bad";
-  header('Location:../subcategory.php?msg='.$result->message);
+  //header('Location:../manage-sellar?msg='.$result->message);
  }
 
 

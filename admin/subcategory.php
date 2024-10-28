@@ -211,7 +211,10 @@ $resultsub = json_decode($response);
 												<td><?php echo $resultsub->records[$i]->updatedOn;?></td>
 													<td>
 														<a href="edit-subcategory.php?id=<?php echo $resultsub->records[$i]->id; ?>"><i class="icon-edit"></i></a>
-														<a href="subcategory.php?id=<?php echo $row['id'] ?>&del=delete" onClick="return confirm('Are you sure you want to delete?')"><i class="icon-remove-sign"></i></a>
+														<form class="form-horizontal row-fluid"  action="action/subcategoryDelete_post.php" name="Category" method="post" enctype="multipart/form-data">
+															<input type="hidden" name="id" value="<?php echo $resultsub->records[$i]->id ?>">
+															<button type="submit" class="icon-remove-sign"></button>
+														</form>
 													</td>
 												</tr>
 											<?php $cnt = $cnt + 1;

@@ -77,7 +77,11 @@ if($num>0){
             "phoneNo"=>$phoneNo,
             "email"=>$email,
             "pan"=>$pan,
-            "city"=>$gst,
+            "createdOn"=>$createdOn,
+            "id"=>$id,
+            "city"=>$city,
+            "address"=>$address,
+            "pincode"=>$pincode,
             "aadhar"=>$aadhar 
         );
   

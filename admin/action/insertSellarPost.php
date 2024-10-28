@@ -14,8 +14,7 @@ $pan=strtoupper($_POST["pan"]);
 $createdOn=date('Y-d-m h:i:sa');
 $createdBy= "Admin";
 $url = $URL . "sellar/insert_sellar.php";
-//$url = $URL . "sellar/insert_bank.php";
-//$url_read_maxId=$URL . "registration/read_maxId.php";
+
 $data = array(
 
   "sellarName" => $sellarName,
@@ -31,7 +30,78 @@ $data = array(
   "pan" => $pan,
   "createdOn"=>$createdOn,
   "createdBy"=>$createdBy);
+   $postdata = json_encode($data);
+  //print_r($postdata);
+  $client = curl_init($url);
+  curl_setopt($client, CURLOPT_POSTFIELDS, $postdata);
+  curl_setopt($client, CURLOPT_CONNECTTIMEOUT, 0); 
+  curl_setopt($client, CURLOPT_TIMEOUT, 4); //timeout in seconds
+  curl_setopt($client,CURLOPT_RETURNTRANSFER,true);
+  $response = curl_exec($client);
+  curl_close($client);
+  //print_r($response);
+  $result_registration = (json_decode($response));
+   //print_r($result_registration);
 
+
+
+// Read Max Id From Sellar table for inseting into sellar address
+$urlmax = $URL . "sellar/read_sellarmaxid.php";
+
+//$url = $URL . "sellar/insert_bank.php";
+//$url_read_maxId=$URL . "registration/read_maxId.php";
+  $maxiddata = array();
+   $postdatamaxid = json_encode($maxiddata);
+   //print_r($postdata);
+   $clientmaxid = curl_init($urlmax);
+   curl_setopt($clientmaxid, CURLOPT_POSTFIELDS, $postdatamaxid);
+   curl_setopt($clientmaxid, CURLOPT_CONNECTTIMEOUT, 0); 
+   curl_setopt($clientmaxid, CURLOPT_TIMEOUT, 4); //timeout in seconds
+   curl_setopt($clientmaxid,CURLOPT_RETURNTRANSFER,true);
+   $responsemaxid = curl_exec($clientmaxid);
+   curl_close($clientmaxid);
+   $result_maxid = (json_decode($responsemaxid));
+   $maxid=$result_maxid->records[0]->id;
+   //print_r($responsemaxid);
+
+
+
+
+/// Insert Id in sellar address table data//
+   $sellaraddressurl = $URL . "sellaraddress/insert_sellarAddress.php";
+   $datamaxid=array("sellarId"=>$maxid);
+   $postdatamaxidin = json_encode($datamaxid);
+   //print_r($postdata);
+   $clientmaxidin = curl_init($sellaraddressurl);
+   curl_setopt($clientmaxidin, CURLOPT_POSTFIELDS, $postdatamaxidin);
+   curl_setopt($clientmaxidin, CURLOPT_CONNECTTIMEOUT, 0); 
+   curl_setopt($clientmaxidin, CURLOPT_TIMEOUT, 4); //timeout in seconds
+   curl_setopt($clientmaxidin,CURLOPT_RETURNTRANSFER,true);
+   $responsemaxidin = curl_exec($clientmaxidin);
+   curl_close($clientmaxidin);
+   $result_maxidin = (json_decode($responsemaxidin));
+
+
+
+
+   //Insert Sellar Bank Details
+
+/// Insert Id in sellar address table data//
+$sellarbankurl = $URL . "sellarbank/insert_sellarBank.php";
+$databank=array("sellarId"=>$maxid);
+$postdatabank = json_encode($databank);
+//print_r($postdata);
+$clientbank = curl_init($sellarbankurl);
+curl_setopt($clientbank, CURLOPT_POSTFIELDS, $postdatabank);
+curl_setopt($clientbank, CURLOPT_CONNECTTIMEOUT, 0); 
+curl_setopt($clientbank, CURLOPT_TIMEOUT, 4); //timeout in seconds
+curl_setopt($clientbank,CURLOPT_RETURNTRANSFER,true);
+$responsebank = curl_exec($clientbank);
+curl_close($clientbank);
+$result_maxidin = (json_decode($responsebank ));
+
+
+   // print_r($result_maxid);
   // $sellaradd = array(
 
   //   "sellarName" => 12,
@@ -41,12 +111,15 @@ $data = array(
   
 
 //print_r($data);
- $postdata = json_encode($data);
- //$postdatadd = json_encode($sellaradd);
-//echo $url;
-//print_r($postdata);
-$result_registration=url_encode_Decode($url,$postdata);
-//print_r($result_registration);
+//  $postdata = json_encode($data);
+//  $postdatamax = json_encode($maxiddata);
+//  //$postdatadd = json_encode($sellaradd);
+// //echo $$postdata;
+// //print_r($postdata);
+// $result_registration=url_encode_Decode($url,$postdata);
+// //print_r($$result_registration);
+// echo $result_maxid=url_encode_Decode($urlmax,$postdatamax);
+//print_r($$result_maxid);
 
   if($result_registration->message="Successfull"){
 
@@ -130,7 +203,7 @@ $result_registration=url_encode_Decode($url,$postdata);
         //echo "Sorry, there was an error uploading your file.";
       
       $_SESSION["registration"] = "Sorry, there was an error uploading your file.";
-        header('Location:../insert-sellar.php');
+      header('Location:../insert-sellar.php');
     }
   }   
    

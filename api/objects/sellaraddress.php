@@ -37,9 +37,7 @@ class Sellaraddress
 
         $stmt = $this->conn->prepare($query);
         $this->sellarId = htmlspecialchars(strip_tags($this->sellarId));
-        $this->createdOn = htmlspecialchars(strip_tags($this->createdOn));
-        $this->createdBy = htmlspecialchars(strip_tags($this->createdBy));
-        
+                
         $stmt->bindParam(":sellarId", $this->sellarId);
         $stmt->bindParam(":createdOn", $this->createdOn);
         $stmt->bindParam(":createdBy", $this->createdBy);
