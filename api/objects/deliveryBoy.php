@@ -39,6 +39,21 @@ class DeliveryBoy
     }
 
 
+    public function readDeliveryBoymaxId()
+    {
+     $query = "Select max(id) as id from " . $this->deliveryboy;
+         
+        $stmt = $this->conn->prepare($query);
+
+       // $this->id = htmlspecialchars(strip_tags($this->id));
+        //$this->emp_id = htmlspecialchars(strip_tags(string: $this->emp_id));
+        //$stmt->bindParam(":id", $this->id); 
+        $stmt->execute();
+        return $stmt;
+                
+    }
+
+
     public function insertDeliveryBoy()
     {
          $query = "INSERT INTO

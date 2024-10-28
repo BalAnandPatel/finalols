@@ -12,7 +12,7 @@ $pan=strtoupper($_POST["pan"]);
 $createdOn=date('Y-m-d h:i:sa');
 $createdBy= "Admin";
 $url = $URL . "deliveryBoy/insertDelivery.php";
-$url = $URL . "deliveryBoy/insertDelivery.php";
+//$url = $URL . "deliveryBoy/insertDelivery.php";
 //$url_read_maxId=$URL . "registration/read_maxId.php";
 
 $target_dir = "../img/delivery/";
@@ -34,9 +34,7 @@ $data = array(
   "createdBy"=>$createdBy);
 
  //print_r($data);
- $postdata = json_encode($data);
-//echo $url;
-//print_r($postdata);
+$postdata = json_encode($data);
 $result_registration=url_encode_Decode($url,$postdata);
 //print_r($result_registration);
 
@@ -138,4 +136,19 @@ $response = curl_exec($client);
 return $result = json_decode($response);
 
 }
+
+$urlmax = $URL . "deliveryBoy/readDeliveryMaxId.php";
+$maxiddata = array();
+$postdatamaxid = json_encode($maxiddata);
+//print_r($postdata);
+$clientmaxid = curl_init($urlmax);
+curl_setopt($clientmaxid, CURLOPT_POSTFIELDS, $postdatamaxid);
+curl_setopt($clientmaxid, CURLOPT_CONNECTTIMEOUT, 0); 
+curl_setopt($clientmaxid, CURLOPT_TIMEOUT, 4); //timeout in seconds
+curl_setopt($clientmaxid,CURLOPT_RETURNTRANSFER,true);
+$responsemaxid = curl_exec($clientmaxid);
+curl_close($clientmaxid);
+$result_maxid = (json_decode($responsemaxid));
+$maxid=$result_maxid->records[0]->id;
+
 ?>
