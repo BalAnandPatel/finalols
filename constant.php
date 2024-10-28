@@ -10,7 +10,7 @@ $BASE_URL="index.php";
 // $GALLERY_NEWS_PATH="http://krishilimited.com/admin/uploads/news/";
 //http://localhost/onlinesabjimandiapi2/api/src/sellaraddress/insert_sellarAddress.php
 // website file path on localhost
-$URL="http://localhost/onlinesabjimandiapi2/api/src/";
+$URL="http://localhost/finalols/api/src/";
 $ADMIN_IMG_PATH="http://localhost/recruit/user/img/";
 $GALLERY_IMG_PATH="http://localhost/recruit/admin/image/gallery/";
 $GALLERY_VIDEO_PATH="http://localhost/recruit/admin/uploads/videos/";

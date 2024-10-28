@@ -7,7 +7,7 @@ class Database{
     private $host = "localhost";
     private $db_name = "vegitabledb";
     private $username = "root";
-    private $password = "root";
+    private $password = "";
     
     // ";
     // private $username = "glintqnj_pracharwall";

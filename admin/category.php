@@ -5,7 +5,7 @@
 //   'Authorization:' . $jwt
 // ];
 include "../constant.php";
-$url = $URL . "category/readCategory.php";
+ echo $url = $URL . "category/readCategory.php";
 //$url="http://localhost/onlinesabjimandiapi/api/src/category/readCategory.php";
 $data = array();
 // //print_r($data);
@@ -17,7 +17,7 @@ curl_setopt($client, CURLOPT_RETURNTRANSFER, 1);
 curl_setopt($client, CURLOPT_POST, 5);
 curl_setopt($client, CURLOPT_POSTFIELDS, $postdata);
 $response = curl_exec($client);
-//print_r($response);
+print_r($response);
 $result = json_decode($response);
 //print_r($result);
 ?>
