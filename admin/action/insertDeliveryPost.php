@@ -12,9 +12,6 @@ $pan=strtoupper($_POST["pan"]);
 $createdOn=date('Y-m-d h:i:sa');
 $createdBy= "Admin";
 $url = $URL . "deliveryBoy/insertDelivery.php";
-//$url = $URL . "deliveryBoy/insertDelivery.php";
-//$url_read_maxId=$URL . "registration/read_maxId.php";
-
 $target_dir = "../img/delivery/";
 $path="../img/delivery/".$pan; 
 
@@ -38,7 +35,26 @@ $postdata = json_encode($data);
 $result_registration=url_encode_Decode($url,$postdata);
 //print_r($result_registration);
 
-  if($result_registration->message="Successfull"){
+
+
+//get max id from delivery Table
+
+$urlmax = $URL . "deliveryBoy/readDeliveryMaxId.php";
+$maxiddata = array();
+$postdatamaxid = json_encode($maxiddata);
+//print_r($postdata);
+$clientmaxid = curl_init($urlmax);
+curl_setopt($clientmaxid, CURLOPT_POSTFIELDS, $postdatamaxid);
+curl_setopt($clientmaxid, CURLOPT_CONNECTTIMEOUT, 0); 
+curl_setopt($clientmaxid, CURLOPT_TIMEOUT, 4); //timeout in seconds
+curl_setopt($clientmaxid,CURLOPT_RETURNTRANSFER,true);
+$responsemaxid = curl_exec($clientmaxid);
+curl_close($clientmaxid);
+$result_maxid = (json_decode($responsemaxid));
+$maxid=$result_maxid->records[0]->id;
+
+
+if($result_registration->message="Successfull"){
 
   /* --- get maximum userid -----*/
 
@@ -113,13 +129,13 @@ $result_registration=url_encode_Decode($url,$postdata);
         //echo "The file ". htmlspecialchars( basename( $_FILES["fileUpload"]["name"])). " has been uploaded.";
        // echo "The file ". htmlspecialchars( basename( $_FILES["fileUploadThumb"]["name"])). " has been uploaded.";
         $_SESSION["registration"] = "File uploaded succesfully.";
-       header('Location:../manage-deliveryBoy.php');
+       //header('Location:../manage-deliveryBoy.php');
       }
        else {
         //echo "Sorry, there was an error uploading your file.";
       
       $_SESSION["registration"] = "Sorry, there was an error uploading your file.";
-        header('Location:../insert-delivery.php');
+        //header('Location:../insert-delivery.php');
     }
   }   
    
@@ -128,7 +144,7 @@ else{
    //header('Location:../registration.php?msg=Failed');
 }
 function url_encode_Decode($url,$postdata){
-    $client = curl_init($url);
+$client = curl_init($url);
 curl_setopt($client, CURLOPT_RETURNTRANSFER, true);
 curl_setopt($client, CURLOPT_POSTFIELDS, $postdata);
 $response = curl_exec($client);
@@ -137,7 +153,7 @@ return $result = json_decode($response);
 
 }
 
-$urlmax = $URL . "deliveryBoy/readDeliveryMaxId.php";
+echo $urlmax = $URL . "deliveryBoy/readDeliveryMaxId.php";
 $maxiddata = array();
 $postdatamaxid = json_encode($maxiddata);
 //print_r($postdata);

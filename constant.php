@@ -17,7 +17,7 @@ $GALLERY_VIDEO_PATH="http://localhost/recruit/admin/uploads/videos/";
 $GALLERY_NEWS_PATH="http://localhost/recruit/admin/uploads/news/";
 
 $EXAM_NAME="UPPCL EXAMINATION";
-$HOME="index.php"; 
+$HOME="index.php";   
 
 $SECRET_KEY = "dKgLINTEL2013aN99840$@";  
 $ISSUER_CLAIM = "GLINTEL TECHNOLOGY PVT LTD"; // this can be the servername
