@@ -49,14 +49,14 @@ if(
 
 {
 
-    $insert_product->skuId = $data->skuId;
     $insert_product->productId = $data->productId;
-    $insert_product->sizeAttributeId = implode(",",$data->size);
-    $insert_product->price =2;
-    $insert_product->quantity =3;
-    $insert_product->colorAttributeId = implode(",",$data->color);
-    $insert_product->createdBy = $data->createdBy;
+    $insert_product->sizeAttributeId = $data->sizeAttributeId;    
+    $insert_product->colorAttributeId = $data->colorAttributeId;    
+    $insert_product->skuId = $data->skuId;
+    $insert_product->quantity = $data->quantity;
+    $insert_product->price = $data->price;
     $insert_product->createdOn = $data->createdOn;
+    $insert_product->createdBy = $data->createdBy;
         
     //var_dump($exam);
     // create the reg

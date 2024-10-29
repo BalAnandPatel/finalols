@@ -66,6 +66,7 @@ if($num>0){
            // "skuId"=>$skuId,
            "skuId"=>$skuId,
            "name"=>$name,
+           "id"=>$id,
            "price"=>$price,
            "description"=>$description,
            "categoriesId"=>$categoriesId,

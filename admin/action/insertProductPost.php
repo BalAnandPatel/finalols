@@ -8,16 +8,17 @@ $shippingCharge=strtoupper($_POST["shippingCharge"]);
 $status=strtoupper($_POST["status"]);;
 $price=strtoupper($_POST["price"]);
 $quantity=strtoupper($_POST["quantity"]);
+$color=implode(",",$_POST['color']);
+$size=implode(",",$_POST['size']);
 $discount=strtoupper($_POST["discount"]);
 $categoriesId=strtoupper($_POST["categoriesId"]);
 $createdOn= date('Y-m-d h:i:sa');
 $createdBy= "Admin";
 $url = $URL . "product/insertproduct.php";
-$urlhistory = $URL . "productHistory/producthistory.php";
+
 //$url = $URL . "deliveryBoy/insertDelivery.php";
 //$url_read_maxId=$URL . "registration/read_maxId.php";
 $data = array(
-
   "sellarId" => $sellarId,
   "skuId" => $skuId,
   "quantity" => $quantity,
@@ -30,36 +31,88 @@ $data = array(
   "createdOn"=>$createdOn,
   "createdBy"=>$createdBy);
 
-//print_r($data);
- $postdata = json_encode($data);
-//echo $url;
-//print_r($postdata);
-$result_registration=url_encode_Decode($url,$postdata);
+  $postdata = json_encode($data);
+  //print_r($postdata);
+  $client = curl_init($url);
+  curl_setopt($client, CURLOPT_POSTFIELDS, $postdata);
+  curl_setopt($client, CURLOPT_CONNECTTIMEOUT, 0); 
+  curl_setopt($client, CURLOPT_TIMEOUT, 4); //timeout in seconds
+  curl_setopt($client,CURLOPT_RETURNTRANSFER,true);
+  $response = curl_exec($client);
+  curl_close($client);
+  //print_r($response);
+  $result= (json_decode($response));
 
-// insert into product skuId
 
-$skuId=trim(($_POST["skuId"]));
-$price=trim(($_POST["price"]));
-$productId=$_POST["skuId"]."_P";
-$quantity=($_POST["quantity"]);
-$color=($_POST["color"]);
-$size=$_POST["size"];
-$createdOn= date('Y-m-d h:i:sa');
-$createdBy= "Admin";
-$urlsku = $URL . "productskuid/insertproductskuid.php";
-//$urlhistory = $URL . "productHistory/producthistory.php";
-//$url = $URL . "deliveryBoy/insertDelivery.php";
-//$url_read_maxId=$URL . "registration/read_maxId.php";
-$datasku = array(
+ // get Max Product Id   
 
+ $urlmax = $URL . "product/readproductMaxId.php";
+ $datamax=array();
+ $postdatamax = json_encode($datamax);
+ $clientmax = curl_init($urlmax);
+ curl_setopt($clientmax, CURLOPT_POSTFIELDS, $postdatamax);
+ curl_setopt($clientmax, CURLOPT_CONNECTTIMEOUT, 0); 
+ curl_setopt($clientmax, CURLOPT_TIMEOUT, 4); //timeout in seconds
+ curl_setopt($clientmax,CURLOPT_RETURNTRANSFER,true);
+ $responsemax = curl_exec($clientmax);
+ curl_close($clientmax);
+ //print_r($response);
+ $result= (json_decode($responsemax));
+ $maxid=$result->records[0]->id;
+
+//<!Product history insert data ->
+$urlhistory = $URL . "productHistory/insertproducthistory.php"; 
+$datahistory = array(
+  "sizeAttributeId" => $size,
+  "productId" => $maxid,
+  "colorAttributeId" => $color,
   "skuId" => $skuId,
-  "quantity" => $quantity,
-  "color" => $color,
-  "productId" => $productId,
-  "size" => $size,
   "price" => $price,
+  "quantity" => $quantity,
   "createdOn"=>$createdOn,
   "createdBy"=>$createdBy);
+  $postdatahistory = json_encode($datahistory);
+  //print_r($postdatahistory);
+  $clienthistory = curl_init($urlhistory);
+  curl_setopt($clienthistory, CURLOPT_POSTFIELDS, $postdatahistory);
+  curl_setopt($clienthistory, CURLOPT_CONNECTTIMEOUT, 0); 
+  curl_setopt($clienthistory, CURLOPT_TIMEOUT, 4); //timeout in seconds
+  curl_setopt($clienthistory,CURLOPT_RETURNTRANSFER,true);
+  $responsemax = curl_exec($clienthistory);
+  curl_close($clienthistory);
+  print_r($responsemax);
+  $resulthistory= (json_decode($responsemax));
+
+
+
+  // insert product sku id
+  $urlhistory = $URL . "productskuid/insertproductskuid.php"; 
+  $datahistory = array(
+    "sizeAttributeId" => $size,
+    "productId" => $maxid,
+    "colorAttributeId" => $color,
+    "skuId" => $skuId,
+    "price" => $price,
+    "quantity" => $quantity,
+    "createdOn"=>$createdOn,
+    "createdBy"=>$createdBy);
+    $postdatahistory = json_encode($datahistory);
+    //print_r($postdatahistory);
+    $clienthistory = curl_init($urlhistory);
+    curl_setopt($clienthistory, CURLOPT_POSTFIELDS, $postdatahistory);
+    curl_setopt($clienthistory, CURLOPT_CONNECTTIMEOUT, 0); 
+    curl_setopt($clienthistory, CURLOPT_TIMEOUT, 4); //timeout in seconds
+    curl_setopt($clienthistory,CURLOPT_RETURNTRANSFER,true);
+    $responsemax = curl_exec($clienthistory);
+    curl_close($clienthistory);
+    print_r($responsemax);
+    $resulthistory= (json_decode($responsemax));
+
+
+ // $maxid=$result->records[0]->id;
+  
+  
+
 
  //print_r($datasku);
  $postdatasku = json_encode($datasku);
@@ -71,7 +124,7 @@ $client = curl_init($url);
 curl_setopt($client, CURLOPT_RETURNTRANSFER, true);
 curl_setopt($client, CURLOPT_POSTFIELDS, $postdata);
 $response = curl_exec($client);
-print_r($response);
+//print_r($response);
 return $result = json_decode($response);
 }
 
@@ -82,15 +135,15 @@ $clientsku = curl_init($urlsku);
 curl_setopt($clientsku, CURLOPT_RETURNTRANSFER, true);
 curl_setopt($clientsku, CURLOPT_POSTFIELDS, $postdatasku);
 $responsesku = curl_exec($clientsku);
-print_r($responsesku);
+//print_r($responsesku);
 return $results = json_decode($responsesku);
 
 }
 
 
-print_r($result_registration);
+print_r($result);
 
-  if($result_registration->message="Successfull"){
+  if($result->message="Successfull"){
 
   /* --- get maximum userid -----*/
 

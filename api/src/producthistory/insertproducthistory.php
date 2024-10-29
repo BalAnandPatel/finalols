@@ -36,7 +36,7 @@ if($jwt){
   
 // get posted data
 $data = json_decode(file_get_contents("php://input"));
-//print_r($data);  
+print_r($data);  
 // make sure data is not empty
 if(
     1
@@ -49,7 +49,15 @@ if(
 
 {
 
-    $insert_product->productId = $data->productId;      
+    $insert_product->productId = $data->productId;
+    $insert_product->sizeAttributeId = $data->sizeAttributeId;    
+    $insert_product->colorAttributeId = $data->colorAttributeId;    
+    $insert_product->skuId = $data->skuId;
+    $insert_product->quantity = $data->quantity;
+    $insert_product->price = $data->price;
+    $insert_product->createdOn = $data->createdOn;
+    $insert_product->createdBy = $data->createdBy; 
+
     //var_dump($exam);
     // create the reg
     if($insert_product->insertProducthistory()){
