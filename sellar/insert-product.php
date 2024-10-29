@@ -1,52 +1,27 @@
 <?php
-include('include/config.php');
-if (strlen($_SESSION['alogin']) == 0) {
-	header('location:index.php');
-} else {
-
-	if (isset($_POST['submit'])) {
-		$skuId = $_POST['skuId'];
-		$category = $_POST['category'];
-		$subcat = $_POST['subcategory'];
-		$productname = $_POST['productName'];
-		$productcompany = $_POST['productCompany'];
-		$productprice = $_POST['productprice'];
-		$productpricebd = $_POST['productpricebd'];
-		$size = $_POST['size'];
-		$color = $_POST['color'];
-		$producthighlight = $_POST['producthighlight'];
-		$additionalInfo = $_POST['additionalInfo'];
-		$refundandExchange = $_POST['refundandExchange'];
-		$productdescription = $_POST['productDescription'];
-		$productscharge = $_POST['productShippingcharge'];
-		$productavailability = $_POST['productAvailability'];
-		$productimage1 = $_FILES["productimage1"]["name"];
-		$productimage2 = $_FILES["productimage2"]["name"];
-		$productimage3 = $_FILES["productimage3"]["name"];
-		$productimage4 = $_FILES["productimage4"]["name"];
-		//for getting product id
-		$sql = mysqli_query($con, "insert into products(skuId,category,subCategory,productName,productCompany,productPrice,size,color,productDescription,shippingCharge,productAvailability,productImage1,productImage2,productImage3,productImage4,productPriceBeforeDiscount,producthighlight,additionalInfo,productrefundandExchange) values('$skuId','$category','$subcat','$productname','$productcompany','$productprice','" . implode(', ', array_values($size)) . "','" . implode(', ', array_values($color)) . "','$productdescription','$productscharge','$productavailability','$productimage1','$productimage2','$productimage3','$productimage4','$productpricebd','$producthighlight','$additionalInfo','$refundandExchange')");
-
-		$query = mysqli_query($con, "Select @@IDENTITY as pid");
-		//print_r($query);
-		$result = mysqli_fetch_array($query);
-		//print_r($result);
-		$productid = $result['pid'];
-		$dir = "productimages/$productid";
-		if (!is_dir($dir)) {
-			mkdir("productimages/" . $productid);
-		}
-
-		move_uploaded_file($_FILES["productimage1"]["tmp_name"], "productimages/$productid/" . $_FILES["productimage1"]["name"]);
-		move_uploaded_file($_FILES["productimage2"]["tmp_name"], "productimages/$productid/" . $_FILES["productimage2"]["name"]);
-		move_uploaded_file($_FILES["productimage3"]["tmp_name"], "productimages/$productid/" . $_FILES["productimage3"]["name"]);
-		move_uploaded_file($_FILES["productimage4"]["tmp_name"], "productimages/$productid/" . $_FILES["productimage4"]["name"]);
-		$_SESSION['msg'] = "Product Inserted Successfully !!";
-	}
-
-
+//session_start();
+// $jwt="123";
+// $request_headers = [
+//   'Authorization:' . $jwt
+// ];
+include "../constant.php";
+$url = $URL . "category/readCategory.php";
+//$url="http://localhost/onlinesabjimandiapi/api/src/category/readCategory.php";
+$data = array();
+// //print_r($data);
+$postdata = json_encode($data);
+$client = curl_init();
+curl_setopt( $client, CURLOPT_URL,$url);
+//curl_setopt( $client, CURLOPT_HTTPHEADER,  $request_headers);
+curl_setopt($client, CURLOPT_RETURNTRANSFER, 1);
+curl_setopt($client, CURLOPT_POST, 5);
+curl_setopt($client, CURLOPT_POSTFIELDS, $postdata);
+$response = curl_exec($client);
+//print_r($response);
+$result = json_decode($response);
+//print_r($result);
 ?>
-	<!DOCTYPE html>
+<!DOCTYPE html>
 	<html lang="en">
 
 	<head>
@@ -65,12 +40,32 @@ if (strlen($_SESSION['alogin']) == 0) {
 
 		<script>
 			function getSubcat(val) {
+				//alert(val);
+				var dataPost = {
+					"cat_id": val};var dataString = JSON.stringify(dataPost);
 				$.ajax({
 					type: "POST",
-					url: "get_subcat.php",
-					data: 'cat_id=' + val,
-					success: function(data) {
-						$("#subcategory").html(data);
+					url: "../api/src/subcotegory/readsubcatogory.php",
+					data: {
+                          cat_id: dataString
+					},
+					
+					success: function(data) 
+					{
+					
+						 $('#subcategories').html('');
+						$('#subcategories').append('<option>' +"Sub Categories" + '</option>');
+						 $.each(data.records, function (i, value) {
+						  
+                $('#subcategories').append('<option id=' + (value.categoryid) + '>' + (value.subcategoryName) + '</option>');
+            });
+					},
+					error: function(data)
+					{
+					       $('#subcategories').html('');
+					     $('#subcategories').append('<option>' + "No records found !!" + '</option>');
+					
+		
 					}
 				});
 			}
@@ -117,7 +112,7 @@ if (strlen($_SESSION['alogin']) == 0) {
 
 									<br />
 
-									<form class="form-horizontal row-fluid" name="insertproduct" method="post" enctype="multipart/form-data">
+									<form class="form-horizontal row-fluid" name="insertproduct" method="post" enctype="multipart/form-data" action="action/insertProductPost.php">
 
 										<div class="control-group">
 											<label class="control-label" for="basicinput">SKU-ID</label>
@@ -125,27 +120,48 @@ if (strlen($_SESSION['alogin']) == 0) {
 												<input type="text" name="skuId" placeholder="Enter Product SKU ID" class="span8 tip" required>
 											</div>
 										</div>
+										<div class="control-group">
+											<label class="control-label" for="basicinput">Sellar Id</label>
+											<div class="controls">
+												<input type="text" name="sellarId" placeholder="Sellar Id" class="span8 tip" required>
+											</div>
+										</div>
+										<!--<div class="control-group">-->
+										<!--	<label class="control-label" for="basicinput">Sellar Id</label>-->
+										<!--	<div class="controls">-->
+										<!--		<input type="text" name="sellarId" placeholder="Enter Product SKU ID" class="span8 tip" required>-->
+										<!--	</div>-->
+										<!--</div>-->
 
 
 										<div class="control-group">
 											<label class="control-label" for="basicinput">Category</label>
 											<div class="controls">
-												<select name="category" class="span8 tip" onChange="getSubcat(this.value);" required>
+												<select name="categoriesId" class="span8 tip" onChange="getSubcat(this.value);" >
 													<option value="">Select Category</option>
-													<?php $query = mysqli_query($con, "select * from category");
-													while ($row = mysqli_fetch_array($query)) { ?>
-
-														<option value="<?php echo $row['id']; ?>"><?php echo $row['categoryName']; ?></option>
+													<?php
+                // print_r($result);
+                // print_r($result['records']);
+                for($i=0; $i<sizeof($result->records);$i++)
+                { //print_r($result->records[$i]);
+                ?>
+				
+													
+														<option value="<?php echo $result->records[$i]->id;?>"> <?php echo $result->records[$i]->name;?></option>
+														
 													<?php } ?>
 												</select>
 											</div>
 										</div>
-
+									
 
 										<div class="control-group">
 											<label class="control-label" for="basicinput">Sub Category</label>
 											<div class="controls">
-												<select name="subcategory" id="subcategory" class="span8 tip" required>
+												<select name="subcategory" id="subcategories" class="span8 tip" >
+												    
+                	<option value="">Select Sub Category</option>
+                
 												</select>
 											</div>
 										</div>
@@ -154,29 +170,30 @@ if (strlen($_SESSION['alogin']) == 0) {
 										<div class="control-group">
 											<label class="control-label" for="basicinput">Product Name</label>
 											<div class="controls">
-												<input type="text" name="productName" placeholder="Enter Product Name" class="span8 tip" required>
+												<input type="text" name="name" placeholder="Enter Product Name" class="span8 tip" required>
+											</div>
+										</div>
+										<div class="control-group">
+											<label class="control-label" for="basicinput">Quantity</label>
+											<div class="controls">
+												<input type="number" name="quantity" placeholder="Enter Product Name" class="span8 tip" required>
 											</div>
 										</div>
 
+										
 										<div class="control-group">
-											<label class="control-label" for="basicinput">Product Company</label>
+											<label class="control-label" for="basicinput">Price</label>
 											<div class="controls">
-												<input type="text" name="productCompany" placeholder="Enter Product Comapny Name" class="span8 tip" required>
+												<input type="number" name="price" placeholder="Enter Product Price" class="span8 tip" required>
 											</div>
 										</div>
 										<div class="control-group">
-											<label class="control-label" for="basicinput">Product Price Before Discount</label>
+											<label class="control-label" for="basicinput">Discount</label>
 											<div class="controls">
-												<input type="text" name="productpricebd" placeholder="Enter Product Price" class="span8 tip" required>
+												<input type="number" name="discount" placeholder="Enter Product discount" class="span8 tip" required>
 											</div>
 										</div>
 
-										<div class="control-group">
-											<label class="control-label" for="basicinput">Product Price After Discount(Selling Price)</label>
-											<div class="controls">
-												<input type="text" name="productprice" placeholder="Enter Product Price" class="span8 tip" required>
-											</div>
-										</div>
 										<div class="control-group">
 											<label class="control-label" for="basicinput">Size</label>
 											<div class="controls">
@@ -204,10 +221,10 @@ if (strlen($_SESSION['alogin']) == 0) {
 										<div class="control-group">
 											<label class="control-label" for="basicinput">Product Description</label>
 											<div class="controls">
-												<textarea name="productDescription" placeholder="Enter Product Description" rows="6" class="span8 tip"></textarea>
+												<textarea name="description" placeholder="Enter Product Description" rows="6" class="span8 tip"></textarea>
 											</div>
 										</div>
-										<div class="control-group">
+										<!-- <div class="control-group">
 											<label class="control-label" for="basicinput">Product Highlight</label>
 											<div class="controls">
 												<textarea name="producthighlight" placeholder="Enter Product Highlight" rows="6" class="span8 tip"></textarea>
@@ -224,19 +241,19 @@ if (strlen($_SESSION['alogin']) == 0) {
 											<div class="controls">
 												<textarea name="refundandExchange" placeholder="Enter Product Refund Exchange" rows="6" class="span8 tip"></textarea>
 											</div>
-										</div>
+										</div> -->
 
 										<div class="control-group">
 											<label class="control-label" for="basicinput">Product Shipping Charge</label>
 											<div class="controls">
-												<input type="text" name="productShippingcharge" placeholder="Enter Product Shipping Charge" class="span8 tip" required>
+												<input type="text" name="shippingCharge" placeholder="Enter Product Shipping Charge" class="span8 tip" required>
 											</div>
 										</div>
 
 										<div class="control-group">
 											<label class="control-label" for="basicinput">Product Availability</label>
 											<div class="controls">
-												<select name="productAvailability" id="productAvailability" class="span8 tip" required>
+												<select name="status" id="productAvailability" class="span8 tip" required>
 													<option value="">Select</option>
 													<option value="In Stock">In Stock</option>
 													<option value="Out of Stock">Out of Stock</option>
@@ -359,4 +376,3 @@ if (strlen($_SESSION['alogin']) == 0) {
 			});
 		</script>
 	</body>
-<?php } ?>

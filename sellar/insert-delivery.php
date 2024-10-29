@@ -1,136 +1,161 @@
-<?php
-include '../../constant.php';
-$name=trim(strtoupper($_POST["name"]));
-$phoneNo=strtoupper($_POST["phoneNo"]);
-$email=strtoupper($_POST["email"]);
-$workingAddress=strtoupper($_POST["workingAddress"]);
-$regidenceAddress=strtoupper($_POST["regidenceAddress"]);
-$workingPincode=strtoupper($_POST["workingPincode"]);
-$status=strtoupper($_POST["status"]);
-$aadhar=strtoupper($_POST["aadhar"]);
-$pan=strtoupper($_POST["pan"]);
-$createdOn=strtoupper($_POST["createOn"]);
-$createdBy= strtoupper($_POST["createdBy"]);
-$url = $URL . "registration/insert_registration.php";
-$url_read_maxId=$URL . "registration/read_maxId.php";
-$data = array(
+	<!DOCTYPE html>
+	<html lang="en">
 
-  "name" => $name,
-  "phonNo" => $phonNo,
-  "email" => $email,
-  "workingAddress" => $workingAddress,
-  "regidenceAddress" => $regidenceAddress,
-  "workingPincode" => $workingPincode,
-  "status" => $status,
-  "aadhar" => $aadhar,
-  "pan" => $pan,
-  "createdOn"=>$createdBy,
-  "createdBy"=>$createdBy);
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Admin| Insert Delivery</title>
+		<link type="text/css" href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+		<link type="text/css" href="bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet">
+		<link type="text/css" href="css/theme.css" rel="stylesheet">
+		<link type="text/css" href="images/icons/css/font-awesome.css" rel="stylesheet">
+		<link type="text/css" href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,600italic,400,600' rel='stylesheet'>
+		<script src="http://js.nicedit.com/nicEdit-latest.js" type="text/javascript"></script>
+		<script type="text/javascript">
+			bkLib.onDomLoaded(nicEditors.allTextAreas);
+		</script>
 
-//print_r($data);
- $postdata = json_encode($data);
-//echo $url;
-//print_r($postdata);
-$result_registration=url_encode_Decode($url,$postdata);
-//print_r($result_registration);
+	</head>
 
-  if($result_registration->message="Successfull"){
+	<body>
+		<?php include('include/header.php'); ?>
 
-  /* --- get maximum userid -----*/
+		<div class="wrapper">
+			<div class="container">
+				<div class="row">
+					<?php include('include/sidebar.php'); ?>
+					<div class="span9">
+						<div class="content">
 
-    $data_maxId=array();
-    $maxId_postdata = json_encode($data_maxId);
-    $result_max_registration=url_encode_Decode($url_read_maxId,$maxId_postdata);
-    $id=$result_max_registration->records[0]->id;
+							<div class="module">
+								<div class="module-head">
+									<h3>Add Delivery Boy</h3>
+								</div>
+								<div class="module-body">
+
+										<?php if (isset($_POST['submit'])) { ?>
+										<div class="alert alert-success">
+											<button type="button" class="close" data-dismiss="alert">×</button>
+											<strong>We wll done!</strong> <?php echo htmlentities($_SESSION['msg']); ?><?php echo htmlentities($_SESSION['msg'] = ""); ?>
+										</div>
+									<?php } ?>
 
 
-/*--- update the images in img folder inside user folder ---*/
+									<?php if (isset($_GET['del'])) { ?>
+										<div class="alert alert-error">
+											<button type="button" class="close" data-dismiss="alert">×</button>
+											<strong>Oh snap!</strong> <?php echo htmlentities($_SESSION['delmsg']); ?><?php echo htmlentities($_SESSION['delmsg'] = ""); ?>
+										</div>
+									<?php } ?>
 
-    $target_dir = "../img/";
-    $path="../img/".$id."/profile/";
-    if (!is_dir($path)){
-    mkdir($path, 0777, true);
-    //echo "directory created";
-    }
-    else{ 
-     // echo "unable to create directory";
-    }
-   $target_file = $target_dir .$id."/profile/". $id.".png";
-   $target_file_thumb = $target_dir .$id."/profile/". $id."_thumb".".png";
+									<br />
+ 
+									<form class="form-horizontal row-fluid" name="insertproduct" method="post" enctype="multipart/form-data" action="action/insertDeliveryPost.php">
+									<div class="control-group">
+											<label class="control-label" for="basicinput">Name</label>
+											<div class="controls">
+												<input type="text" name="name" placeholder="name" class="span8 tip" required>
+										</div>
+										</div>
+										<div class="control-group">
+											<label class="control-label" for="basicinput">phone No</label>
+											<div class="controls">
+												<input type="text" name="phoneNo" placeholder="Phone No" class="span8 tip" required>
+										</div>
+										</div>
 
-    $uploadOk = 1;
-    $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
-    $imageFileTypeThumb = strtolower(pathinfo($target_file_thumb,PATHINFO_EXTENSION));
-    
-    // Check if image file is a actual image or fake image
-    if(isset($_POST["submit"])) {
-     $check = getimagesize($_FILES["image"]["tmp_name"]);
-     $check_thumb = getimagesize($_FILES["fileUploadThumb"]["tmp_name"]);
+										<div class="control-group">
+											<label class="control-label" for="basicinput">Email Id</label>
+											<div class="controls">
+												<input type="text" name="email" placeholder="Enter Email Id" class="span8 tip" required>
+											</div>
+										</div>
+										<div class="control-group">
+											<label class="control-label" for="basicinput">Working Address</label>
+											<div class="controls">
+												<input type="text" name="workingAddress" placeholder="Enter Working Address" class="span8 tip" required>
+											</div>
+										</div>
 
-      if(($check !== false) &&($check_thumb !== false)) {
-        
-        $uploadOk = 1;
-      }
-       else {
-        $uploadOk = 0;
-      }
-    }
-    
-    // Check if file already exists
-    if (file_exists($target_file)) {
-      $uploadOk = 0;
-    }
-    
-    // Check file size
-    if ($_FILES["image"]["size"] > 5000000) {
-     
-      $uploadOk = 0;
-    }
-    {
-      
-      $uploadOk = 1;
-    }
-    
-    // Allow certain file formats
-    if(($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"
-    && $imageFileType != "gif")  && ($imageFileTypeThumb != "jpg" && $imageFileTypeThumb != "png" && $imageFileTypeThumb != "jpeg"
-    && $imageFileTypeThumb != "gif")){
-    
-      $uploadOk = 0;
-    }
-    
-    // Check if $uploadOk is set to 0 by an error
-    if ($uploadOk == 0) {
-      echo "Sorry, your file was not uploaded.";
-    
-    } else {
+										<div class="control-group">
+											<label class="control-label" for="basicinput">Regidence Address</label>
+											<div class="controls">
+												<input type="text" name="regidenceAddress" placeholder="Enter Regidence Address" class="span8 tip" required>
+											</div>
+										</div>
+										<div class="control-group">
+											<label class="control-label" for="basicinput">Pincode</label>
+											<div class="controls">
+												<input type="text" name="workingPincode" placeholder="Enter your pincode" class="span8 tip" required>
+											</div>
+										</div>
+										<div class="control-group">
+											<label class="control-label" for="basicinput">Aadhar</label>
+											<div class="controls">
+												<input type="text" name="aadhar" placeholder="Adhar" cl0ass="span8 tip" required>
+											</div>
+										</div>
+										<div class="control-group">
+											<label class="control-label" for="basicinput">Pan</label>
+											<div class="controls">
+												<input type="text" name="pan" placeholder="pan Card" cl0ass="span8 tip" required>
+											</div>
+										</div>
+										<div class="control-group">
+											<label class="control-label" for="basicinput">Profile Photo</label>
+											<div class="controls">
+												<input type="file" name="photo" placeholder="you photo" cl0ass="span8 tip" required>
+											</div>
+										</div>
+										<div class="control-group">
+											<div class="controls">
+												<button type="submit" name="submit" class="btn">Insert</button>
+											</div>
+										</div>
+									</form>
+								</div>
+							</div>
 
-      if ((move_uploaded_file($_FILES["image"]["tmp_name"], $target_file)) 
-      && (move_uploaded_file($_FILES["fileUploadThumb"]["tmp_name"], $target_file_thumb))) {
-        //echo "The file ". htmlspecialchars( basename( $_FILES["fileUpload"]["name"])). " has been uploaded.";
-       // echo "The file ". htmlspecialchars( basename( $_FILES["fileUploadThumb"]["name"])). " has been uploaded.";
-        $_SESSION["registration"] = "File uploaded succesfully.";
-        header('Location:../registration_view.php?id='.$id);
-      }
-       else {
-        //echo "Sorry, there was an error uploading your file.";
-      
-      $_SESSION["registration"] = "Sorry, there was an error uploading your file.";
-        header('Location:../update_registration.php?id='.$id);
-    }
-  }   
-   
-}
-else{
-   header('Location:../registration.php?msg=Failed');
-}
-function url_encode_Decode($url,$postdata){
-    $client = curl_init($url);
-curl_setopt($client, CURLOPT_RETURNTRANSFER, true);
-curl_setopt($client, CURLOPT_POSTFIELDS, $postdata);
-$response = curl_exec($client);
-//print_r($response);
-return $result = json_decode($response);
-
-}
-?>
+						</div><!--/.content-->
+					</div><!--/.span9-->
+				</div>
+			</div><!--/.container-->
+		</div><!--/.wrapper-->
+		<div id="blank_size_field" style="display: none;">
+			<div class="flex-grow-1 pr-3">
+				<div class="form-group">
+					<input type="text" class="span8 tip" name="size[]" id="size" placeholder="Enter Product Size" />
+					<button type="button" class="btn btn-danger btn-sm" style="margin-top: 0px;" name="button" onclick="removeSize(this)">
+						<!-- <i class="fa fa-minus"></i> -->
+						 Remove
+					</button>
+				</div>
+			</div>
+		</div>
+		<div id="blank_color_field" style="display: none;">
+			<div class="flex-grow-1 pr-3">
+				<div class="form-group">
+					<input type="text" class="span8 tip" name="color[]" id="color" placeholder="Enter Product Color" />
+					<button type="button" class="btn btn-danger btn-sm" style="margin-top: 0px;" name="button" onclick="removeColor(this)">
+						<!-- <i class="fa fa-minus"></i> -->
+						 Remove
+					</button>
+				</div>
+			</div>
+		</div>
+		<?php include('include/footer.php'); ?>
+		<script src="scripts/jquery-1.9.1.min.js" type="text/javascript"></script>
+		<script src="scripts/jquery-ui-1.10.1.custom.min.js" type="text/javascript"></script>
+		<script src="bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+		<script src="scripts/flot/jquery.flot.js" type="text/javascript"></script>
+		<script src="scripts/datatables/jquery.dataTables.js"></script>
+		<script>
+			$(document).ready(function() {
+				$('.datatable-1').dataTable();
+				$('.dataTables_paginate').addClass("btn-group datatable-pagination");
+				$('.dataTables_paginate > a').wrapInner('<span />');
+				$('.dataTables_paginate > a:first-child').append('<i class="icon-chevron-left shaded"></i>');
+				$('.dataTables_paginate > a:last-child').append('<i class="icon-chevron-right shaded"></i>');
+			});
+		</script>
+	</body>

@@ -649,8 +649,6 @@ input[type=button].btn-block, input[type=reset].btn-block, input[type=submit].bt
 
 
 
-
-
 .modal {
 	-webkit-border-radius: 4px;
 	-moz-border-radius: 4px;
@@ -684,6 +682,7 @@ input[type=button].btn-block, input[type=reset].btn-block, input[type=submit].bt
 	overflow: hidden;
 	margin-bottom: 5px
 }
+
 .accordion-heading {
 	background: #fafafa;
 	background: -moz-linear-gradient(top, #fff 0, #fff 50%, #fafafa 51%, #fafafa 100%);
@@ -694,6 +693,7 @@ input[type=button].btn-block, input[type=reset].btn-block, input[type=submit].bt
 	background: linear-gradient(to bottom, #fff 0, #fff 50%, #fafafa 51%, #fafafa 100%);
 filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='@topColor', endColorstr='@bottomColor', GradientType=0)
 }
+
 .accordion-heading .accordion-toggle {
 	color: #555;
 	font-weight: bold;
@@ -701,6 +701,7 @@ filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='@topColor', end
 	padding: 10px 15px;
 	text-decoration: none!important
 }
+
 .media .media-avatar {
 	 
 	border: 1px solid rgba(204, 204, 204, 0.5);
@@ -1112,8 +1113,7 @@ border-top-left-radius: 3px;
 	padding: 0
 }
 .stream.new-update a, .stream.load-more a {
-	background: #background: #f7f7f7;;
-	
+	background: #f7f7f7;;
 	color: #555;
 	font-weight: 600;
 	font-size: 14px;
