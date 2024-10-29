@@ -66,7 +66,9 @@ $result = json_decode($response);
 											<tr>
 												<th>#</th>
 												<th>Sellar Name</th>
+												<th>Shop Owner Photo</th>
 												<th>Shop Title</th>
+												<th>Shop Photo</th>
 												<th>Contact no</th>
 												<th>Sellar Address </th>
 												<!-- <th>Billing Address/City/State/Pincode </th> -->
@@ -87,7 +89,9 @@ $result = json_decode($response);
 	<tr>
 													<td><?php echo htmlentities($cnt); ?></td>
 													<td><?php echo $result->records[$i]->sellarName;?></td>
+													<td><img src="img/SELLAR/<?php echo $result->records[$i]->pan ."/".$result->records[$i]->pan.".png";?>"></td>
 													<td><?php echo $result->records[$i]->counterName;?></td>
+													<td><img src="img/SELLAR/<?php echo $result->records[$i]->pan ."/".$result->records[$i]->pan."_counter.png";?>"></td>
 													<td> <?php echo $result->records[$i]->phoneNo;?></td>
 													<td><?php echo $result->records[$i]->address;?></td>
 													<td><?php echo $result->records[$i]->createdOn;?></td>
