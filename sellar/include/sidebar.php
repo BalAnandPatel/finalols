@@ -95,6 +95,7 @@ error_reporting(0);
 			<li><a href="manage-products.php"><i class="menu-icon icon-table"></i>Manage Products </a></li>
 			<li><a href="insert-delivery.php"><i class="menu-icon icon-paste"></i>Customer List </a></li>
 			<li><a href="manage-deliveryBoy.php"><i class="menu-icon icon-paste"></i>Update Address</a></li>
+			<li><a href="update-personal.php"><i class="menu-icon icon-paste"></i>Personal Info</a></li>
 			<li><a href="insert-sellar.php"><i class="menu-icon icon-paste"></i>Close Shop</a></li>
 			<li><a href="manage-sellar.php"><i class="menu-icon icon-paste"></i>Setting</a></li>
 			
