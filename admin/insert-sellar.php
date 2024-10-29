@@ -29,7 +29,7 @@
 
 							<div class="module">
 								<div class="module-head">
-									<h3>Add Sellar Boy</h3>
+									<h3>Add Sellar</h3>
 								</div>
 								<div class="module-body">
 
@@ -108,25 +108,43 @@
 										<div class="control-group">
 											<label class="control-label" for="basicinput">Aadhar</label>
 											<div class="controls">
-												<input type="text" name="aadhar" placeholder="Adhar no" cl0ass="span8 tip" required>
+												<input type="text" name="aadhar" placeholder="Adhar no" class="span8 tip" required>
 											</div>
 										</div>
 										<div class="control-group">
 											<label class="control-label" for="basicinput">Pan</label>
 											<div class="controls">
-												<input type="text" name="pan" placeholder="pan Card" cl0ass="span8 tip" required>
+												<input type="text" name="pan" placeholder="pan Card" class="span8 tip" required>
+											</div>
+										</div>
+										<div class="control-group">
+											<label class="control-label" for="basicinput">Adress</label>
+											<div class="controls">
+												<input type="text" name="address" placeholder="Address" class="span8 tip" required>
+											</div>
+										</div>
+										<div class="control-group">
+											<label class="control-label" for="basicinput">Pin</label>
+											<div class="controls">
+												<input type="text" name="pin" placeholder="Pin" class="span8 tip" required>
+											</div>
+										</div>
+										<div class="control-group">
+											<label class="control-label" for="basicinput">City</label>
+											<div class="controls">
+												<input type="text" name="city" placeholder="City" class="span8 tip" required>
 											</div>
 										</div>
 										<div class="control-group">
 											<label class="control-label" for="basicinput">Owner Image</label>
 											<div class="controls">
-												<input type="file" name="upload" placeholder="counter Image" cl0ass="span8 tip" required>
+												<input type="file" name="upload" placeholder="counter Image" class="span8 tip" required>
 											</div>
 										</div>
 										<div class="control-group">
 											<label class="control-label" for="basicinput">Shop Image</label>
 											<div class="controls">
-												<input type="file" name="shopupload" placeholder="shop Image" cl0ass="span8 tip" required>
+												<input type="file" name="shopupload" placeholder="shop Image" class="span8 tip" required>
 											</div>
 										</div>
 										<div class="control-group">
