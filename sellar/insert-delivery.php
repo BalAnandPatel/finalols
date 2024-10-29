@@ -27,92 +27,49 @@
 					<div class="span9">
 						<div class="content">
 
-							<div class="module">
+						<div class="module">
 								<div class="module-head">
-									<h3>Add Delivery Boy</h3>
+									<h3>Customer Details</h3>
 								</div>
-								<div class="module-body">
+								<div class="module-body table">
+									<table cellpadding="0" cellspacing="0" border="0" class="datatable-1 table table-bordered table-striped	 display" width="100%">
+										<thead>
+											<tr>
+												<th>#</th>
+												<th>Customer Id</th>
+												<th>Name</th>
+												<th>Email</th>
+												<th>Phone</th>
+												<th>Address</th>
+												<th>Reg. Date</th>
+												<th>Time</th>
+											</tr>
+										</thead>
+										<tbody>
 
-										<?php if (isset($_POST['submit'])) { ?>
-										<div class="alert alert-success">
-											<button type="button" class="close" data-dismiss="alert">×</button>
-											<strong>We wll done!</strong> <?php echo htmlentities($_SESSION['msg']); ?><?php echo htmlentities($_SESSION['msg'] = ""); ?>
-										</div>
-									<?php } ?>
+										<?php
+                // print_r($result);
+				$cnt=0;
+                // print_r($result['records']);
+                for($i=0; $i<sizeof($resultsub->records);$i++)
+                { //print_r($result->records[$i]);
+                ?>	
+												<tr>
+												<td><?php echo htmlentities($cnt); ?></td>
+												<td><?php echo $resultsub->records[$i]->id; ?></td>
+												<td><?php echo $resultsub->records[$i]->name;?></td>
+												<td><?php echo $resultsub->records[$i]->email;?></td>
+												<td><?php echo $resultsub->records[$i]->phone;?></td>
+												<td><?php echo $resultsub->records[$i]->address;?></td>
+												<td><?php echo $resultsub->records[$i]->reg;?></td>
+												<td><?php echo $resultsub->records[$i]->status;?></td>
+												<td><?php echo $resultsub->records[$i]->time;?></td>
+								
+												</tr>
+											<?php $cnt = $cnt + 1;
+											} ?>
 
-
-									<?php if (isset($_GET['del'])) { ?>
-										<div class="alert alert-error">
-											<button type="button" class="close" data-dismiss="alert">×</button>
-											<strong>Oh snap!</strong> <?php echo htmlentities($_SESSION['delmsg']); ?><?php echo htmlentities($_SESSION['delmsg'] = ""); ?>
-										</div>
-									<?php } ?>
-
-									<br />
- 
-									<form class="form-horizontal row-fluid" name="insertproduct" method="post" enctype="multipart/form-data" action="action/insertDeliveryPost.php">
-									<div class="control-group">
-											<label class="control-label" for="basicinput">Name</label>
-											<div class="controls">
-												<input type="text" name="name" placeholder="name" class="span8 tip" required>
-										</div>
-										</div>
-										<div class="control-group">
-											<label class="control-label" for="basicinput">phone No</label>
-											<div class="controls">
-												<input type="text" name="phoneNo" placeholder="Phone No" class="span8 tip" required>
-										</div>
-										</div>
-
-										<div class="control-group">
-											<label class="control-label" for="basicinput">Email Id</label>
-											<div class="controls">
-												<input type="text" name="email" placeholder="Enter Email Id" class="span8 tip" required>
-											</div>
-										</div>
-										<div class="control-group">
-											<label class="control-label" for="basicinput">Working Address</label>
-											<div class="controls">
-												<input type="text" name="workingAddress" placeholder="Enter Working Address" class="span8 tip" required>
-											</div>
-										</div>
-
-										<div class="control-group">
-											<label class="control-label" for="basicinput">Regidence Address</label>
-											<div class="controls">
-												<input type="text" name="regidenceAddress" placeholder="Enter Regidence Address" class="span8 tip" required>
-											</div>
-										</div>
-										<div class="control-group">
-											<label class="control-label" for="basicinput">Pincode</label>
-											<div class="controls">
-												<input type="text" name="workingPincode" placeholder="Enter your pincode" class="span8 tip" required>
-											</div>
-										</div>
-										<div class="control-group">
-											<label class="control-label" for="basicinput">Aadhar</label>
-											<div class="controls">
-												<input type="text" name="aadhar" placeholder="Adhar" cl0ass="span8 tip" required>
-											</div>
-										</div>
-										<div class="control-group">
-											<label class="control-label" for="basicinput">Pan</label>
-											<div class="controls">
-												<input type="text" name="pan" placeholder="pan Card" cl0ass="span8 tip" required>
-											</div>
-										</div>
-										<div class="control-group">
-											<label class="control-label" for="basicinput">Profile Photo</label>
-											<div class="controls">
-												<input type="file" name="photo" placeholder="you photo" cl0ass="span8 tip" required>
-											</div>
-										</div>
-										<div class="control-group">
-											<div class="controls">
-												<button type="submit" name="submit" class="btn">Insert</button>
-											</div>
-										</div>
-									</form>
+									</table>
 								</div>
 							</div>
 

@@ -97,7 +97,7 @@ $resultsub = json_decode($response);
 					<div class="span9">
 						<div class="content">
 
-							<div class="module">
+							<!-- <div class="module">
 								<div class="module-head">
 									<h3>Sub Category</h3>
 								</div>
@@ -173,24 +173,25 @@ $resultsub = json_decode($response);
 										</div>
 									</form>
 								</div>
-							</div>
+							</div> -->
 
 
 							<div class="module">
 								<div class="module-head">
-									<h3>Sub Category</h3>
+									<h3>Payment History</h3>
 								</div>
 								<div class="module-body table">
 									<table cellpadding="0" cellspacing="0" border="0" class="datatable-1 table table-bordered table-striped	 display" width="100%">
 										<thead>
 											<tr>
 												<th>#</th>
-												<th>Category</th>
-												<th>SubCategory</th>
-												<th>SubCategory Image</th>
-												<th>Creation date</th>
-												<th>Last Updated</th>
-												<th>Action</th>
+												<th>Name</th>
+												<th>Ammount</th>
+												<th>Transaction Id</th>
+												<th>Order Id</th>
+												<th>Method</th>
+												<th>Status</th>
+												<th>Time</th>
 											</tr>
 										</thead>
 										<tbody>
@@ -204,18 +205,14 @@ $resultsub = json_decode($response);
                 ?>	
 												<tr>
 												<td><?php echo htmlentities($cnt); ?></td>
-												<td><?php echo $resultsub->records[$i]->parentId;?></td>
 												<td><?php echo $resultsub->records[$i]->name;?></td>
-												<td><img src="img/subcategory/<?php echo $resultsub->records[$i]->id ."/".$resultsub->records[$i]->id.".png";?>"></td>
-												<td><?php echo $resultsub->records[$i]->createdOn;?></td>
-												<td><?php echo $resultsub->records[$i]->updatedOn;?></td>
-													<td>
-														<a href="edit-subcategory.php?id=<?php echo $resultsub->records[$i]->id; ?>"><i class="icon-edit"></i></a>
-														<form class="form-horizontal row-fluid"  action="action/subcategoryDelete_post.php" name="Category" method="post" enctype="multipart/form-data">
-															<input type="hidden" name="id" value="<?php echo $resultsub->records[$i]->id ?>">
-															<button type="submit" class="icon-remove-sign"></button>
-														</form>
-													</td>
+												<td><?php echo $resultsub->records[$i]->ammount;?></td>
+												<td><?php echo $resultsub->records[$i]->transId;?></td>
+												<td><?php echo $resultsub->records[$i]->orderId;?></td>
+												<td><?php echo $resultsub->records[$i]->method;?></td>
+												<td><?php echo $resultsub->records[$i]->status;?></td>
+												<td><?php echo $resultsub->records[$i]->time;?></td>
+								
 												</tr>
 											<?php $cnt = $cnt + 1;
 											} ?>

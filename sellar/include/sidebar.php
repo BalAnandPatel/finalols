@@ -89,14 +89,14 @@ error_reporting(0);
 
 
 		<ul class="widget widget-menu unstyled">
-			<li><a href="category.php"><i class="menu-icon icon-tasks"></i> Create Category </a></li>
-			<li><a href="subcategory.php"><i class="menu-icon icon-tasks"></i>Sub Category </a></li>
+			<li><a href="category.php"><i class="menu-icon icon-tasks"></i> Add Bank</a></li>
+			<li><a href="subcategory.php"><i class="menu-icon icon-tasks"></i>Payment History</a></li>
 			<li><a href="insert-product.php"><i class="menu-icon icon-paste"></i>Insert Product </a></li>
 			<li><a href="manage-products.php"><i class="menu-icon icon-table"></i>Manage Products </a></li>
-			<li><a href="insert-delivery.php"><i class="menu-icon icon-paste"></i>Insert Delivery </a></li>
-			<li><a href="manage-deliveryBoy.php"><i class="menu-icon icon-paste"></i>Manage Delivery</a></li>
-			<li><a href="insert-sellar.php"><i class="menu-icon icon-paste"></i>Insert Sellar</a></li>
-			<li><a href="manage-sellar.php"><i class="menu-icon icon-paste"></i>Manage Sellar</a></li>
+			<li><a href="insert-delivery.php"><i class="menu-icon icon-paste"></i>Customer List </a></li>
+			<li><a href="manage-deliveryBoy.php"><i class="menu-icon icon-paste"></i>Update Address</a></li>
+			<li><a href="insert-sellar.php"><i class="menu-icon icon-paste"></i>Close Shop</a></li>
+			<li><a href="manage-sellar.php"><i class="menu-icon icon-paste"></i>Setting</a></li>
 			
 
 		</ul>
