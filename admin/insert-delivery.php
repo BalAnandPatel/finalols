@@ -49,7 +49,7 @@
 									<?php } ?>
 
 									<br />
-
+ 
 									<form class="form-horizontal row-fluid" name="insertproduct" method="post" enctype="multipart/form-data" action="action/insertDeliveryPost.php">
 									<div class="control-group">
 											<label class="control-label" for="basicinput">Name</label>

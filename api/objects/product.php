@@ -7,6 +7,9 @@ class Product
     private $seller = "seller";
     private $products = "products";
     private $productskuid = "productskuid";
+
+    private $producthistory="producthistory";
+
     private $wall_upload_history = "wall_upload_history";
     // private $table_payment = "payment";
 
@@ -28,9 +31,23 @@ class Product
     }
 
 
+
+    // Read Product Max id
+
+    public function readProductMaxId()
+    {
+        $query = "Select max(id) as id from " . $this->products;
+         $stmt = $this->conn->prepare($query);
+        // $stmt->bindParam(":skuId", $this->skuId); 
+        $stmt->execute();
+        return $stmt;
+    }
+
+
+
     public function readAllProductDetails()
     {
-  $query = "Select a.name,a.categoriesId,a.description,b.quantity,a.createdOn,a.image,a.sellarId,a.skuId,a.price,a.discount from " . $this->products . " as a INNER JOIN " .$this->productskuid . " as b ON b.productId=a.id ";
+  $query = "Select a.name,a.categoriesId,a.description,b.quantity,a.id,a.createdOn,a.image,a.sellarId,a.skuId,a.price,a.discount from " . $this->products . " as a INNER JOIN " .$this->productskuid . " as b ON b.productId=a.id ";
          $stmt = $this->conn->prepare($query);
         //  $stmt->bindParam(":skuId", $this->skuId); 
         $stmt->execute();
@@ -44,7 +61,7 @@ class Product
 
     public function readAllProduct()
     {
-       $query = " Select name,categoriesId,description,image,sellarId,skuId,price,discount from " . $this->products;
+       $query = " Select name,categoriesId,description,image,sellarId,skuId,price,discount from " . $this->products . "INNER JOIN ON" ;
          $stmt = $this->conn->prepare($query);
         //  $stmt->bindParam(":skuId", $this->skuId); 
         $stmt->execute();
@@ -99,21 +116,29 @@ class Product
     function deletProducts(){
   
         // delete user detatail
-        $query = " DELETE FROM " . $this->products. " 
-        WHERE skuId=:skuId";
+        $query1 = " DELETE FROM " . $this->products. " 
+        WHERE id=:id";
+        $query2 = " DELETE FROM " . $this->producthistory. " 
+        WHERE productId=:id";
+        $query3 = " DELETE FROM " . $this->productskuid. " 
+        WHERE productId=:id";
     
        
         // prepare query
-        $stmt = $this->conn->prepare($query);
+        $stmt1 = $this->conn->prepare($query1);
+        $stmt2 = $this->conn->prepare($query2);
+        $stmt3 = $this->conn->prepare($query3);
        
         // sanitize
-        $this->skuId=htmlspecialchars(strip_tags($this->skuId));
+        $this->id=htmlspecialchars(strip_tags($this->id));
       
         // bind id of record to delete
-        $stmt->bindParam(":skuId", $this->skuId);
+        $stmt1->bindParam(":id", $this->id);
+        $stmt2->bindParam(":id", $this->id);
+        $stmt3->bindParam(":id", $this->id);
        
         // execute query
-        if ($stmt->execute()){
+        if ($stmt1->execute() && $stmt2->execute() && $stmt2->execute()){
             return true;
         }
       

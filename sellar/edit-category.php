@@ -1,39 +1,21 @@
 <?php
-include('include/config.php');
-if (strlen($_SESSION['alogin']) == 0) {
-	header('location:index.php');
-} else {
-	date_default_timezone_set('Asia/Kolkata'); // change according timezone
-	$currentTime = date('d-m-Y h:i:s A', time());
-
-
-	if (isset($_POST['submit'])) {
-		$category = $_POST['category'];
-		$id = intval($_GET['id']);
-		if (!empty($_FILES['image'])) {
-			$query = mysqli_query($con, "select * from category where id='$id'");
-			$row = mysqli_fetch_array($query);
-			unlink('uploads/category/'.$row['categoryImage']);
-			$path = "uploads/category/";
-			if (!is_dir($path)) {
-				mkdir($path, 0777, true);
-				// echo "directory created";
-			}
-			$filename = time() . ".png";
-			$target_file = $path . $filename;
-			if (move_uploaded_file($_FILES["image"]["tmp_name"], $target_file)) {
-				$sql = mysqli_query($con, "update category set categoryName='$category',categoryImage='$filename',updationDate='$currentTime' where id='$id'");
-			} else {
-				exit();
-			}
-			// exit();
-		} else {
-			$sql = mysqli_query($con, "update category set categoryName='$category',updationDate='$currentTime' where id='$id'");
-			// exit();
-		}
-		$_SESSION['msg'] = "Category Updated !!";
-	}
-
+include "../constant.php";
+$id=trim(strtoupper($_GET["id"]));
+$url = $URL . "category/readCategorybyId.php";
+//$url="http://localhost/onlinesabjimandiapi/api/src/category/readCategory.php";
+$data = array("id" => $id);
+//print_r($data);
+$postdata = json_encode($data);
+$client = curl_init();
+curl_setopt( $client, CURLOPT_URL,$url);
+//curl_setopt( $client, CURLOPT_HTTPHEADER,  $request_headers);
+curl_setopt($client, CURLOPT_RETURNTRANSFER, 1);
+curl_setopt($client, CURLOPT_POST, 5);
+curl_setopt($client, CURLOPT_POSTFIELDS, $postdata);
+$response = curl_exec($client);
+//print_r($response);
+$result = json_decode($response);
+//print_r($result);
 ?>
 	<!DOCTYPE html>
 	<html lang="en">
@@ -75,28 +57,29 @@ if (strlen($_SESSION['alogin']) == 0) {
 
 									<br />
 
-									<form class="form-horizontal row-fluid" name="Category" method="post" enctype="multipart/form-data">
+									<form class="form-horizontal row-fluid" name="Category" method="post" enctype="multipart/form-data" action="action/categoryUpdated_post.php">
 										<?php
-										$id = intval($_GET['id']);
-										$query = mysqli_query($con, "select * from category where id='$id'");
-										while ($row = mysqli_fetch_array($query)) {
-										?>
+										for($i=0; $i<sizeof($result->records);$i++)
+										{ //print_r($result->records[$i]);
+										?>	
+									
 											<div class="control-group">
 												<label class="control-label" for="basicinput">Category Name</label>
 												<div class="controls">
-													<input type="text" placeholder="Enter category Name" name="category" value="<?php echo  htmlentities($row['categoryName']); ?>" class="span8 tip" required>
+													<input type="text"  name="name" value="<?php echo $result->records[$i]->name;?>" class="span8 tip" required>
 												</div>
 											</div>
 
 
 											<div class="control-group">
-												<label class="control-label" for="basicinput">Category Image</label>
+												<label class="control-label" for="basicinput">Commision</label>
 												<div class="controls">
-													<input type="file" name="image" id="image">
-													<small>If you want to change image then upload, otherwise not.</small>
+													<input type="text"  name="commision" value="<?php echo $result->records[$i]->commision;?>" class="span8 tip" required>
+													<input type="hidden"  name="id" value="<?php echo $result->records[$i]->id;?>" class="span8 tip">
 												</div>
 											</div>
-										<?php } ?>
+                                         <?php 
+										}?>										
 
 										<div class="control-group">
 											<div class="controls">
@@ -135,4 +118,3 @@ if (strlen($_SESSION['alogin']) == 0) {
 			});
 		</script>
 	</body>
-<?php } ?>

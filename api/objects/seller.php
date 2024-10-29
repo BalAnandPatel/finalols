@@ -153,23 +153,20 @@ class Seller
     {
 
         // query to update record
-        $query = "UPDATE 
+       $query = "UPDATE 
          " . $this->sellar . "
      SET
         sellarName=:sellarName,
         counterName=:counterName,
         pan=:pan,
         aadhar=:aadhar,
-        image=:image,
-        phoneNo=:phonNo,
-        regFee=:regfee,
-        depositAmount=:depositAmount,
-        password=:password,
+        phoneNo=:phoneNo,
+        regFee=:regFee,
+        gst=:gst,
         email=:email,
-        status=:status,
         updatedOn=:updatedOn,
         updatedBy=:updatedBy
-        where sellar_id=:sellar_id";
+        where id=:id";
 
  
         // prepare query
@@ -181,12 +178,10 @@ class Seller
         $this->phoneNo = htmlspecialchars(strip_tags($this->phoneNo));
         $this->pan = htmlspecialchars(strip_tags($this->pan));
         $this->aadhar = htmlspecialchars(strip_tags($this->aadhar));
-        $this->image = htmlspecialchars(strip_tags($this->image));
         $this->regFee = htmlspecialchars(strip_tags($this->regFee));
-        $this->depositAmount = htmlspecialchars(strip_tags($this->depositAmount));
-        $this->password = htmlspecialchars(strip_tags($this->password));
-        $this->email = htmlspecialchars(strip_tags($this->email));
-        $this->status = htmlspecialchars(strip_tags($this->status));
+        $this->gst = htmlspecialchars(strip_tags($this->gst));
+        $this->id = htmlspecialchars(strip_tags($this->id));
+        $this->email = htmlspecialchars(strip_tags($this->email));    
         $this->updatedOn = htmlspecialchars(strip_tags($this->updatedOn));
         $this->updatedBy = htmlspecialchars(strip_tags($this->updatedBy));
 
@@ -194,15 +189,13 @@ class Seller
         //bind values with stmt
         $stmt->bindParam(":counterName", $this->counterName);
         $stmt->bindParam(":sellarName", $this->sellarName);
+        $stmt->bindParam(":id", $this->id);
         $stmt->bindParam(":phoneNo", $this->phoneNo);
         $stmt->bindParam(":pan", $this->pan);
         $stmt->bindParam(":aadhar", $this->aadhar);
-        $stmt->bindParam(":image", $this->image);
+        $stmt->bindParam(":gst", $this->gst);
         $stmt->bindParam(":regFee", $this->regFee);
-        $stmt->bindParam(":depositAmount", $this->depositAmount);
-        $stmt->bindParam(":password", $this->password);
-        $stmt->bindParam(":edmail", $this->email);
-        $stmt->bindParam(":status", $this->status);
+        $stmt->bindParam(":email", $this->email);
         $stmt->bindParam(":updatedBy", $this->updatedBy);
         $stmt->bindParam(":updatedOn", $this->updatedOn);
 

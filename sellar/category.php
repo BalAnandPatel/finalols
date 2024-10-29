@@ -1,47 +1,27 @@
 <?php
-include('include/config.php');
-if (strlen($_SESSION['alogin']) == 0) {
-	header('location:index.php');
-} else {
-	date_default_timezone_set('Asia/Kolkata'); // change according timezone
-	$currentTime = date('d-m-Y h:i:s A', time());
-
-
-	if (isset($_POST['submit'])) {
-		$category = $_POST['category'];
-		if (!empty($_POST['category'])) {
-			$path = "uploads/category/";
-			if (!is_dir($path)) {
-				mkdir($path, 0777, true);
-				// echo "directory created";
-			}
-			$filename = time() . ".png";
-			$target_file = $path . $filename;
-			if (move_uploaded_file($_FILES["image"]["tmp_name"], $target_file)) {
-				$sql = mysqli_query($con, "insert into category(categoryName,categoryImage) values('$category','$filename')");
-			} else {
-				exit();
-			}
-		} else {
-			$_SESSION['delmsg'] = "Failed to upload image !!";
-		}
-		$_SESSION['msg'] = "Category Created !!";
-		header("Location: category.php");
-
-		exit();
-	}
-
-	if (isset($_GET['del'])) {
-		$sql = mysqli_query($con, "select categoryImage from category where `id`='" . $_GET['id'] . "'");
-		while ($row = mysqli_fetch_array($sql)) {
-			unlink('uploads/category/' . $row['categoryImage']);
-		}
-		mysqli_query($con, "delete from category where id = '" . $_GET['id'] . "'");
-		$_SESSION['delmsg'] = "Category deleted !!";
-	}
-
+//session_start();
+// $jwt="123";
+// $request_headers = [
+//   'Authorization:' . $jwt
+// ];
+include "../constant.php";
+$url = $URL . "category/readCategory.php";
+//$url="http://localhost/onlinesabjimandiapi/api/src/category/readCategory.php";
+$data = array();
+// //print_r($data);
+$postdata = json_encode($data);
+$client = curl_init();
+curl_setopt( $client, CURLOPT_URL,$url);
+//curl_setopt( $client, CURLOPT_HTTPHEADER,  $request_headers);
+curl_setopt($client, CURLOPT_RETURNTRANSFER, 1);
+curl_setopt($client, CURLOPT_POST, 5);
+curl_setopt($client, CURLOPT_POSTFIELDS, $postdata);
+$response = curl_exec($client);
+//print_r($response);
+$result = json_decode($response);
+//print_r($result);
 ?>
-	<!DOCTYPE html>
+<!DOCTYPE html>
 	<html lang="en">
 
 	<head>
@@ -88,12 +68,25 @@ if (strlen($_SESSION['alogin']) == 0) {
 
 									<br />
 
-									<form class="form-horizontal row-fluid" name="Category" method="post" enctype="multipart/form-data">
+									<form class="form-horizontal row-fluid"  action="action/category_post.php" name="Category" method="post" enctype="multipart/form-data">
 
 										<div class="control-group">
 											<label class="control-label" for="basicinput">Category Name</label>
 											<div class="controls">
-												<input type="text" placeholder="Enter category Name" name="category" class="span8 tip" required>
+												<input type="text" placeholder="Enter category Name" name="name" class="span8 tip" required>
+											</div>
+										</div>
+										<div class="control-group">
+											<label class="control-label" for="basicinput">Categor Percentage</label>
+											<div class="controls">
+												<input type="text" placeholder="Category Percentage" name="commision" class="span8 tip" required>
+											</div>
+										</div>
+
+										<div class="control-group">
+											<label class="control-label" for="basicinput">Description</label>
+											<div class="controls">
+												<input type="text" placeholder="Category Percentage" name="description" class="span8 tip" required>
 											</div>
 										</div>
 
@@ -104,6 +97,7 @@ if (strlen($_SESSION['alogin']) == 0) {
 												<input type="file" class="span8" name="image">
 											</div>
 										</div>
+										
 
 										<div class="control-group">
 											<div class="controls">
@@ -125,6 +119,7 @@ if (strlen($_SESSION['alogin']) == 0) {
 											<tr>
 												<th>#</th>
 												<th>Category</th>
+												<th>Camission</th>
 												<th>Image</th>
 												<th>Creation date</th>
 												<th>Last Updated</th>
@@ -133,19 +128,28 @@ if (strlen($_SESSION['alogin']) == 0) {
 										</thead>
 										<tbody>
 
-											<?php $query = mysqli_query($con, "select * from category");
-											$cnt = 1;
-											while ($row = mysqli_fetch_array($query)) {
-											?>
+										<?php
+                // print_r($result);
+				$cnt=0;
+                // print_r($result['records']);
+                for($i=0; $i<sizeof($result->records);$i++)
+                { //print_r($result->records[$i]);
+                ?>	
 												<tr>
 													<td><?php echo htmlentities($cnt); ?></td>
-													<td><?php echo htmlentities($row['categoryName']); ?></td>
-													<td><img src="uploads/category/<?php echo htmlentities($row['categoryImage']); ?>" alt="<?php echo htmlentities($row['categoryName']); ?>"></td>
-													<td> <?php echo htmlentities($row['creationDate']); ?></td>
-													<td><?php echo htmlentities($row['updationDate']); ?></td>
+													<td><?php echo $result->records[$i]->name;?></td>
+													<td><?php echo $result->records[$i]->commision;?></td>
+													<td><img src="img/category/<?php echo $result->records[$i]->id ."/".$result->records[$i]->id.".png";?>"></td>
+													<td><?php echo $result->records[$i]->createdOn;?></td>
+													<td><?php echo $result->records[$i]->updatedOn;?></td>
 													<td>
-														<a href="edit-category.php?id=<?php echo $row['id'] ?>"><i class="icon-edit"></i></a>
-														<a href="category.php?id=<?php echo $row['id'] ?>&del=delete" onClick="return confirm('Are you sure you want to delete?')"><i class="icon-remove-sign"></i></a>
+														<a href="edit-category.php?id=<?php echo $result->records[$i]->id ?>"><i class="icon-edit"></i></a>
+														<form class="form-horizontal row-fluid"  action="action/categoryDelete_post.php" name="Category" method="post" enctype="multipart/form-data">
+															<input type="hidden" name="id" value="<?php echo $result->records[$i]->id ?>">
+															<button type="submit" class="icon-remove-sign"></button>
+														</form>
+														
+														<a href="category.php?id=<?php echo $result->records[$i]->id ?>&del=delete" onClick="return confirm('Are you sure you want to delete?')"><i class="icon-remove-sign"></i></a>
 													</td>
 												</tr>
 											<?php $cnt = $cnt + 1;
@@ -180,4 +184,3 @@ if (strlen($_SESSION['alogin']) == 0) {
 			});
 		</script>
 	</body>
-<?php } ?>

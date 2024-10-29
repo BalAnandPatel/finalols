@@ -70,6 +70,7 @@ if($num>0){
            "description"=>$description,
            "categoriesId"=>$categoriesId,
            "image"=>$image,
+           "colorAttribute"=>$colorAttribute,
            "discount"=>$discount,
            "sellarId"=>$sellarId
         );

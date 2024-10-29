@@ -67,7 +67,8 @@ if($num>0){
             
             "name"=>$name,
             "id"=>$id,
-            "commision"=>$commision
+            "commision"=>$commision,
+            "description"=>$description
             );
   
         array_push($read_category_arr["records"], $read_category_item);

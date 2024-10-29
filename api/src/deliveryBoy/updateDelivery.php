@@ -17,6 +17,7 @@ $update_delivery = new DeliveryBoy($db);
   
 // get posted data
 $data = json_decode(file_get_contents("php://input"));
+$update_delivery->id=$data->id;
  //print_r($data);
 // mavarke sure data is not empty
 if(1
@@ -26,10 +27,11 @@ if(1
 
 {
     $update_delivery->name=$data->name;
-    $update_delivery->emp_id=$data->emp_id;
-    $update_delivery->father=$data->father;
-    $update_delivery->mobile_no=$data->mobile_no;
+    $update_delivery->workingAddress=$data->workingAddress;
+    $update_delivery->workingPincode=$data->workingPincode;
     $update_delivery->email=$data->email;
+    $update_delivery->updatedOn=$data->updatedOn;
+    $update_delivery->updatedBy=$data->updatedBy;
 
     if($update_delivery->updateDelivery()){
   

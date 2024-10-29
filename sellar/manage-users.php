@@ -1,16 +1,25 @@
 <?php
-include('include/config.php');
-if (strlen($_SESSION['alogin']) == 0) {
-	header('location:index.php');
-} else {
-	date_default_timezone_set('Asia/Kolkata'); // change according timezone
-	$currentTime = date('d-m-Y h:i:s A', time());
-
-	if (isset($_GET['del'])) {
-		mysqli_query($con, "delete from products where id = '" . $_GET['id'] . "'");
-		$_SESSION['delmsg'] = "Product deleted !!";
-	}
-
+//session_start();
+// $jwt="123";
+// $request_headers = [
+//   'Authorization:' . $jwt
+// ];
+include "../constant.php";
+$url = $URL . "user/read_user.php";
+//$url="http://localhost/onlinesabjimandiapi/api/src/category/readCategory.php";
+$data = array();
+// //print_r($data);
+$postdata = json_encode($data);
+$client = curl_init();
+curl_setopt( $client, CURLOPT_URL,$url);
+//curl_setopt( $client, CURLOPT_HTTPHEADER,  $request_headers);
+curl_setopt($client, CURLOPT_RETURNTRANSFER, 1);
+curl_setopt($client, CURLOPT_POST, 5);
+curl_setopt($client, CURLOPT_POSTFIELDS, $postdata);
+$response = curl_exec($client);
+//print_r($response);
+$result = json_decode($response);
+//print_r($result);
 ?>
 	<!DOCTYPE html>
 	<html lang="en">
@@ -55,7 +64,7 @@ if (strlen($_SESSION['alogin']) == 0) {
 										<thead>
 											<tr>
 												<th>#</th>
-												<th> Name</th>
+												<th>Name</th>
 												<th>Email </th>
 												<th>Contact no</th>
 												<th>Shippping Address/City/State/Pincode </th>
@@ -66,19 +75,20 @@ if (strlen($_SESSION['alogin']) == 0) {
 										</thead>
 										<tbody>
 
-											<?php $query = mysqli_query($con, "select * from users");
-											$cnt = 1;
-											while ($row = mysqli_fetch_array($query)) {
-												$address_query = mysqli_query($con, "select * from address where `user_id` = '" . $row['id'] . "' ");
-												$address_row = mysqli_fetch_array($address_query);
-											?>
+										<?php
+                // print_r($result);
+				$cnt=0;
+                // print_r($result['records']);
+                for($i=0; $i<sizeof($result->records);$i++)
+                { //print_r($result->records[$i]);
+                ?>
 												<tr>
 													<td><?php echo htmlentities($cnt); ?></td>
-													<td><?php echo htmlentities($row['name']); ?></td>
-													<td><?php echo htmlentities($row['email']); ?></td>
-													<td> <?php echo htmlentities($row['contactno']); ?></td>
-													<td><?php echo htmlentities($address_row['shippingAddress'] . "," . $address_row['shippingCity'] . "," . $address_row['shippingState'] . "-" . $address_row['shippingPincode']); ?></td>
-													<td><?php echo htmlentities($row['regDate']); ?></td>
+													<td><?php echo $result->records[$i]->name;?></td>
+													<td><?php echo $result->records[$i]->phoneNo;?></td>
+													<td> <?php echo $result->records[$i]->password;?></td>
+													<td> <?php echo $result->records[$i]->password;?></td>
+													<td><?php echo $result->records[$i]->createdOn;?></td>
 
 												<?php $cnt = $cnt + 1;
 											} ?>
@@ -112,4 +122,3 @@ if (strlen($_SESSION['alogin']) == 0) {
 			});
 		</script>
 	</body>
-<?php } ?>

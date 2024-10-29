@@ -1,3 +1,6 @@
+<?php
+error_reporting(0);
+?>
 <div class="span3">
 	<div class="sidebar">
 
@@ -91,8 +94,8 @@
 			<li><a href="insert-product.php"><i class="menu-icon icon-paste"></i>Insert Product </a></li>
 			<li><a href="manage-products.php"><i class="menu-icon icon-table"></i>Manage Products </a></li>
 			<li><a href="insert-delivery.php"><i class="menu-icon icon-paste"></i>Insert Delivery </a></li>
-			<li><a href="manage-delivery.php"><i class="menu-icon icon-paste"></i>Manage Delivery</a></li>
-			<li><a href="insert-sellr.php"><i class="menu-icon icon-paste"></i>Insert Sellar</a></li>
+			<li><a href="manage-deliveryBoy.php"><i class="menu-icon icon-paste"></i>Manage Delivery</a></li>
+			<li><a href="insert-sellar.php"><i class="menu-icon icon-paste"></i>Insert Sellar</a></li>
 			<li><a href="manage-sellar.php"><i class="menu-icon icon-paste"></i>Manage Sellar</a></li>
 			
 

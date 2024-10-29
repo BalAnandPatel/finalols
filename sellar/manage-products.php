@@ -1,24 +1,27 @@
 <?php
-include('include/config.php');
-if (strlen($_SESSION['alogin']) == 0) {
-	header('location:index.php');
-} else {
-	date_default_timezone_set('Asia/Kolkata'); // change according timezone
-	$currentTime = date('d-m-Y h:i:s A', time());
-
-	if (isset($_GET['del'])) {
-		$query = mysqli_query($con, "select * from products where id = '" . $_GET['id'] . "'");
-		$fetch = mysqli_fetch_array($query);
-		unlink("productimages/".$_GET['id']."/".$fetch['productImage1']);
-		unlink("productimages/".$_GET['id']."/".$fetch['productImage2']);
-		unlink("productimages/".$_GET['id']."/".$fetch['productImage3']);
-		unlink("productimages/".$_GET['id']."/".$fetch['productImage4']);
-		unlink("productimages/".$_GET['id']);
-		mysqli_query($con, "delete from products where id = '" . $_GET['id'] . "'");
-		$_SESSION['delmsg'] = "Product deleted !!";
-	}
-
+//session_start();
+// $jwt="123";
+// $request_headers = [
+//   'Authorization:' . $jwt
+// ];
+include "../constant.php";
+$url = $URL . "product/readproductdetails.php";
+//$url="http://localhost/onlinesabjimandiapi/api/src/category/readCategory.php";
+$data = array();
+// //print_r($data);
+$postdata = json_encode($data);
+$client = curl_init();
+curl_setopt( $client, CURLOPT_URL,$url);
+//curl_setopt( $client, CURLOPT_HTTPHEADER,  $request_headers);
+curl_setopt($client, CURLOPT_RETURNTRANSFER, 1);
+curl_setopt($client, CURLOPT_POST, 5);
+curl_setopt($client, CURLOPT_POSTFIELDS, $postdata);
+$response = curl_exec($client);
+print_r($response);
+$result = json_decode($response);
+//print_r($result);
 ?>
+
 	<!DOCTYPE html>
 	<html lang="en">
 
@@ -66,28 +69,37 @@ if (strlen($_SESSION['alogin']) == 0) {
 												<th>Product Name</th>
 												<th>Category </th>
 												<th>Subcategory</th>
-												<th>Company Name</th>
+												<th>Quantity</th>
 												<th>Product Creation Date</th>
 												<th>Action</th>
 											</tr>
 										</thead>
 										<tbody>
 
-											<?php $query = mysqli_query($con, "select products.*,category.categoryName,skuId,subcategory.subcategory from products join category on category.id=products.category join subcategory on subcategory.id=products.subCategory");
-											$cnt = 1;
-											while ($row = mysqli_fetch_array($query)) {
-											?>
-												<tr>
+										<?php
+                // print_r($result);
+				$cnt=0;
+                // print_r($result['records']);
+                for($i=0; $i<sizeof($result->records);$i++)
+                { //print_r($result->records[$i]);
+                ?>												<tr>
 													<td><?php echo htmlentities($cnt); ?></td>
-													<td><?php echo htmlentities($row['skuId']); ?></td>
-													<td><?php echo htmlentities($row['productName']); ?></td>
-													<td><?php echo htmlentities($row['categoryName']); ?></td>
-													<td> <?php echo htmlentities($row['subcategory']); ?></td>
-													<td><?php echo htmlentities($row['productCompany']); ?></td>
-													<td><?php echo htmlentities($row['postingDate']); ?></td>
+													<td><?php echo $result->records[$i]->skuId;?></td>
+													<td><?php echo $result->records[$i]->name;?></td>
+													<td><?php echo $result->records[$i]->categoriesId;?></td>
+													<td> <?php echo $result->records[$i]->quantity;?></td>
+													<td><?php echo $result->records[$i]->price;?></td>
+													<td><?php echo $result->records[$i]->createdOn;?></td>
 													<td>
-														<a href="edit-products.php?id=<?php echo $row['id'] ?>"><i class="icon-edit"></i></a>
-														<a href="manage-products.php?id=<?php echo $row['id'] ?>&del=delete" onClick="return confirm('Are you sure you want to delete?')"><i class="icon-remove-sign"></i></a>
+													<form class="form-horizontal row-fluid"  action="action/productDelete_post.php" name="product" method="post" enctype="multipart/form-data">
+															<input type="hidden" name="id" value="<?php echo $result->records[$i]->id ?>">
+															<button type="submit" class="icon-remove-sign"></button>
+															
+														</form>
+														<form class="form-horizontal row-fluid"  action="edit-product.php" name="product" method="post" enctype="multipart/form-data">
+															<input type="hidden" name="id" value="<?php echo $result->records[$i]->id ?>">
+															<button type="submit" class="icon-edit"></button>
+														</form>
 													</td>
 												</tr>
 											<?php $cnt = $cnt + 1;
@@ -122,4 +134,3 @@ if (strlen($_SESSION['alogin']) == 0) {
 			});
 		</script>
 	</body>
-<?php } ?>

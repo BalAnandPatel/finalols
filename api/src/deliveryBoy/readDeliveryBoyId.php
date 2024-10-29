@@ -30,7 +30,7 @@ $read_deliveryBody = new DeliveryBoy($db);
   
 $data = json_decode(file_get_contents("php://input"));
 
-//$read_deliveryBody->id = $data->id;
+$read_deliveryBody->id = $data->id;
 $getHeaders = apache_request_headers();
 //print_r($getHeaders);
 $jwt = "123";

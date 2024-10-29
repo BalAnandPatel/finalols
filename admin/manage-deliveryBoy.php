@@ -66,6 +66,7 @@ $result = json_decode($response);
 											<tr>
 												<th>#</th>
 												<th>Name</th>
+												<th>Photo</th>
 												<th>Contact no</th>
 												<th>Working Pincode</th>
 												<th>Working Address</th>
@@ -86,14 +87,19 @@ $result = json_decode($response);
 	<tr>
 													<td><?php echo htmlentities($cnt); ?></td>
 													<td><?php echo $result->records[$i]->name;?></td>
+													<td><img src="img/delivery/<?php echo $result->records[$i]->pan ."/".$result->records[$i]->pan.".png";?>"></td>
 													<td><?php echo $result->records[$i]->phoneNo;?></td>
 													<td> <?php echo $result->records[$i]->workingPincode;?></td>
 													<td><?php echo $result->records[$i]->workingAddress;?></td>
 													<td><?php echo $result->records[$i]->createdOn;?></td>
-													<td><a href="edit-category.php?id=<?php echo $result->records[$i]->id ?>"><i class="icon-edit"></i></a>
+													<td>
 														<form class="form-horizontal row-fluid"  action="action/deliveryDelete_post.php" name="Category" method="post" enctype="multipart/form-data">
 															<input type="hidden" name="id" value="<?php echo $result->records[$i]->id ?>">
 															<button type="submit" class="icon-remove-sign"></button>
+														</form>
+														<form class="form-horizontal row-fluid"  action="edit-delivery.php" name="Category" method="post" enctype="multipart/form-data">
+															<input type="hidden" name="id" value="<?php echo $result->records[$i]->id ?>">
+															<button type="submit" class="icon-edit"></button>
 														</form>
 													</td>	
 

@@ -1,40 +1,21 @@
 <?php
-include('include/config.php');
-if (strlen($_SESSION['alogin']) == 0) {
-	header('location:index.php');
-} else {
-	date_default_timezone_set('Asia/Kolkata'); // change according timezone
-	$currentTime = date('d-m-Y h:i:s A', time());
-
-	if (isset($_POST['submit'])) {
-		$category = $_POST['category'];
-		$subcat = $_POST['subcategory'];
-		$id = intval($_GET['id']);
-
-		if (!empty($_FILES['image'])) {
-			$query = mysqli_query($con, "select * from subcategory where id='$id'");
-			$row = mysqli_fetch_array($query);
-			unlink('uploads/subcategory/' . $row['subcategoryImage']);
-			$path = "uploads/subcategory/";
-			if (!is_dir($path)) {
-				mkdir($path, 0777, true);
-				// echo "directory created";
-			}
-			$filename = time() . ".png";
-			$target_file = $path . $filename;
-			if (move_uploaded_file($_FILES["image"]["tmp_name"], $target_file)) {
-				$sql = mysqli_query($con, "update subcategory set categoryid='$category',subcategory='$subcat',subcategoryImage='$filename',updationDate='$currentTime' where id='$id'");
-				$_SESSION['msg'] = "Sub-Category Updated !!";
-			} else {
-				exit();
-			}
-			// exit();
-		} else {
-			$sql = mysqli_query($con, "update subcategory set subcategory='$subcat',updationDate='$currentTime' where id='$id'");
-			// exit();
-		}
-	}
-
+include "../constant.php";
+echo $id=trim(strtoupper($_GET["id"]));
+$url = $URL . "subcotegory/readsubcatogory.php";
+//$url="http://localhost/onlinesabjimandiapi/api/src/category/readCategory.php";
+$data = array("id" => $id);
+//print_r($data);
+$postdata = json_encode($data);
+$client = curl_init();
+curl_setopt( $client, CURLOPT_URL,$url);
+//curl_setopt( $client, CURLOPT_HTTPHEADER,  $request_headers);
+curl_setopt($client, CURLOPT_RETURNTRANSFER, 1);
+curl_setopt($client, CURLOPT_POST, 5);
+curl_setopt($client, CURLOPT_POSTFIELDS, $postdata);
+$response = curl_exec($client);
+//print_r($response);
+$resultsub = json_decode($response);
+//print_r($resultsub);
 ?>
 	<!DOCTYPE html>
 	<html lang="en">
@@ -48,6 +29,42 @@ if (strlen($_SESSION['alogin']) == 0) {
 		<link type="text/css" href="css/theme.css" rel="stylesheet">
 		<link type="text/css" href="images/icons/css/font-awesome.css" rel="stylesheet">
 		<link type="text/css" href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,600italic,400,600' rel='stylesheet'>
+		<script>
+			function getSubcat(val) {
+				//alert(val);
+				var dataPost = {
+					"cat_id": val};var dataString = JSON.stringify(dataPost);
+				$.ajax({
+					type: "POST",
+					url: "../api/src/subcotegory/readsubcatogory.php",
+					data: {
+                          cat_id: dataString
+					},
+					success: function(data) 
+					{
+					
+						 $('#subcategories').html('');
+						$('#subcategories').append('<option>' +"Sub Categories" + '</option>');
+						 $.each(data.records, function (i, value) {
+						  
+                $('#subcategories').append('<option id=' + (value.categoryid) + '>' + (value.subcategoryName) + '</option>');
+            });
+					},
+					error: function(data)
+					{
+					       $('#subcategories').html('');
+					     $('#subcategories').append('<option>' + "No records found !!" + '</option>');
+					
+		
+					}
+				});
+			}
+
+			function selectCountry(val) {
+				$("#search-box").val(val);
+				$("#suggesstion-box").hide();
+			}
+		</script>
 	</head>
 
 	<body>
@@ -76,46 +93,55 @@ if (strlen($_SESSION['alogin']) == 0) {
 
 									<br />
 
-									<form class="form-horizontal row-fluid" name="Category" method="post" enctype="multipart/form-data">
-										<?php
-										$id = intval($_GET['id']);
-										$query = mysqli_query($con, "select category.id,category.categoryName,subcategory.subcategory from subcategory join category on category.id=subcategory.categoryid where subcategory.id='$id'");
-										while ($row = mysqli_fetch_array($query)) {
-										?>
+									<form class="form-horizontal row-fluid" name="Category" method="post" action="action/updatesubcategory_post.php" enctype="multipart/form-data">
+										
 
-											<div class="control-group">
+<div class="control-group">
 												<label class="control-label" for="basicinput">Category</label>
 												<div class="controls">
-													<select name="category" class="span8 tip" required>
-														<option value="<?php echo htmlentities($row['id']); ?>"><?php echo htmlentities($catname = $row['categoryName']); ?></option>
-														<?php $ret = mysqli_query($con, "select * from category");
-														while ($result = mysqli_fetch_array($ret)) {
-															echo $cat = $result['categoryName'];
-															if ($catname == $cat) {
-																continue;
-															} else {
-														?>
-																<option value="<?php echo $result['id']; ?>"><?php echo $result['categoryName']; ?></option>
-														<?php }
-														} ?>
-													</select>
+												<select name="parentId" class="span8 tip" onChange="getSubcat(this.value);" >
+													<option value="">Select Category</option>
+													<?php
+                // print_r($result);
+                // print_r($result['records']);
+                for($i=0; $i<sizeof($resultsub->records);$i++)
+                { //print_r($result->records[$i]);
+                ?>
+				
+													
+														<option value="<?php echo $resultsub->records[$i]->id;?>"> <?php echo $resultsub->records[$i]->parentId;?></option>
+														
+													<?php } ?>
+												</select>
 												</div>
 											</div>
-
+											<?php
+										for($i=0; $i<sizeof($resultsub->records);$i++)
+										{ //print_r($result->records[$i]);
+										?>
 											<div class="control-group">
 												<label class="control-label" for="basicinput">SubCategory Name</label>
 												<div class="controls">
-													<input type="text" placeholder="Enter category Name" name="subcategory" value="<?php echo  htmlentities($row['subcategory']); ?>" class="span8 tip" required>
+													<input type="text" name="name" value="<?php echo $resultsub->records[$i]->name;?>" class="span8 tip" required>
 												</div>
 											</div>
 											<div class="control-group">
 												<label class="control-label" for="basicinput">SubCategory Image</label>
 												<div class="controls">
+													
+												<img src="img/subcategory/<?php echo $resultsub->records[$i]->id ."/".$resultsub->records[$i]->id.".png";?>" width="100px" height="100px">
+													<p><small>Existing Image</small></p>
+												</div>
+											</div>
+											<div class="control-group">
+												<label class="control-label" for="basicinput">SubCategory Image</label>
+												<div class="controls">
+
 													<input type="file" placeholder="Select category image" name="image" value="<?php echo  htmlentities($row['subcategory']); ?>" class="span8 tip" required>
 													<p><small>Upload if you want to change image</small></p>
 												</div>
 											</div>
-
+											<input type="hidden" name="id" value="<?php echo $resultsub->records[$i]->id;?>" class="span8 tip">
 
 										<?php } ?>
 
@@ -156,4 +182,3 @@ if (strlen($_SESSION['alogin']) == 0) {
 			});
 		</script>
 	</body>
-<?php } ?>

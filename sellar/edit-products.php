@@ -1,40 +1,66 @@
 <?php
-include ('include/config.php');
-if (!isset($_SESSION['alogin'])) {
-	header('location:index.php');
-} else {
-	$pid = intval($_GET['id']); // product id
-	if (isset($_POST['submit'])) {
-		$skuId = $_POST['skuId'];
-		$category = $_POST['category'];
-		$subcat = $_POST['subcategory'];
-		$productname = $_POST['productName'];
-		$productcompany = $_POST['productCompany'];
-		$productprice = $_POST['productprice'];
-		$productpricebd = $_POST['productpricebd'];
-		if (isset($_POST['size'])) {
-			$size = $_POST['size'];
-		} else {
-			$size = array();
-			;
-		}
-		if (isset($_POST['color'])) {
-			$color = $_POST['color'];
-		} else {
-			$color = array();
-		}
-		$productHighlight = $_POST['productHighlight'];
-		$additionalInfo = $_POST['additionalInfo'];
-		$productrefundandExchange = $_POST['productrefundandExchange'];
-		$productdescription = $_POST['productDescription'];
-		$productscharge = $_POST['productShippingcharge'];
-		$productavailability = $_POST['productAvailability'];
-		$productimage1 = $_FILES["productimage1"]["name"];
-		$productimage2 = $_FILES["productimage2"]["name"];
-		$productimage3 = $_FILES["productimage3"]["name"];
-		$sql = mysqli_query($con, "update  products set  skuId='$skuId',category='$category',subCategory='$subcat',productName='$productname',productCompany='$productcompany',productPrice='$productprice', productHighlight='$productHighlight', additionalInfo='$additionalInfo', productrefundandExchange='$productrefundandExchange', productDescription='$productdescription',shippingCharge='$productscharge',productAvailability='$productavailability',productPriceBeforeDiscount='$productpricebd', size = '" . implode(', ', array_values($size)) . "', color = '" . implode(', ', array_values($color)) . "' where id='$pid' ");
-		$_SESSION['msg'] = "Product Updated Successfully !!";
-	}
+//session_start();
+// $jwt="123";
+// $request_headers = [
+//   'Authorization:' . $jwt
+// ];
+include "../constant.php";
+$skuId=trim(strtoupper($_GET["skuId"]));
+$url = $URL . "product/readproductById.php";
+//$url="http://localhost/onlinesabjimandiapi/api/src/category/readCategory.php";
+$data = array("skuId" => $skuId);
+// //print_r($data);
+$postdata = json_encode($data);
+$client = curl_init();
+curl_setopt( $client, CURLOPT_URL,$url);
+//curl_setopt( $client, CURLOPT_HTTPHEADER,  $request_headers);
+curl_setopt($client, CURLOPT_RETURNTRANSFER, 1);
+curl_setopt($client, CURLOPT_POST, 5);
+curl_setopt($client, CURLOPT_POSTFIELDS, $postdata);
+$response = curl_exec($client);
+//print_r($response);
+$result = json_decode($response);
+//print_r($result);
+?>
+
+
+<?php
+// include ('include/config.php');
+// if (!isset($_SESSION['alogin'])) {
+// 	header('location:index.php');
+// } else {
+// 	$pid = intval($_GET['id']); // product id
+// 	if (isset($_POST['submit'])) {
+// 		$skuId = $_POST['skuId'];
+// 		$category = $_POST['category'];
+// 		$subcat = $_POST['subcategory'];
+// 		$productname = $_POST['productName'];
+// 		$productcompany = $_POST['productCompany'];
+// 		$productprice = $_POST['productprice'];
+// 		$productpricebd = $_POST['productpricebd'];
+// 		if (isset($_POST['size'])) {
+// 			$size = $_POST['size'];
+// 		} else {
+// 			$size = array();
+// 			;
+// 		}
+// 		if (isset($_POST['color'])) {
+// 			$color = $_POST['color'];
+// 		} else {
+// 			$color = array();
+// 		}
+// 		$productHighlight = $_POST['productHighlight'];
+// 		$additionalInfo = $_POST['additionalInfo'];
+// 		$productrefundandExchange = $_POST['productrefundandExchange'];
+// 		$productdescription = $_POST['productDescription'];
+// 		$productscharge = $_POST['productShippingcharge'];
+// 		$productavailability = $_POST['productAvailability'];
+// 		$productimage1 = $_FILES["productimage1"]["name"];
+// 		$productimage2 = $_FILES["productimage2"]["name"];
+// 		$productimage3 = $_FILES["productimage3"]["name"];
+// 		$sql = mysqli_query($con, "update  products set  skuId='$skuId',category='$category',subCategory='$subcat',productName='$productname',productCompany='$productcompany',productPrice='$productprice', productHighlight='$productHighlight', additionalInfo='$additionalInfo', productrefundandExchange='$productrefundandExchange', productDescription='$productdescription',shippingCharge='$productscharge',productAvailability='$productavailability',productPriceBeforeDiscount='$productpricebd', size = '" . implode(', ', array_values($size)) . "', color = '" . implode(', ', array_values($color)) . "' where id='$pid' ");
+// 		$_SESSION['msg'] = "Product Updated Successfully !!";
+	//}
 
 
 	?>
@@ -56,14 +82,33 @@ if (!isset($_SESSION['alogin'])) {
 			bkLib.onDomLoaded(nicEditors.allTextAreas);
 		</script>
 
-		<script>
+<script>
 			function getSubcat(val) {
+				//alert(val);
+				var dataPost = {
+					"cat_id": val};var dataString = JSON.stringify(dataPost);
 				$.ajax({
 					type: "POST",
-					url: "get_subcat.php",
-					data: 'cat_id=' + val,
-					success: function (data) {
-						$("#subcategory").html(data);
+					url: "../api/src/subcotegory/readsubcatogory.php",
+					data: {
+                          cat_id: dataString
+					},
+					success: function(data) 
+					{
+					
+						 $('#subcategories').html('');
+						$('#subcategories').append('<option>' +"Sub Categories" + '</option>');
+						 $.each(data.records, function (i, value) {
+						  
+                $('#subcategories').append('<option id=' + (value.categoryid) + '>' + (value.subcategoryName) + '</option>');
+            });
+					},
+					error: function(data)
+					{
+					       $('#subcategories').html('');
+					     $('#subcategories').append('<option>' + "No records found !!" + '</option>');
+					
+		
 					}
 				});
 			}
@@ -115,48 +160,42 @@ if (!isset($_SESSION['alogin'])) {
 									<br />
 
 									<form class="form-horizontal row-fluid" name="insertproduct" method="post"
-										enctype="multipart/form-data">
+										enctype=	"multipart/form-data">
 
 										<?php
-
-										$query = mysqli_query($con, "select products.*,category.categoryName as catname,category.id as cid,subcategory.subcategory as subcatname,subcategory.id as subcatid from products join category on category.id=products.category join subcategory on subcategory.id=products.subCategory where products.id='$pid'");
-										$cnt = 1;
-										while ($row = mysqli_fetch_array($query)) {
-
-
-
-											?>
+                // print_r($result);
+				$cnt=0;
+                // print_r($result['records']);
+                for($i=0; $i<sizeof($result->records);$i++)
+                { //print_r($result->records[$i]);
+                ?>
 
 
 											<div class="control-group">
 												<label class="control-label" for="basicinput">Category</label>
 												<div class="controls">
-													<select name="category" class="span8 tip" onChange="getSubcat(this.value);"
-														required>
-														<option value="<?php echo htmlentities($row['cid']); ?>">
-															<?php echo htmlentities($row['catname']); ?>
-														</option>
-														<?php $query = mysqli_query($con, "select * from category");
-														while ($rw = mysqli_fetch_array($query)) {
-															if ($row['catname'] == $rw['categoryName']) {
-																continue;
-															} else {
-																?>
-
-																<option value="<?php echo $rw['id']; ?>">
-																	<?php echo $rw['categoryName']; ?>
-																</option>
-															<?php }
-														} ?>
-													</select>
+												<select name="categoriesId" class="span8 tip" onChange="getSubcat(this.value);" >
+													<option value="">Select Category</option>
+													<?php
+                // print_r($result);
+                // print_r($result['records']);
+                // for($i=0; $i<sizeof($result->records);$i++)
+                // { print_r($result->records[$i]);
+                // ?>
+				
+													
+														<option value="<?php echo $result->records[$i]->categoriesId;?>"> <?php echo $result->records[$i]->categoriesId;?></option>
+														
+													
+												</select>
 												</div>
 											</div>
 
 											<div class="control-group">
 												<label class="control-label" for="basicinput">Product SKU-ID</label>
 												<div class="controls">
-													<input type="text" name="skuId" placeholder="Enter Product Comapny Name"
-														value="<?php echo htmlentities($row['skuId']); ?>" class="span8 tip"
+													<input type="text" name="skuId" 
+														value="<?php echo $result->records[$i]->skuId;?>" class="span8 tip"
 														required>
 												</div>
 											</div>
@@ -166,8 +205,8 @@ if (!isset($_SESSION['alogin'])) {
 												<div class="controls">
 
 													<select name="subcategory" id="subcategory" class="span8 tip" required>
-														<option value="<?php echo htmlentities($row['subcatid']); ?>">
-															<?php echo htmlentities($row['subcatname']); ?>
+														<option value="<?php echo $result->records[$i]->categoriesId;?>">
+														<?php echo $result->records[$i]->skuId;?>
 														</option>
 													</select>
 												</div>
@@ -178,26 +217,18 @@ if (!isset($_SESSION['alogin'])) {
 												<label class="control-label" for="basicinput">Product Name</label>
 												<div class="controls">
 													<input type="text" name="productName" placeholder="Enter Product Name"
-														value="<?php echo htmlentities($row['productName']); ?>"
+														value="<?php echo $result->records[$i]->name;?>"
 														class="span8 tip">
 												</div>
 											</div>
 
-											<div class="control-group">
-												<label class="control-label" for="basicinput">Product Company</label>
-												<div class="controls">
-													<input type="text" name="productCompany"
-														placeholder="Enter Product Comapny Name"
-														value="<?php echo htmlentities($row['productCompany']); ?>"
-														class="span8 tip" required>
-												</div>
-											</div>
+											
 											<div class="control-group">
 												<label class="control-label" for="basicinput">Product Price Before
 													Discount</label>
 												<div class="controls">
 													<input type="text" name="productpricebd" placeholder="Enter Product Price"
-														value="<?php echo htmlentities($row['productPriceBeforeDiscount']); ?>"
+														value="<?php echo $result->records[$i]->price;?>"
 														class="span8 tip" required>
 												</div>
 											</div>
@@ -206,7 +237,7 @@ if (!isset($_SESSION['alogin'])) {
 												<label class="control-label" for="basicinput">Product Price</label>
 												<div class="controls">
 													<input type="text" name="productprice" placeholder="Enter Product Price"
-														value="<?php echo htmlentities($row['productPrice']); ?>"
+														value="<?php echo $result->records[$i]->price - $result->records[$i]->discount;?>"
 														class="span8 tip" required>
 												</div>
 											</div>
@@ -302,45 +333,19 @@ if (!isset($_SESSION['alogin'])) {
 												<div class="controls">
 													<textarea name="productDescription" placeholder="Enter Product Description"
 														rows="6"
-														class="span8 tip"><?php echo htmlentities($row['productDescription']); ?></textarea>
+														class="span8 tip"><?php echo $result->records[$i]->description;?>
+													</textarea>
 												</div>
 											</div>
 
-											<div class="control-group">
-												<label class="control-label" for="basicinput">Product Highlights</label>
-												<div class="controls">
-													<textarea name="productHighlight" placeholder="Enter Product Description"
-														rows="6"
-														class="span8 tip"><?php echo htmlentities($row['productHighlight']); ?></textarea>
-												</div>
-
-											</div>
-
-											<div class="control-group">
-												<label class="control-label" for="basicinput">Product Additional Info</label>
-												<div class="controls">
-													<textarea name="additionalInfo" placeholder="Enter Product Description"
-														rows="6"
-														class="span8 tip"><?php echo htmlentities($row['additionalInfo']); ?></textarea>
-												</div>
-
-											</div>
-											<div class="control-group">
-												<label class="control-label" for="basicinput">Refund and Exchange</label>
-												<div class="controls">
-													<textarea name="productrefundandExchange"
-														placeholder="Enter Product Description" rows="6"
-														class="span8 tip"><?php echo htmlentities($row['productrefundandExchange']); ?></textarea>
-												</div>
-
-											</div>
-
+											
+											
 											<div class="control-group">
 												<label class="control-label" for="basicinput">Product Shipping Charge</label>
 												<div class="controls">
 													<input type="text" name="productShippingcharge"
 														placeholder="Enter Product Shipping Charge"
-														value="<?php echo htmlentities($row['shippingCharge']); ?>"
+														value="<?php echo $result->records[$i]->shippingCharge;?>"
 														class="span8 tip" required>
 												</div>
 											</div>
@@ -485,4 +490,3 @@ if (!isset($_SESSION['alogin'])) {
 			});
 		</script>
 	</body>
-<?php } ?>
