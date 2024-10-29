@@ -3,7 +3,7 @@ include "../constant.php";
 $url = $URL . "category/readCategory.php";
 //$url="http://localhost/onlinesabjimandiapi/api/src/category/readCategory.php";
 $data = array();
-// //print_r($data);
+//print_r($data);
 $postdata = json_encode($data);
 $client = curl_init();
 curl_setopt( $client, CURLOPT_URL,$url);
@@ -210,10 +210,14 @@ $resultsub = json_decode($response);
 												<td><?php echo $resultsub->records[$i]->createdOn;?></td>
 												<td><?php echo $resultsub->records[$i]->updatedOn;?></td>
 													<td>
-														<a href="edit-subcategory.php?id=<?php echo $resultsub->records[$i]->id; ?>"><i class="icon-edit"></i></a>
 														<form class="form-horizontal row-fluid"  action="action/subcategoryDelete_post.php" name="Category" method="post" enctype="multipart/form-data">
 															<input type="hidden" name="id" value="<?php echo $resultsub->records[$i]->id ?>">
+															
 															<button type="submit" class="icon-remove-sign"></button>
+														</form>
+														<form class="form-horizontal row-fluid"  action="edit-subcategory.php" name="Category" method="post" enctype="multipart/form-data">
+															<input type="hidden" name="id" value="<?php echo $resultsub->records[$i]->id ?>">
+															<button type="submit" class="icon-edit"></button>
 														</form>
 													</td>
 												</tr>

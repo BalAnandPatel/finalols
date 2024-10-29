@@ -143,13 +143,17 @@ $result = json_decode($response);
 													<td><?php echo $result->records[$i]->createdOn;?></td>
 													<td><?php echo $result->records[$i]->updatedOn;?></td>
 													<td>
-														<a href="edit-category.php?id=<?php echo $result->records[$i]->id ?>"><i class="icon-edit"></i></a>
+														
 														<form class="form-horizontal row-fluid"  action="action/categoryDelete_post.php" name="Category" method="post" enctype="multipart/form-data">
 															<input type="hidden" name="id" value="<?php echo $result->records[$i]->id ?>">
 															<button type="submit" class="icon-remove-sign"></button>
 														</form>
+														<form class="form-horizontal row-fluid"  action="edit-category.php" name="Category" method="post" enctype="multipart/form-data">
+															<input type="hidden" name="id" value="<?php echo $result->records[$i]->id ?>">
+															<button type="submit" class="icon-edit"></button>
+														</form>
 														
-														<a href="category.php?id=<?php echo $result->records[$i]->id ?>&del=delete" onClick="return confirm('Are you sure you want to delete?')"><i class="icon-remove-sign"></i></a>
+														
 													</td>
 												</tr>
 											<?php $cnt = $cnt + 1;

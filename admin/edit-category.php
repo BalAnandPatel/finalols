@@ -1,6 +1,6 @@
 <?php
 include "../constant.php";
-$id=trim(strtoupper($_GET["id"]));
+$id=($_POST["id"]);
 $url = $URL . "category/readCategorybyId.php";
 //$url="http://localhost/onlinesabjimandiapi/api/src/category/readCategory.php";
 $data = array("id" => $id);
@@ -76,8 +76,28 @@ $result = json_decode($response);
 												<div class="controls">
 													<input type="text"  name="commision" value="<?php echo $result->records[$i]->commision;?>" class="span8 tip" required>
 													<input type="hidden"  name="id" value="<?php echo $result->records[$i]->id;?>" class="span8 tip">
+													
 												</div>
 											</div>
+											<div class="control-group">
+												<label class="control-label" for="basicinput">Description</label>
+												<div class="controls">
+													<input type="text"  name="description" value="<?php echo $result->records[$i]->description;?>" class="span8 tip" required>
+													
+												</div>
+											</div>
+											<div class="control-group">
+												<label class="control-label" for="basicinput">Existing Image</label>
+												<div class="controls">
+												<img src="img/category/<?php echo $result->records[$i]->id ."/".$result->records[$i]->id.".png";?>" width="150px" height="150px">
+												</div>
+
+										<div class="control-group">
+											<label class="control-label" for="basicinput">Image</label>
+											<div class="controls">
+												<input type="file" class="span8" name="image">
+											</div>
+										</div>
                                          <?php 
 										}?>										
 

@@ -66,6 +66,7 @@ $result = json_decode($response);
 											<tr>
 												<th>#</th>
 												<th>Name</th>
+												<th>Photo</th>
 												<th>Contact no</th>
 												<th>Working Pincode</th>
 												<th>Working Address</th>
@@ -86,6 +87,7 @@ $result = json_decode($response);
 	<tr>
 													<td><?php echo htmlentities($cnt); ?></td>
 													<td><?php echo $result->records[$i]->name;?></td>
+													<td><img src="img/delivery/<?php echo $result->records[$i]->pan ."/".$result->records[$i]->pan.".png";?>"></td>
 													<td><?php echo $result->records[$i]->phoneNo;?></td>
 													<td> <?php echo $result->records[$i]->workingPincode;?></td>
 													<td><?php echo $result->records[$i]->workingAddress;?></td>
