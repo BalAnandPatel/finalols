@@ -22,11 +22,11 @@ $result = (json_decode($response));
 if($result->message="Deleted"){
     
   
-  //header('Location:../manage-sellar.php');
+  header('Location:../manage-sellar.php');
  } else
  {
   //echo "Bad";
-  //header('Location:../manage-sellar?msg='.$result->message);
+  header('Location:../manage-sellar?msg='.$result->message);
  }
 
 

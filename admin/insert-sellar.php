@@ -117,24 +117,8 @@
 												<input type="text" name="pan" placeholder="pan Card" class="span8 tip" required>
 											</div>
 										</div>
-										<div class="control-group">
-											<label class="control-label" for="basicinput">Adress</label>
-											<div class="controls">
-												<input type="text" name="address" placeholder="Address" class="span8 tip" required>
-											</div>
-										</div>
-										<div class="control-group">
-											<label class="control-label" for="basicinput">Pin</label>
-											<div class="controls">
-												<input type="text" name="pin" placeholder="Pin" class="span8 tip" required>
-											</div>
-										</div>
-										<div class="control-group">
-											<label class="control-label" for="basicinput">City</label>
-											<div class="controls">
-												<input type="text" name="city" placeholder="City" class="span8 tip" required>
-											</div>
-										</div>
+										
+										
 										<div class="control-group">
 											<label class="control-label" for="basicinput">Owner Image</label>
 											<div class="controls">
