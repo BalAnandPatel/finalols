@@ -1,7 +1,7 @@
 <?php
 include "../constant.php";
 $id=$_POST["id"];
-$url = $URL . "deliveryBoy/read_sellarById.php";
+$url = $URL . "deliveryBoy/readDeliveryBoyId.php";
 //$url="http://localhost/onlinesabjimandiapi/api/src/category/readCategory.php";
 $data = array("id" => $id);
 print_r($data);
@@ -43,7 +43,7 @@ $result = json_decode($response);
 
 							<div class="module">
 								<div class="module-head">
-									<h3>Category</h3>
+									<h3>Edit Delivery Boy</h3>
 								</div>
 								<div class="module-body">
 
@@ -57,7 +57,7 @@ $result = json_decode($response);
 
 									<br />
 
-									<form class="form-horizontal row-fluid" name="Category" method="post" enctype="multipart/form-data" action="action/categoryUpdated_post.php">
+									<form class="form-horizontal row-fluid" name="Category" method="post" enctype="multipart/form-data" action="action/updatedDeliveryPost.php">
 										<?php
 										for($i=0; $i<sizeof($result->records);$i++)
 										{ //print_r($result->records[$i]);

@@ -39,36 +39,36 @@ $result_registration=url_encode_Decode($url,$postdata);
 
 //get max id from delivery Table
 
-$urlmax = $URL . "deliveryBoy/readDeliveryMaxId.php";
-$maxiddata = array();
-$postdatamaxid = json_encode($maxiddata);
-//print_r($postdata);
-$clientmaxid = curl_init($urlmax);
-curl_setopt($clientmaxid, CURLOPT_POSTFIELDS, $postdatamaxid);
-curl_setopt($clientmaxid, CURLOPT_CONNECTTIMEOUT, 0); 
-curl_setopt($clientmaxid, CURLOPT_TIMEOUT, 4); //timeout in seconds
-curl_setopt($clientmaxid,CURLOPT_RETURNTRANSFER,true);
-$responsemaxid = curl_exec($clientmaxid);
-curl_close($clientmaxid);
-$result_maxid = (json_decode($responsemaxid));
-$maxid=$result_maxid->records[0]->id;
+// $urlmax = $URL . "deliveryBoy/readDeliveryMaxId.php";
+// $maxiddata = array();
+// $postdatamaxid = json_encode($maxiddata);
+// //print_r($postdata);
+// $clientmaxid = curl_init($urlmax);
+// curl_setopt($clientmaxid, CURLOPT_POSTFIELDS, $postdatamaxid);
+// curl_setopt($clientmaxid, CURLOPT_CONNECTTIMEOUT, 0); 
+// curl_setopt($clientmaxid, CURLOPT_TIMEOUT, 4); //timeout in seconds
+// curl_setopt($clientmaxid,CURLOPT_RETURNTRANSFER,true);
+// $responsemaxid = curl_exec($clientmaxid);
+// curl_close($clientmaxid);
+// $result_maxid = (json_decode($responsemaxid));
+// $maxid=$result_maxid->records[0]->id;
 
  // insert delivery id in delivery bank details
 
-$urlmaxin = $URL . "deliveryBoy/insertDeliverybank.php";
-$maxiddatain = array("id"=>$maxid,"createdOn"=>$createdOn,
-  "createdBy"=>$createdBy);
-$postdatamaxidin = json_encode($maxiddatain);
-//print_r($postdatamaxidin);
-$clientmaxidin = curl_init($urlmaxin);
-curl_setopt($clientmaxidin, CURLOPT_POSTFIELDS, $postdatamaxidin);
-curl_setopt($clientmaxidin, CURLOPT_CONNECTTIMEOUT, 0); 
-curl_setopt($clientmaxidin, CURLOPT_TIMEOUT, 4); //timeout in seconds
-curl_setopt($clientmaxidin,CURLOPT_RETURNTRANSFER,true);
-$responsemaxidin = curl_exec($clientmaxidin);
-//print_r($responsemaxidin);
-curl_close($clientmaxid);
-$resultmaxidin = (json_decode($responsemaxidin));
+// $urlmaxin = $URL . "deliveryBoy/insertDeliverybank.php";
+// $maxiddatain = array("id"=>$maxid,"createdOn"=>$createdOn,
+//   "createdBy"=>$createdBy);
+// $postdatamaxidin = json_encode($maxiddatain);
+// //print_r($postdatamaxidin);
+// $clientmaxidin = curl_init($urlmaxin);
+// curl_setopt($clientmaxidin, CURLOPT_POSTFIELDS, $postdatamaxidin);
+// curl_setopt($clientmaxidin, CURLOPT_CONNECTTIMEOUT, 0); 
+// curl_setopt($clientmaxidin, CURLOPT_TIMEOUT, 4); //timeout in seconds
+// curl_setopt($clientmaxidin,CURLOPT_RETURNTRANSFER,true);
+// $responsemaxidin = curl_exec($clientmaxidin);
+// //print_r($responsemaxidin);
+// curl_close($clientmaxid);
+// $resultmaxidin = (json_decode($responsemaxidin));
 //echo $maxid=$result_maxid->records[0]->id;
 
 
@@ -76,20 +76,20 @@ $resultmaxidin = (json_decode($responsemaxidin));
 
 // insert delivery id in delivery income
 
-$urlincome = $URL . "deliveryBoy/insertDeliveryIncome.php";
-$dataincome = array("id"=>$maxid,"createdOn"=>$createdOn,
-  "createdBy"=>$createdBy);
-$postdataincome = json_encode($dataincome);
-print_r($postdataincome);
-$clientincome = curl_init($urlincome);
-curl_setopt($clientincome, CURLOPT_POSTFIELDS, $postdataincome);
-curl_setopt($clientincome, CURLOPT_CONNECTTIMEOUT, 0); 
-curl_setopt($clientincome, CURLOPT_TIMEOUT, 4); //timeout in seconds
-curl_setopt($clientincome,CURLOPT_RETURNTRANSFER,true);
-$responseincome = curl_exec($clientincome);
-print_r($responsemaxidin);
-curl_close($clientincome);
-$resulincome = (json_decode($responsemaxidin));
+// $urlincome = $URL . "deliveryBoy/insertDeliveryIncome.php";
+// $dataincome = array("id"=>$maxid,"createdOn"=>$createdOn,
+//   "createdBy"=>$createdBy);
+// $postdataincome = json_encode($dataincome);
+// print_r($postdataincome);
+// $clientincome = curl_init($urlincome);
+// curl_setopt($clientincome, CURLOPT_POSTFIELDS, $postdataincome);
+// curl_setopt($clientincome, CURLOPT_CONNECTTIMEOUT, 0); 
+// curl_setopt($clientincome, CURLOPT_TIMEOUT, 4); //timeout in seconds
+// curl_setopt($clientincome,CURLOPT_RETURNTRANSFER,true);
+// $responseincome = curl_exec($clientincome);
+// print_r($responsemaxidin);
+// curl_close($clientincome);
+// $resulincome = (json_decode($responsemaxidin));
 //echo $maxid=$result_maxid->records[0]->id;
 
 if($result_registration->message="Successfull"){

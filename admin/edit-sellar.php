@@ -43,7 +43,7 @@ $result = json_decode($response);
 
 							<div class="module">
 								<div class="module-head">
-									<h3>Category</h3>
+									<h3>Edit Sellar</h3>
 								</div>
 								<div class="module-body">
 
@@ -57,7 +57,7 @@ $result = json_decode($response);
 
 									<br />
 
-									<form class="form-horizontal row-fluid" name="Category" method="post" enctype="multipart/form-data" action="action/categoryUpdated_post.php">
+									<form class="form-horizontal row-fluid" name="sellarUpdate" method="post" enctype="multipart/form-data" action="action/updateSellarPost.php">
 										<?php
 										for($i=0; $i<sizeof($result->records);$i++)
 										{ //print_r($result->records[$i]);
@@ -66,14 +66,14 @@ $result = json_decode($response);
 											<div class="control-group">
 												<label class="control-label" for="basicinput">Seller Id:</label>
 												<div class="controls">
-												<input type="text"  name="sellerName" value="<?php echo $result->records[$i]->id;?>" class="span8 tip" readonly>
+												<input type="text"  name="id" value="<?php echo $result->records[$i]->id;?>" class="span8 tip" readonly>
 												</div>
 											</div>
 
 											<div class="control-group">
 												<label class="control-label" for="basicinput">Sellar Name</label>
 												<div class="controls">
-													<input type="text"  name="sellerName" value="<?php echo $result->records[$i]->sellarName;?>" class="span8 tip" required>
+													<input type="text"  name="sellarName" value="<?php echo $result->records[$i]->sellarName;?>" class="span8 tip" required>
 												</div>
 											</div>
 

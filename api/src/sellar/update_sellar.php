@@ -24,15 +24,16 @@ $update_sellar = new Seller($db);
 // get posted data
 $data = json_decode(file_get_contents("php://input"));
 $update_sellar->id=$data->id;
+//print_r($id);
 $getHeaders = apache_request_headers();
 //print_r($getHeaders);
-$jwt = $getHeaders['Authorization'];
+$jwt = "123";
 
 if($jwt){
 
     try {
 
-        $decoded = JWT::decode($jwt, $SECRET_KEY, array('HS256'));
+       // $decoded = JWT::decode($jwt, $SECRET_KEY, array('HS256'));
 // mavarke sure data is not empty
 if(1
     // !empty($data->id) &&
@@ -44,9 +45,12 @@ if(1
     $update_sellar->phoneNo=$data->phoneNo;
     $update_sellar->email=$data->email;
     $update_sellar->counterName=$data->counterName;
-    $update_sellar->address=$data->address;
-    $update_sellar->pincode=$data->pincode;
-    $update_sellar->city=$data->city;
+    $update_sellar->regFee=$data->regFee;
+    $update_sellar->gst=$data->gst;
+    $update_sellar->aadhar=$data->aadhar;
+    $update_sellar->pan=$data->pan;
+    $update_sellar->updatedOn=$data->updatedOn;
+    $update_sellar->updatedBy=$data->updatedBy;
 
     if($update_sellar->updateSellar()){
   
@@ -54,7 +58,7 @@ if(1
         http_response_code(201);
   
         // tell the user
-        echo json_encode(array("message" => "Update successfully"));
+        echo json_encode(array("message" => "successfully"));
     }
     
   

@@ -4,6 +4,8 @@ class DeliveryBoy
 {
 
     private $conn;
+    private $deliverybankdetails = "deliverybankdetails";
+    private $deliveryincome="deliveryincome";
     private $seller = "seller";
     private $deliveryboy = "deliveryboy";
     private $business_category = "business_category";
@@ -33,6 +35,24 @@ class DeliveryBoy
        // $this->id = htmlspecialchars(strip_tags($this->id));
         //$this->emp_id = htmlspecialchars(strip_tags(string: $this->emp_id));
         //$stmt->bindParam(":id", $this->id); 
+        $stmt->execute();
+        return $stmt;
+                
+    }
+
+
+
+    // read delivery boy by id
+
+    public function readDeliveryBoyId()
+    {
+     $query = "Select name,phoneNo,email,id,status,regidenceAddress,workingPincode,workingAddress,aadhar,pan,image,createdBy,createdOn from " . $this->deliveryboy . " where id=:id";
+         
+        $stmt = $this->conn->prepare($query);
+
+       // $this->id = htmlspecialchars(strip_tags($this->id));
+        //$this->emp_id = htmlspecialchars(strip_tags(string: $this->emp_id));
+        $stmt->bindParam(":id", $this->id); 
         $stmt->execute();
         return $stmt;
                 
@@ -104,15 +124,88 @@ class DeliveryBoy
         if ($stmt->execute()) {
             return true;
         }
+        return false;
+    }
+
+
+        //insert delivery bank details
+
+
+        public function insertDeliveryBoybank()
+    {
+         $query = "INSERT INTO
+        " . $this->deliverybankdetails. "
+    SET      deliveryId=:id,
+             createdOn=:createdOn,
+             createdBy=:createdBy";           ;
+
+        $stmt = $this->conn->prepare($query);
+      
+        // $this->id = htmlspecialchars(strip_tags($this->id));
+        // $this->createdBy = htmlspecialchars(strip_tags($this->createdBy));
+        // $this->createdOn = htmlspecialchars(strip_tags($this->createdOn));
+        
+       
+        
+        
+        $stmt->bindParam(":id", $this->id);
+        $stmt->bindParam(":createdBy", $this->createdBy);
+        $stmt->bindParam(":createdOn", $this->createdOn);
+       
+        // execute query
+        if ($stmt->execute()) {
+            return true;
+        }
 
         return false;
     }
 
+
+
+    //insert income delivery boy 
+
+    public function insertDeliveryIncome()
+    {
+         $query = "INSERT INTO
+        " . $this->deliveryincome. "
+    SET      deliveryId=:id,
+             createdOn=:createdOn,
+             createdBy=:createdBy";           ;
+
+        $stmt = $this->conn->prepare($query);
+      
+        // $this->id = htmlspecialchars(strip_tags($this->id));
+        // $this->createdBy = htmlspecialchars(strip_tags($this->createdBy));
+        // $this->createdOn = htmlspecialchars(strip_tags($this->createdOn));
+        
+       
+        
+        
+        $stmt->bindParam(":id", $this->id);
+        $stmt->bindParam(":createdBy", $this->createdBy);
+        $stmt->bindParam(":createdOn", $this->createdOn);
+       
+        // execute query
+        if ($stmt->execute()) {
+            return true;
+        }
+
+        return false;
+    }
+
+
+
+
+
     function deleteDelivery(){
   
         // delete user detatail
-        $query = " DELETE FROM " . $this->deliveryboy . " 
+        $query1 = " DELETE FROM " . $this->deliveryboy . " 
         WHERE id=:id";
+        $query2 = " DELETE FROM " . $this->deliverybankdetails . " 
+        WHERE deliveryId=:id";
+        $query3 = " DELETE FROM " . $this->deliveryincome . " 
+        WHERE deliveryId=:id";
     
         // $query2 = " DELETE FROM " . $this->user_profile . " 
         // WHERE userId=:id";
@@ -127,7 +220,9 @@ class DeliveryBoy
         // WHERE userId=:id";
       
         // prepare query
-        $stmt = $this->conn->prepare($query);
+         $stmt1 = $this->conn->prepare($query1);
+         $stmt2 = $this->conn->prepare($query2);
+         $stmt3 = $this->conn->prepare($query3);
         // $stmt2 = $this->conn->prepare($query2);
         // $stmt3 = $this->conn->prepare($query3);
         // $stmt4 = $this->conn->prepare($query4);
@@ -137,14 +232,16 @@ class DeliveryBoy
         $this->id=htmlspecialchars(strip_tags($this->id));
       
         // bind id of record to delete
-        $stmt->bindParam(":id", $this->id);
+        $stmt1->bindParam(":id", $this->id);
+        $stmt2->bindParam(":id", $this->id);
+        $stmt3->bindParam(":id", $this->id);
         // $stmt2->bindParam(":id", $this->id);
         // $stmt3->bindParam(":id", $this->id);
         // $stmt4->bindParam(":id", $this->id);
         // $stmt5->bindParam(":id", $this->id);
       
         // execute query
-        if ($stmt->execute()){
+        if ($stmt1->execute() && $stmt2->execute() && $stmt3->execute() ){
             return true;
         }
       
@@ -159,13 +256,8 @@ class DeliveryBoy
      SET
         name=:name,
         email=:email,
-        phoneNo=:phoneNo,
         workingAddress=:workingAddress,
-        regidenceAddress=:regidenceAddress,
         workingPincode=:workingPincode,
-        pan=:pan,
-        aadhar=:aadhar,
-        status=:status,
         updatedOn=:updatedOn,
         updatedBy=:updatedBy,
         where id=:id";
@@ -177,31 +269,30 @@ class DeliveryBoy
         
         $this->name = htmlspecialchars(strip_tags($this->name));
         $this->email = htmlspecialchars(strip_tags($this->email));
-        $this->phoneNo = htmlspecialchars(strip_tags($this->phoneNo));
+       
         $this->workingAddress = htmlspecialchars(strip_tags($this->workingAddress));
-        $this->regidenceAddress = htmlspecialchars(strip_tags($this->regidenceAddress));
+      
         $this->workingPincode = htmlspecialchars(strip_tags($this->workingPincode));
-        $this->id = htmlspecialchars(strip_tags($this->id));
-        $this->pan = htmlspecialchars(strip_tags($this->pan));
-        $this->aadhar = htmlspecialchars(strip_tags($this->aadhar));
+     
+ 
         $this->updatedOn = htmlspecialchars(strip_tags($this->updatedOn));
         $this->updatedBy = htmlspecialchars(strip_tags($this->updatedBy));
-        $this->id = htmlspecialchars(strip_tags($this->id));
+      
 
 
         //bind values with stmt
         $stmt->bindParam(":name", $this->name);
         $stmt->bindParam(":email", $this->email);
-        $stmt->bindParam(":phoneNo", $this->phoneNo);
+
         $stmt->bindParam(":workingAddress", $this->workingAddress);
-        $stmt->bindParam(":regidenceAddress", $this->regidenceAddress);
+    
         $stmt->bindParam(":workingPincode", $this->workingPincode);
-        $stmt->bindParam(":id", $this->id);
-        $stmt->bindParam(":pan", $this->pan);
-        $stmt->bindParam(":aadhar", $this->aadhar);
+
+       
+     
         $stmt->bindParam(":updatedOn", $this->updatedOn);
         $stmt->bindParam(":updatedBy", $this->updatedBy);
-        $stmt->bindParam(":id", $this->id);
+
         
         
         // execute query
