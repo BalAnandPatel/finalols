@@ -21,12 +21,8 @@ curl_close($client);
 //print_r($response);
 
 $result = (json_decode($response));
-//print_r($result);
+print_r($result);
 if($result->message="Update successfully"){
-
-
-
-  if($responsemaxId="True"){
 
     /* --- get maximum userid -----*/
   
@@ -93,22 +89,21 @@ if($result->message="Update successfully"){
     if(move_uploaded_file($_FILES["image"]["tmp_name"], $target_file)) {
       //echo "The file ". htmlspecialchars( basename( $_FILES["fileUpload"]["name"])). " has been uploaded.";
      // echo "The file ". htmlspecialchars( basename( $_FILES["fileUploadThumb"]["name"])). " has been uploaded.";
-      $_SESSION["registration"] = "File uploaded succesfully.";
-     //header('Location:../manage-deliveryBoy.php');
+      //$_SESSION["registration"] = "File uploaded succesfully.";
+      header('Location:../category.php');
     }
      else {
       //echo "Sorry, there was an error uploading your file.";
     
-    $_SESSION["registration"] = "Sorry, there was an error uploading your file.";
-    //header('Location:../category.php');
+    //$_SESSION["registration"] = "Sorry, there was an error uploading your file.";
+    header('Location:../category.php');
   }
   }   
   
   }
   else{
-    //header('Location:../category.php?msg='.$result->message);
+    header('Location:../category.php?msg='.$result->message);
   }
-}
 
 
 //print_r($result);
