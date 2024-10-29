@@ -1,6 +1,6 @@
 <?php
 include "../constant.php";
-echo $id=trim(strtoupper($_GET["id"]));
+$id=$_POST["id"];
 $url = $URL . "subcotegory/readsubcatogory.php";
 //$url="http://localhost/onlinesabjimandiapi/api/src/category/readCategory.php";
 $data = array("id" => $id);

@@ -21,7 +21,7 @@ curl_close($client);
 //print_r($response);
 
 $result = (json_decode($response));
-print_r($result);
+//print_r($result);
 if($result->message="Update successfully"){
 
     /* --- get maximum userid -----*/
