@@ -28,9 +28,6 @@ $data = array(
   "status" => $status,
   "aadhar" => $aadhar,
   "pan" => $pan,
-  "address"=>$address,
-  "pin"=>$pin,
-  "city"=>$city,
   "createdOn"=>$createdOn,
   "createdBy"=>$createdBy);
    $postdata = json_encode($data);
@@ -65,7 +62,7 @@ $urlmax = $URL . "sellar/read_sellarmaxid.php";
    curl_close($clientmaxid);
    $result_maxid = (json_decode($responsemaxid));
    $maxid=$result_maxid->records[0]->id;
-   //print_r($responsemaxid);
+   print_r($responsemaxid);
 
 
 
@@ -199,20 +196,20 @@ $result_maxidin = (json_decode($responsebank ));
       && (move_uploaded_file($_FILES["shopupload"]["tmp_name"], $target_file_thumb))) {
         //echo "The file ". htmlspecialchars( basename( $_FILES["fileUpload"]["name"])). " has been uploaded.";
        // echo "The file ". htmlspecialchars( basename( $_FILES["fileUploadThumb"]["name"])). " has been uploaded.";
-        $_SESSION["registration"] = "File uploaded succesfully.";
+        //$_SESSION["registration"] = "File uploaded succesfully.";
        header('Location:../manage-sellar.php');
       }
        else {
         //echo "Sorry, there was an error uploading your file.";
       
-      $_SESSION["registration"] = "Sorry, there was an error uploading your file.";
+      //$_SESSION["registration"] = "Sorry, there was an error uploading your file.";
       header('Location:../insert-sellar.php');
     }
   }   
    
 }
 else{
-   //header('Location:../registration.php?msg=Failed');
+   header('Location:../registration.php?msg=Failed');
 }
 function url_encode_Decode($url,$postdata){
     $client = curl_init($url);
