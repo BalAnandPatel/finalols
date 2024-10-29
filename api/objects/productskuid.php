@@ -38,11 +38,11 @@ class Productskuid
         set  productId=:productId,
              sizeAttributeId=:sizeAttributeId,
              colorAttributeId=:colorAttributeId,
-             price=:price,
              skuId=:skuId,
-             quantity=:quantity,
+             price=:price,
+             createdOn=:createdOn,
              createdBy=:createdBy,
-             createdOn=:createdOn";
+             quantity=:quantity";
 
         $stmt = $this->conn->prepare($query);
         // $this->productId = htmlspecialchars(strip_tags($this->productId));
@@ -56,14 +56,15 @@ class Productskuid
         
        
         
-        $stmt->bindParam(":skuId", $this->skuId);
         $stmt->bindParam(":productId", $this->productId);
-        $stmt->bindParam(":sizeAttribute", $this->sizeAttributeId);
-        $stmt->bindParam(":colorAttribute", $this->colorAttributeId);
+        $stmt->bindParam(":sizeAttributeId", $this->sizeAttributeId);
+        $stmt->bindParam(":colorAttributeId", $this->colorAttributeId);
+        $stmt->bindParam(":skuId", $this->skuId);
         $stmt->bindParam(":price", $this->price);
         $stmt->bindParam(":quantity", $this->quantity);
         $stmt->bindParam(":createdOn", $this->createdOn);
         $stmt->bindParam(":createdBy", $this->createdBy);
+      
         //$stmt->debugDumpParams();
        // print_r($stmt->debugDumpParams());
  

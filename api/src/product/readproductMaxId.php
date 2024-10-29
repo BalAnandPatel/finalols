@@ -37,14 +37,14 @@ if($jwt){
 
     try {
 
-       //  $decoded = JWT::decode($jwt, $SECRET_KEY, array('HS256'));
+        //  $decoded = JWT::decode($jwt, $SECRET_KEY, array('HS256'));
 // $read_allusers->userType = $data->userType;
 // $read_allusers->status = $data->status;
 // $read_allusers->userId = $data->userId;
 
  //print_r($data);
 
-$stmt = $read_product->readAllProduct();
+$stmt = $read_product->readProductMaxId();
 $num = $stmt->rowCount();
   
 // check if more than 0 record found
@@ -58,21 +58,11 @@ if($num>0){
     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
      
         extract($row);
-       // print_r($row);
   
         $read_product_item=array(
 
             
-           // "skuId"=>$skuId,
-           "skuId"=>$skuId,
-           "name"=>$name,
-           "price"=>$price,
-           "description"=>$description,
-           "categoriesId"=>$categoriesId,
-           "image"=>$image,
-           "colorAttribute"=>$colorAttribute,
-           "discount"=>$discount,
-           "sellarId"=>$sellarId
+            "id"=>$id
         );
   
         array_push($read_product_arr["records"], $read_product_item);

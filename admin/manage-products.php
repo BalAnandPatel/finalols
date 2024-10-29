@@ -91,8 +91,15 @@ $result = json_decode($response);
 													<td><?php echo $result->records[$i]->price;?></td>
 													<td><?php echo $result->records[$i]->createdOn;?></td>
 													<td>
-														<a href="edit-products.php?skuId=<?php echo $result->records[$i]->skuId;?>"><i class="icon-edit"></i></a>
-														<a href="manage-products.php?skuId=<?php echo $result->records[$i]->skuId;?>&del=delete" onClick="return confirm('Are you sure you want to delete?')"><i class="icon-remove-sign"></i></a>
+													<form class="form-horizontal row-fluid"  action="action/productDelete_post.php" name="product" method="post" enctype="multipart/form-data">
+															<input type="hidden" name="id" value="<?php echo $result->records[$i]->id ?>">
+															<button type="submit" class="icon-remove-sign"></button>
+															
+														</form>
+														<form class="form-horizontal row-fluid"  action="edit-product.php" name="product" method="post" enctype="multipart/form-data">
+															<input type="hidden" name="id" value="<?php echo $result->records[$i]->id ?>">
+															<button type="submit" class="icon-edit"></button>
+														</form>
 													</td>
 												</tr>
 											<?php $cnt = $cnt + 1;

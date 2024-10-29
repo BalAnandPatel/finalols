@@ -8,7 +8,7 @@ header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers
   
 // include database and object file
 include_once '../../config/database.php';
-include_once '../../objects/productview.php';
+include_once '../../objects/product.php';
   
 // get database connection
 $database = new Database();
@@ -19,10 +19,10 @@ $delete_product = new Product($db);
   
 // get admin id
 $data = json_decode(file_get_contents("php://input"));
-//print_r($data);  
+print_r($data);  
 
 // set admin id to be deleted
-$delete_product->skuId = $data->skuId;
+$delete_product->id = $data->id;
   
 // delete the admin
 if($delete_product->deletProducts()){

@@ -41,11 +41,13 @@ class Producthistory
 
     public function insertProducthistory()
     {
+       // echo $this->sizeAttributeId;
+        //echo $this->colorAttributeId;
          $query = "INSERT INTO
         " . $this->producthistory . "
     SET      productId=:productId,
              sizeAttributeId=:sizeAttributeId,
-             sizeAttributeId=:sizeAttributeId,
+             colorAttributeId=:colorAttributeId,
              skuId=:skuId,
              price=:price,
              createdOn=:createdOn,
@@ -53,20 +55,20 @@ class Producthistory
              quantity=:quantity";
 
         $stmt = $this->conn->prepare($query);
-        $this->productId = htmlspecialchars(strip_tags($this->productId));
-        $this->sizeAttributeId = htmlspecialchars(strip_tags($this->sizeAttributetId));
-        $this->colorAttributeId = htmlspecialchars(strip_tags($this->colorAttributeId));
-        $this->skuId = htmlspecialchars(strip_tags($this->skuId));
-        $this->price = htmlspecialchars(strip_tags($this->price));
-        $this->quantity = htmlspecialchars(strip_tags($this->quantity));
-        $this->createdOn = htmlspecialchars(strip_tags($this->createdOn));
-        $this->createdBy = htmlspecialchars(strip_tags($this->createdBy));
+        // $this->productId = htmlspecialchars(strip_tags($this->productId));
+        // $this->sizeAttributeId = htmlspecialchars(strip_tags($this->sizeAttributetId));
+        // $this->colorAttributeId = htmlspecialchars(strip_tags($this->colorAttributeId));
+        // $this->skuId = htmlspecialchars(strip_tags($this->skuId));
+        // $this->price = htmlspecialchars(strip_tags($this->price));
+        // $this->quantity = htmlspecialchars(strip_tags($this->quantity));
+        // $this->createdOn = htmlspecialchars(strip_tags($this->createdOn));
+        // $this->createdBy = htmlspecialchars(strip_tags($this->createdBy));
         
        
         
         $stmt->bindParam(":productId", $this->productId);
         $stmt->bindParam(":sizeAttributeId", $this->sizeAttributeId);
-        $stmt->bindParam(":colorAttirbuteId", $this->colorAttributeId);
+        $stmt->bindParam(":colorAttributeId", $this->colorAttributeId);
         $stmt->bindParam(":skuId", $this->skuId);
         $stmt->bindParam(":price", $this->price);
         $stmt->bindParam(":quantity", $this->quantity);
