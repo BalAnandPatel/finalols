@@ -60,6 +60,9 @@ $data = array(
  $result= (json_decode($responsemax));
  $maxid=$result->records[0]->id;
 
+
+ 
+
 //<!Product history insert data ->
 $urlhistory = $URL . "productHistory/insertproducthistory.php"; 
 $datahistory = array(

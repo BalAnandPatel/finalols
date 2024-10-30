@@ -44,7 +44,7 @@ if($jwt){
 
  //print_r($data);
 
-$stmt = $read_product->readAllProduct();
+$stmt = $read_product->readAllProductDetails();
 $num = $stmt->rowCount();
   
 // check if more than 0 record found
@@ -66,6 +66,7 @@ if($num>0){
            // "skuId"=>$skuId,
            "skuId"=>$skuId,
            "name"=>$name,
+           "productName"=>$productName,
            "price"=>$price,
            "description"=>$description,
            "categoriesId"=>$categoriesId,
