@@ -27,7 +27,7 @@ $db = $database->getConnection();
 $read_sellar = new Seller($db);
   
 $data = json_decode(file_get_contents("php://input"));
-$read_sellar->id = $data->id;
+$read_sellar->id = 92;
 // $read_allusers->status = $data->status;
 // $read_allusers->userId = $data->userId;
 // print_r($_SERVER);
@@ -81,6 +81,8 @@ if($num>0){
             "regFee"=>$regFee,
             "gst"=>$gst,
             "city"=>$city,
+            "accountNo"=>$accountNo,
+            "ifscCode"=>$ifscCode,
             "pincode"=>$pincode,
             "address"=>$address,
             "aadhar"=>$aadhar 

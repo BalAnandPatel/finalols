@@ -1,9 +1,9 @@
 <?php
 //session_start();
- echo $jwt=$_SESSION['JWT'];
-$request_headers = [
-  'Authorization:' . $jwt
-];
+//  echo $jwt=$_SESSION['JWT'];
+// $request_headers = [
+//   'Authorization:' . $jwt
+// ];
 include "./constant.php";
 $url = $URL . "category/readCategory.php";
 //$url="http://localhost/onlinesabjimandiapi/api/src/category/readCategory.php";
@@ -45,6 +45,7 @@ $result = json_decode($response);
 
           <div class="category-carousel swiper">
             <div class="swiper-wrapper">
+              
               <a href="category.html" class="nav-link category-item swiper-slide">
                 <img src="images/icon-vegetables-broccoli.png" alt="Category Thumbnail">
                 <h3 class="category-title">Fruits & Veges</h3>

@@ -21,7 +21,7 @@ class Seller
    
     public function readSellar()
     {
-        $query = "Select a.sellarName,a.counterName,a.id,a.pan,a.gst,b.city,b.pincode,a.createdOn,b.address,a.aadhar,image,phoneNo,regFee,depositAmount,password,email,status from " . $this->sellar .  " as a INNER JOIN " . $this->sellaraddress . " as b ON sellarId=a.id";
+        echo $query = "Select a.sellarName,a.counterName,a.id,a.pan,a.gst,b.city,b.pincode,a.createdOn,b.address,a.aadhar,image,phoneNo,regFee,depositAmount,password,email,status from " . $this->sellar .  " as a INNER JOIN " . $this->sellaraddress . " as b ON sellarId=a.id JOIN " . $this->sellaraddress . " as c ON sellarId=a.id";
          $stmt = $this->conn->prepare($query);
         // $stmt->bindParam(":userName", $this->userName); 
         $stmt->execute();
@@ -29,9 +29,12 @@ class Seller
     }
 
 
+    
+
+
     public function readSellarById()
     {
-       $query = "Select a.sellarName,a.counterName,a.id,a.pan,a.gst,b.city,b.pincode,b.address,a.aadhar,image,phoneNo,regFee,depositAmount,password,email,status from " . $this->sellar .  " as a INNER JOIN " . $this->sellaraddress . " as b ON sellarId=a.id where a.id=:id";
+        $query = "Select a.sellarName,a.counterName,b.address,b.city,b.pincode,c.accountNo,c.ifscCode,a.id,a.pan,a.gst,b.city,b.pincode,a.createdOn,b.address,a.aadhar,image,phoneNo,regFee,depositAmount,password,email,status from " . $this->sellar .  " as a INNER JOIN " . $this->sellaraddress . " as b ON b.sellarId=a.id JOIN " . $this->sellarbankdetails . " as c ON c.sellarId=a.id where a.id=:id";
          $stmt = $this->conn->prepare($query);
           $stmt->bindParam(":id", $this->id); 
         $stmt->execute();

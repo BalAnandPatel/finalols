@@ -29,8 +29,7 @@ $db = $database->getConnection();
 $read_deliveryBody = new DeliveryBoy($db);
   
 $data = json_decode(file_get_contents("php://input"));
-
-$read_deliveryBody->id = $data->id;
+$read_deliveryBody->id = 75;
 $getHeaders = apache_request_headers();
 //print_r($getHeaders);
 $jwt = "123";
@@ -71,6 +70,8 @@ if($num>0){
             "workingPincode"=>$workingPincode,
             "status"=>$status,
             "aadhar"=>$aadhar,
+            "accountNo"=>$accountNo,
+            "ifscCode"=>$ifscCode,
             "id"=>$id,
             "pan"=>$pan,
             "image"=>$image,

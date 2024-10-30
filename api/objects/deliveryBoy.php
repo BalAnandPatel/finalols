@@ -46,7 +46,7 @@ class DeliveryBoy
 
     public function readDeliveryBoyId()
     {
-     $query = "Select name,phoneNo,email,id,status,regidenceAddress,workingPincode,workingAddress,aadhar,pan,image,createdBy,createdOn from " . $this->deliveryboy . " where id=:id";
+     echo $query = "Select a.name,a.phoneNo,a.email,a.id,a.status,a.regidenceAddress,a.workingPincode,a.workingAddress,a.aadhar,pan,b.accountNo,b.ifscCode,image,a.createdBy,a.createdOn from " . $this->deliveryboy . " as a INNER JOIN " . $this->deliverybankdetails . " as b ON b.deliveryId=a.id JOIN " . $this->deliveryincome . " as c ON c.deliveryId=a.id where b.deliveryId=:id";
          
         $stmt = $this->conn->prepare($query);
 

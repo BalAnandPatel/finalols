@@ -33,7 +33,7 @@ $read_sellar->id = $data->id;
 // print_r($_SERVER);
 $getHeaders = apache_request_headers();
 //print_r($getHeaders);
-$jwt = $getHeaders['Authorization'];
+$jwt = "123";
 
 // $arr = explode(" ", $authHeader);
 
@@ -48,7 +48,7 @@ if($jwt){
 
     try {
 
-         $decoded = JWT::decode($jwt, $SECRET_KEY, array('HS256'));
+         //$decoded = JWT::decode($jwt, $SECRET_KEY, array('HS256'));
          //$decoded = JWT::decode($jwt, $SECRET_KEY);
 
     
