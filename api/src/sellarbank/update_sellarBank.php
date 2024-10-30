@@ -8,7 +8,7 @@ header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers
   
 // get database connection
 include_once '../../config/database.php';
-include_once '../../objects/seller.php';
+include_once '../../objects/sellerbank.php';
 include_once '../../constant.php';
 require '../../php-jwt/src/JWT.php';
 require '../../php-jwt/src/ExpiredException.php';
@@ -19,20 +19,20 @@ use \Firebase\JWT\JWT;
 $database = new Database();
 $db = $database->getConnection();
   
-$update_sellar = new Seller($db);
+$update_sellar = new Sellerbank($db);
   
 // get posted data
 $data = json_decode(file_get_contents("php://input"));
-$update_sellar->id=$data->id;
+$update_sellar->id=92;
 $getHeaders = apache_request_headers();
 //print_r($getHeaders);
-$jwt = $getHeaders['Authorization'];
+$jwt = "123";
 
 if($jwt){
 
     try {
 
-        $decoded = JWT::decode($jwt, $SECRET_KEY, array('HS256'));
+        //$decoded = JWT::decode($jwt, $SECRET_KEY, array('HS256'));
 // mavarke sure data is not empty
 if(1
     // !empty($data->id) &&
@@ -40,15 +40,15 @@ if(1
 )
 
 {
-    $update_sellar->sellarName=$data->sellarName;
-    $update_sellar->phoneNo=$data->phoneNo;
-    $update_sellar->email=$data->email;
-    $update_sellar->counterName=$data->counterName;
-    $update_sellar->address=$data->address;
-    $update_sellar->pincode=$data->pincode;
-    $update_sellar->city=$data->city;
+    $update_sellar->accountNo=$data->accountNo;
+    $update_sellar->ifscCode=$data->ifscCode;
+    $update_sellar->upiId=$data->upiId;
+    $update_sellar->bankName=$data->bankName;
+    $update_sellar->updatedBy=$data->updatedBy;
+    $update_sellar->updatedOn=$data->updatedOn;
 
-    if($update_sellar->updateSellar()){
+
+    if($update_sellar->updateSellarbank()){
   
         // set response code - 201 created
         http_response_code(201);

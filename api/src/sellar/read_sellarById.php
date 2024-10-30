@@ -27,7 +27,7 @@ $db = $database->getConnection();
 $read_sellar = new Seller($db);
   
 $data = json_decode(file_get_contents("php://input"));
-$read_sellar->id = 21;
+$read_sellar->id = 92;
 // $read_allusers->status = $data->status;
 // $read_allusers->userId = $data->userId;
 // print_r($_SERVER);
@@ -76,8 +76,12 @@ if($num>0){
             "counterName"=>$counterName,
             "phoneNo"=>$phoneNo,
             "email"=>$email,
+            "bankName"=>$bankName,
             "pan"=>$pan,
             "id"=>$id,
+            "upiId"=>$upiId,
+            "updatedOn"=>$updatedOn,
+            "updatedBy"=>$updatedBy,
             "regFee"=>$regFee,
             "gst"=>$gst,
             "city"=>$city,

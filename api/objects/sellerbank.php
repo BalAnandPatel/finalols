@@ -94,7 +94,7 @@ class Sellerbank
       
         return false;
     }
-    function updateSellar()
+    function updateSellarbank()
     {
 
         // query to update record
@@ -102,10 +102,11 @@ class Sellerbank
          " . $this->sellarbankdetails . "
      SET
         bankName=:bankName,
-        AccountHolderName=:AccountHolderName,
         ifscCode=:ifscCode,
-        upiId=:upiId
-        where sellarId=:sellarId";
+        upiId=:upiId,
+        updatedOn=:updatedOn,
+        updatedBy=:updatedBy
+        where sellarId=:id";
 
  
         // prepare query
@@ -113,15 +114,16 @@ class Sellerbank
  
         
         $this->bankName = htmlspecialchars(strip_tags($this->bankName));
-        $this->AccountHolderName = htmlspecialchars(strip_tags($this->AccountHolderName));
         $this->ifscCode = htmlspecialchars(strip_tags($this->ifscCode));
         $this->upiId = htmlspecialchars(strip_tags($this->upiId));
 
         //bind values with stmt
         $stmt->bindParam(":bankName", $this->bankName);
-        $stmt->bindParam(":AccountHolderName", $this->AccountHolderName);
         $stmt->bindParam(":ifscCode", $this->ifscCode);
+        $stmt->bindParam(":updatedOn", $this->updatedOn);
+        $stmt->bindParam(":updatedBy", $this->updatedBy);
         $stmt->bindParam(":upiId", $this->upiId);
+        $stmt->bindParam(":id", $this->id);
         
         // execute query
         if ($stmt->execute()){
