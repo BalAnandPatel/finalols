@@ -68,43 +68,58 @@ $result = json_decode($response);
 
 									<br />
 
-									<form class="form-horizontal row-fluid"  action="action/bank-post.php" name="bankDetail" method="post" enctype="multipart/form-data">
+									<form class="form-horizontal row-fluid"  action="action/sellar_bank_post.php" name="bankDetail" method="post" enctype="multipart/form-data">
 
-										<div class="control-group">
+									
+									<?php
+                // print_r($result);
+				$cnt=0;
+                // print_r($result['records']);
+                for($i=0; $i<sizeof($result->records);$i++)
+                { //print_r($result->records[$i]);
+                ?>	
+									<div class="control-group">
+											<label class="control-label" for="basicinput">SELLAR ID</label>
+											<div class="controls">
+												<input type="text" placeholder="Enter Your Name" name="id" class="span8 tip" required value="<?php echo $result->records[$i]->id;?>" readonly>
+											</div>
+										</div>	
+									<div class="control-group">
 											<label class="control-label" for="basicinput">Account Name</label>
 											<div class="controls">
-												<input type="text" placeholder="Enter Your Name" name="name" class="span8 tip" required>
+											<input type="text" placeholder="Enter Your Name" name="id" class="span8 tip" required value="<?php echo $result->records[$i]->sellarName;?>" readonly>
 											</div>
 										</div>
 										<div class="control-group">
 											<label class="control-label" for="basicinput">Account No:</label>
 											<div class="controls">
-												<input type="text" placeholder="Account Number" name="acNo" class="span8 tip" required>
+												<input type="text" placeholder="Account Number" name="accountNo" class="span8 tip" required>
 											</div>
 										</div>
 
 										<div class="control-group">
 											<label class="control-label" for="basicinput">Bank</label>
 											<div class="controls">
-												<input type="text" placeholder="Bank Name" name="bank" class="span8 tip" required>
+												<input type="text" placeholder="Bank Name" name="bankName" class="span8 tip" required>
 											</div>
 										</div>
 
 										<div class="control-group">
 											<label class="control-label" for="basicinput">IFSC Code</label>
 											<div class="controls">
-												<input type="text" placeholder="IFSC Code" name="ifsc" class="span8 tip" required>
+												<input type="text" placeholder="IFSC Code" name="ifscCode" class="span8 tip" required>
 											</div>
 										</div>
 
 										<div class="control-group">
 											<label class="control-label" for="basicinput">UPI</label>
 											<div class="controls">
-												<input type="text" placeholder="UPI ID" name="upi" class="span8 tip" required>
+												<input type="text" placeholder="UPI ID" name="upiId" class="span8 tip" required>
 											</div>
 										</div>
 
-
+										<?php $cnt = $cnt + 1;
+											} ?>
 										
 
 										<div class="control-group">
@@ -147,12 +162,12 @@ $result = json_decode($response);
                 ?>	
 												<tr>
 													<td><?php echo htmlentities($cnt); ?></td>
-													<td><?php echo $result->records[$i]->name;?></td>
-													<td><?php echo $result->records[$i]->acNo;?></td>													<td><?php echo $result->records[$i]->bank;?></td>
-													<td><?php echo $result->records[$i]->ifsc;?></td>
-													<td><?php echo $result->records[$i]->upi;?></td>
-													<td><?php echo $result->records[$i]->createdOn;?></td>
+													<td><?php echo $result->records[$i]->sellarName;?></td>
+													<td><?php echo $result->records[$i]->accountNo;?></td>								<td><?php echo $result->records[$i]->bankName;?></td>
+													<td><?php echo $result->records[$i]->ifscCode;?></td>
+													<td><?php echo $result->records[$i]->upiId;?></td>
 													<td><?php echo $result->records[$i]->updatedOn;?></td>
+													<td><?php echo $result->records[$i]->updatedBy;?></td>
 													<td>
 														<a href="edit-category.php?id=<?php echo $result->records[$i]->id ?>"><i class="icon-edit"></i></a>
 														<form class="form-horizontal row-fluid"  action="action/categoryDelete_post.php" name="Category" method="post" enctype="multipart/form-data">
