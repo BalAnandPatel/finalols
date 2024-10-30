@@ -4,7 +4,7 @@ $id = $_POST["id"];
 $url = $URL . "deliveryBoy/readDeliveryBoyId.php";
 //$url="http://localhost/onlinesabjimandiapi/api/src/category/readCategory.php";
 $data = array("id" => $id);
-print_r($data);
+//print_r($data);
 $postdata = json_encode($data);
 $client = curl_init();
 curl_setopt($client, CURLOPT_URL, $url);
@@ -13,7 +13,7 @@ curl_setopt($client, CURLOPT_RETURNTRANSFER, 1);
 curl_setopt($client, CURLOPT_POST, 5);
 curl_setopt($client, CURLOPT_POSTFIELDS, $postdata);
 $response = curl_exec($client);
-print_r($response);
+//print_r($response);
 $result = json_decode($response);
 //print_r($result);
 ?>
