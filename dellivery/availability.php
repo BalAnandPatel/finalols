@@ -29,7 +29,7 @@
 
 							<div class="module">
 								<div class="module-head">
-									<h3>Close Shop</h3>
+									<h3>Availability</h3>
 								</div>
 								<div class="module-body">
 
@@ -52,13 +52,13 @@
 
 									<form class="form-horizontal row-fluid" name="insertproduct" method="post" enctype="multipart/form-data" action="action/insertSellarPost.php">
 										<div class="control-group">
-											<label class="control-label" for="basicinput">Close Time</label>
+											<label class="control-label" for="basicinput">N/A Time</label>
 											<div class="controls">
 												<input type="date" name="close" class="span8 tip" required>
 											</div>
 										</div>
 										<div class="control-group">
-											<label class="control-label" for="basicinput">Open Time</label>
+											<label class="control-label" for="basicinput">Available Time</label>
 											<div class="controls">
 												<input type="date" name="open" class="span8 tip" required>
 											</div>

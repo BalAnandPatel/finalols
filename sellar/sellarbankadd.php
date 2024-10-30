@@ -8,7 +8,7 @@ include "../constant.php";
 $url = $URL . "sellar/read_sellarById.php";
 //$url="http://localhost/onlinesabjimandiapi/api/src/category/readCategory.php";
 $data = array();
-// //print_r($data);
+print_r($data);
 $postdata = json_encode($data);
 $client = curl_init();
 curl_setopt( $client, CURLOPT_URL,$url);
@@ -105,12 +105,6 @@ $result = json_decode($response);
 										</div>
 
 
-										<div class="control-group">
-											<label class="control-label" for="basicinput">Passbook:</label>
-											<div class="controls">
-												<input type="file" class="span8" name="passbook">
-											</div>
-										</div>
 										
 
 										<div class="control-group">
@@ -134,7 +128,6 @@ $result = json_decode($response);
 												<th>#</th>
 												<th>Name</th>
 												<th>Account Number</th>
-												<th>Passbook</th>
 												<th>Bank</th>
 												<th>IFSC</th>
 												<th>UPI</th>
@@ -155,9 +148,7 @@ $result = json_decode($response);
 												<tr>
 													<td><?php echo htmlentities($cnt); ?></td>
 													<td><?php echo $result->records[$i]->name;?></td>
-													<td><?php echo $result->records[$i]->acNo;?></td>
-													<td><img src="img/category/<?php echo $result->records[$i]->id ."/".$result->records[$i]->id.".png";?>"></td>
-													<td><?php echo $result->records[$i]->bank;?></td>
+													<td><?php echo $result->records[$i]->acNo;?></td>													<td><?php echo $result->records[$i]->bank;?></td>
 													<td><?php echo $result->records[$i]->ifsc;?></td>
 													<td><?php echo $result->records[$i]->upi;?></td>
 													<td><?php echo $result->records[$i]->createdOn;?></td>

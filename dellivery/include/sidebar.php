@@ -89,14 +89,14 @@ error_reporting(0);
 
 
 		<ul class="widget widget-menu unstyled">
-			<li><a href="category.php"><i class="menu-icon icon-tasks"></i> Add Bank</a></li>
-			<li><a href="subcategory.php"><i class="menu-icon icon-tasks"></i>Payment History</a></li>
+			<li><a href="deliveryBank.php"><i class="menu-icon icon-tasks"></i> Add Bank</a></li>
+			<li><a href="deliveryPaymentHistory.php"><i class="menu-icon icon-tasks"></i>Payment History</a></li>
 			<!-- <li><a href="insert-product.php"><i class="menu-icon icon-paste"></i>Insert Product </a></li>
 			<li><a href="manage-products.php"><i class="menu-icon icon-table"></i>Manage Products </a></li> -->
-			<li><a href="insert-product.php"><i class="menu-icon icon-paste"></i>Commision </a></li>
-			<li><a href="insert-delivery.php"><i class="menu-icon icon-paste"></i>Customer List </a></li>
-			<li><a href="manage-deliveryBoy.php"><i class="menu-icon icon-paste"></i>Update Address</a></li>
-			<li><a href="insert-sellar.php"><i class="menu-icon icon-paste"></i>Availability</a></li>
+			<li><a href="commision.php"><i class="menu-icon icon-paste"></i>Commision </a></li>
+			<li><a href="customerlist.php"><i class="menu-icon icon-paste"></i>Customer List </a></li>
+			<li><a href="deliveryAddressUpdate.php"><i class="menu-icon icon-paste"></i>Update Address</a></li>
+			<li><a href="availability.php"><i class="menu-icon icon-paste"></i>Availability</a></li>
 			<li><a href="manage-sellar.php"><i class="menu-icon icon-paste"></i>Setting</a></li>
 			
 
