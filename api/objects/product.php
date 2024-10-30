@@ -48,7 +48,7 @@ class Product
 
     public function readAllProductDetails()
     {
-  echo $query = "Select a.name,c.name, a.categoriesId,a.description,b.quantity,a.id,a.createdOn,a.image,a.sellarId,a.skuId,a.price,a.discount from " . $this->products . " as a INNER JOIN " .$this->productskuid . " as b ON b.productId=a.id JOIN " . $this->categories . " as c ON c.id=a.categoriesId";
+   $query = "Select a.name as productName,c.name, a.categoriesId,a.description,b.quantity,a.id,a.createdOn,a.image,a.sellarId,a.skuId,a.price,a.discount from " . $this->products . " as a INNER JOIN " .$this->productskuid . " as b ON b.productId=a.id JOIN " . $this->categories . " as c ON c.id=a.categoriesId";
          $stmt = $this->conn->prepare($query);
         //  $stmt->bindParam(":skuId", $this->skuId); 
         $stmt->execute();
@@ -62,7 +62,7 @@ class Product
 
     public function readAllProduct()
     {
-       $query = " Select name,categoriesId,description,image,sellarId,skuId,price,discount from " . $this->products . "INNER JOIN ON" ;
+       $query = " Select name,categoriesId,description,image,sellarId,skuId,price,discount from " . $this->products . "INNER JOIN ON";
          $stmt = $this->conn->prepare($query);
         //  $stmt->bindParam(":skuId", $this->skuId); 
         $stmt->execute();

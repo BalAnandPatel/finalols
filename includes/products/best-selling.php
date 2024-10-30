@@ -1,23 +1,23 @@
 <?php
-//session_start();
- echo $jwt=$_SESSION['JWT'];
-$request_headers = [
-  'Authorization:' . $jwt
-];
+// //session_start();
+//  echo $jwt=$_SESSION['JWT'];
+// $request_headers = [
+//   'Authorization:' . $jwt
+// ];
 include "constant.php";
 $url = $URL . "product/readAllproduct.php";
 //$url="http://localhost/onlinesabjimandiapi/api/src/category/readCategory.php";
-$data = array();
+//$data = array();
 // //print_r($data);
-$postdata = json_encode($data);
-$client = curl_init();
-curl_setopt( $client, CURLOPT_URL,$url);
+   $postdata = json_encode($data);
+  $client = curl_init();
+ curl_setopt( $client, CURLOPT_URL,$url);
  curl_setopt( $client, CURLOPT_HTTPHEADER,  $request_headers);
  curl_setopt($client, CURLOPT_RETURNTRANSFER, 1);
 curl_setopt($client, CURLOPT_POST, 5);
 curl_setopt($client, CURLOPT_POSTFIELDS, $postdata);
 $response = curl_exec($client);
-print_r($response);
+//print_r($response);
 $result = json_decode($response);
 //print_r($result);
 ?>
@@ -47,6 +47,15 @@ $result = json_decode($response);
           <div class="products-carousel swiper">
             <div class="swiper-wrapper">
 
+
+            <?php
+                // print_r($result);
+				$cnt=0;
+                // print_r($result['records']);
+                for($i=0; $i<sizeof($result->records);$i++)
+                { //print_r($result->records[$i]);
+                ?>	
+							 
               <div class="product-item swiper-slide">
                 <span class="badge bg-success position-absolute m-3">-15%</span>
                 <a href="#" class="btn-wishlist"><svg width="24" height="24">
@@ -54,15 +63,16 @@ $result = json_decode($response);
                   </svg></a>
                 <figure>
                   <a href="products.php" title="Product Title">
-                    <img src="images/thumb-tomatoes.png" alt="Product Thumbnail" class="tab-image">
+                  <img src="admin/productimages/<?php echo $result->records[$i]->skuId ."/".$result->records[$i]->skuId."1.PNG";?>" alt="Product Thumbnail" class="tab-image">
+                    <!-- <img src="images/thumb-tomatoes.png" alt="Product Thumbnail" class="tab-image"> -->
                   </a>
                 </figure>
-                <h3>Sunstar Fresh Melon Juice</h3>
+                <h3><?php echo $result->records[$i]->name;?></h3>
                 <span class="qty">1 Unit</span><span class="rating"><svg width="24" height="24" class="text-primary">
                     <use xlink:href="#star-solid"></use>
                   </svg> 4.5</span>
                 <span class="price">$18.00</span>
-                <div class="d-flex align-items-center justify-content-between">
+                <!-- <div class="d-flex align-items-center justify-content-between">
                   <div class="input-group product-qty">
                     <span class="input-group-btn">
                       <button type="button" class="quantity-left-minus btn btn-danger btn-number" data-type="minus">
@@ -85,10 +95,13 @@ $result = json_decode($response);
                   <a href="cart.php" class="nav-link">Add to Cart <svg width="18" height="18">
                       <use xlink:href="#cart"></use>
                     </svg></a>
-                </div>
+                </div> -->
               </div>
 
-              <div class="product-item swiper-slide">
+              <?php $cnt = $cnt + 1;
+											} ?>
+
+              <!-- <div class="product-item swiper-slide">
                 <span class="badge bg-success position-absolute m-3">-15%</span>
                 <a href="#" class="btn-wishlist"><svg width="24" height="24">
                     <use xlink:href="#heart"></use>
@@ -243,8 +256,8 @@ $result = json_decode($response);
                         </svg>
                       </button>
                     </span>
-                  </div>
-                  <a href="cart.php" class="nav-link">Add to Cart <svg width="18" height="18">
+                  </div> -->
+                  <!-- <a href="cart.php" class="nav-link">Add to Cart <svg width="18" height="18">
                       <use xlink:href="#cart"></use>
                     </svg></a>
                 </div>
@@ -328,9 +341,9 @@ $result = json_decode($response);
                       <use xlink:href="#cart"></use>
                     </svg></a>
                 </div>
-              </div>
+              </div> -->
 
-              <div class="product-item swiper-slide">
+              <!-- <div class="product-item swiper-slide">
                 <a href="#" class="btn-wishlist"><svg width="24" height="24">
                     <use xlink:href="#heart"></use>
                   </svg></a>
@@ -368,7 +381,7 @@ $result = json_decode($response);
                       <use xlink:href="#cart"></use>
                     </svg></a>
                 </div>
-              </div>
+              </div> -->
 
             </div>
           </div>
