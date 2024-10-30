@@ -12,12 +12,12 @@ $data = array();
 $postdata = json_encode($data);
 $client = curl_init();
 curl_setopt( $client, CURLOPT_URL,$url);
- curl_setopt( $client, CURLOPT_HTTPHEADER,  $request_headers);
+ //curl_setopt( $client, CURLOPT_HTTPHEADER,  $request_headers);
  curl_setopt($client, CURLOPT_RETURNTRANSFER, 1);
 curl_setopt($client, CURLOPT_POST, 5);
 curl_setopt($client, CURLOPT_POSTFIELDS, $postdata);
 $response = curl_exec($client);
-print_r($response);
+//print_r($response);
 $result = json_decode($response);
 //print_r($result);
 ?>
@@ -46,11 +46,20 @@ $result = json_decode($response);
           <div class="category-carousel swiper">
             <div class="swiper-wrapper">
               
-              <a href="category.html" class="nav-link category-item swiper-slide">
-                <img src="images/icon-vegetables-broccoli.png" alt="Category Thumbnail">
-                <h3 class="category-title">Fruits & Veges</h3>
+            <?php
+                // print_r($result);
+				$cnt=0;
+                // print_r($result['records']);
+                for($i=0; $i<sizeof($result->records);$i++)
+                { //print_r($result->records[$i]);
+                ?>	                  
+            <a href="category.html" class="nav-link category-item swiper-slide">
+            <img src="admin/img/category/<?php echo $result->records[$i]->id ."/".$result->records[$i]->id.".png";?>" alt="Category Thumbnail" width="150px" height="150px">
+                <!-- <img src="images/icon-vegetables-broccoli.png"> -->
+                <h3 class="category-title"><?php echo $result->records[$i]->name;?></h3>
               </a>
-              <a href="category.html" class="nav-link category-item swiper-slide">
+              <?php }?>
+              <!-- <a href="category.html" class="nav-link category-item swiper-slide">
                 <img src="images/icon-bread-baguette.png" alt="Category Thumbnail">
                 <h3 class="category-title">Breads & Sweets</h3>
               </a>
@@ -77,8 +86,8 @@ $result = json_decode($response);
               <a href="category.html" class="nav-link category-item swiper-slide">
                 <img src="images/icon-bread-baguette.png" alt="Category Thumbnail">
                 <h3 class="category-title">Breads & Sweets</h3>
-              </a>
-              <a href="category.html" class="nav-link category-item swiper-slide">
+              </a> -->
+              <!-- <a href="category.html" class="nav-link category-item swiper-slide">
                 <img src="images/icon-soft-drinks-bottle.png" alt="Category Thumbnail">
                 <h3 class="category-title">Fruits & Veges</h3>
               </a>
@@ -93,7 +102,7 @@ $result = json_decode($response);
               <a href="category.html" class="nav-link category-item swiper-slide">
                 <img src="images/icon-bread-herb-flour.png" alt="Category Thumbnail">
                 <h3 class="category-title">Breads</h3>
-              </a>
+              </a> -->
 
             </div>
           </div>

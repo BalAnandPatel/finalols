@@ -29,7 +29,7 @@ $read_subcategory = new subcategories($db);
 //echo "999999999999";  
 $data = json_decode(file_get_contents("php://input"));
  
-//print_r($data);
+print_r($data);
 
 $read_subcategory->id = $data->id;
 // $read_allusers->status = $data->status;

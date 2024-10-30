@@ -42,26 +42,28 @@ $result = json_decode($response);
 			function getSubcat(val) {
 				//alert(val);
 				var dataPost = {
-					"cat_id": val};var dataString = JSON.stringify(dataPost);
+					"id": val};var dataString = JSON.stringify(dataPost);
+					console.log(dataString);
 				$.ajax({
 					type: "POST",
 					url: "../api/src/subcotegory/readsubcatogory.php",
 					data: {
-                          cat_id: dataString
+                          dataString
 					},
 					
 					success: function(data) 
 					{
-					
+						console.log(data);
 						 $('#subcategories').html('');
 						$('#subcategories').append('<option>' +"Sub Categories" + '</option>');
 						 $.each(data.records, function (i, value) {
 						  
-                $('#subcategories').append('<option id=' + (value.categoryid) + '>' + (value.subcategoryName) + '</option>');
+                $('#subcategories').append('<option id=' + (value.id) + '>' + (value.name) + '</option>');
             });
 					},
 					error: function(data)
 					{
+						console.log(data);
 					       $('#subcategories').html('');
 					     $('#subcategories').append('<option>' + "No records found !!" + '</option>');
 					
