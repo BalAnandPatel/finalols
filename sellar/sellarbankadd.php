@@ -8,7 +8,7 @@ include "../constant.php";
 $url = $URL . "sellar/read_sellarById.php";
 //$url="http://localhost/onlinesabjimandiapi/api/src/category/readCategory.php";
 $data = array();
-print_r($data);
+//print_r($data);
 $postdata = json_encode($data);
 $client = curl_init();
 curl_setopt( $client, CURLOPT_URL,$url);
@@ -17,7 +17,7 @@ curl_setopt($client, CURLOPT_RETURNTRANSFER, 1);
 curl_setopt($client, CURLOPT_POST, 5);
 curl_setopt($client, CURLOPT_POSTFIELDS, $postdata);
 $response = curl_exec($client);
-print_r($response);
+//print_r($response);
 $result = json_decode($response);
 //print_r($result);
 ?>
@@ -169,13 +169,9 @@ $result = json_decode($response);
 													<td><?php echo $result->records[$i]->updatedOn;?></td>
 													<td><?php echo $result->records[$i]->updatedBy;?></td>
 													<td>
-														<a href="edit-category.php?id=<?php echo $result->records[$i]->id ?>"><i class="icon-edit"></i></a>
-														<form class="form-horizontal row-fluid"  action="action/categoryDelete_post.php" name="Category" method="post" enctype="multipart/form-data">
-															<input type="hidden" name="id" value="<?php echo $result->records[$i]->id ?>">
-															<button type="submit" class="icon-remove-sign"></button>
-														</form>
+													Active
 														
-														<a href="category.php?id=<?php echo $result->records[$i]->id ?>&del=delete" onClick="return confirm('Are you sure you want to delete?')"><i class="icon-remove-sign"></i></a>
+														
 													</td>
 												</tr>
 											<?php $cnt = $cnt + 1;

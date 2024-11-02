@@ -73,6 +73,7 @@ if($num>0){
 
             
             "sellarName"=>$sellarName,
+            "sellarId"=>$sellarId,
             "counterName"=>$counterName,
             "phoneNo"=>$phoneNo,
             "email"=>$email,

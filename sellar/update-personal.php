@@ -17,7 +17,7 @@ curl_setopt($client, CURLOPT_RETURNTRANSFER, 1);
 curl_setopt($client, CURLOPT_POST, 5);
 curl_setopt($client, CURLOPT_POSTFIELDS, $postdata);
 $response = curl_exec($client);
-//print_r($response);
+print_r($response);
 $result = json_decode($response);
 //print_r($result);
 ?>
@@ -50,10 +50,26 @@ $result = json_decode($response);
 							</div>
 							<div class="module-body">
 								<form class="form-horizontal row-fluid" name="insertproduct" method="post" enctype="multipart/form-data" action="action/insertSellarPost.php">
+
+
+								
+								<?php
+                // print_r($result);
+				$cnt=0;
+                // print_r($result['records']);
+                for($i=0; $i<sizeof($result->records);$i++)
+                { //print_r($result->records[$i]);
+                ?>
 									<div class="control-group">
-										<label class="control-label" for="basicinput">Name</label>
+										<label class="control-label" for="basicinput">SellarId</label>
 										<div class="controls">
-											<input type="text" name="sellarName" placeholder="Name" class="span8 tip" required>
+											<input type="text" name="sellarName" placeholder="Name" class="span8 tip" value="<?php echo $result->records[$i]->sellarId;?>"readonly>
+										</div>
+									</div>
+									<div class="control-group">
+										<label class="control-label" for="basicinput">Sellar Name</label>
+										<div class="controls">
+											<input type="text" name="sellarId" placeholder="Name" class="span8 tip" value="<?php echo $result->records[$i]->sellarName;?>"readonly>
 										</div>
 									</div>
 									<div class="control-group">
@@ -134,6 +150,7 @@ $result = json_decode($response);
 											<button type="submit" name="submit" class="btn">Update</button>
 										</div>
 									</div>
+					<?php }?>				
                                 </form>
 </div>
 </div>

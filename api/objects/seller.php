@@ -34,7 +34,7 @@ class Seller
 
     public function readSellarById()
     {
-        $query = "Select a.sellarName,a.counterName,c.bankName,b.address,c.updatedOn,c.updatedBy,c.upiId,b.city,b.pincode,c.accountNo,c.ifscCode,a.id,a.pan,a.gst,b.city,b.pincode,a.createdOn,b.address,a.aadhar,image,phoneNo,regFee,depositAmount,password,email,status from " . $this->sellar .  " as a INNER JOIN " . $this->sellaraddress . " as b ON b.sellarId=a.id JOIN " . $this->sellarbankdetails . " as c ON c.sellarId=a.id where a.id=:id";
+        $query = "Select a.sellarName,a.counterName,c.bankName,b.sellarId,c.updatedOn,c.updatedBy,c.upiId,b.city,b.pincode,c.accountNo,c.ifscCode,a.id,a.pan,a.gst,b.city,b.pincode,a.createdOn,b.address,a.aadhar,image,phoneNo,regFee,depositAmount,password,email,status from " . $this->sellar .  " as a INNER JOIN " . $this->sellaraddress . " as b ON b.sellarId=a.id JOIN " . $this->sellarbankdetails . " as c ON c.sellarId=a.id where a.id=:id";
          $stmt = $this->conn->prepare($query);
           $stmt->bindParam(":id", $this->id); 
         $stmt->execute();
@@ -210,6 +210,57 @@ class Seller
 
         return false;
     }
+
+
+// updated Sellar address
+
+function updateSellaraddrss()
+{
+
+    // query to update record
+   echo $query = "UPDATE 
+     " . $this->sellaraddress . "
+ SET
+    address=:address,
+    city=:city,
+    pincode=:pincode,
+    updatedOn=:updatedOn,
+    updatedBy=:updatedBy
+    where sellarId=:id";
+
+
+    // prepare query
+    $stmt = $this->conn->prepare($query);
+
+    
+    $this->address = htmlspecialchars(strip_tags($this->address));
+    $this->city = htmlspecialchars(strip_tags($this->city));
+    $this->pincode = htmlspecialchars(strip_tags($this->pincode));
+    $this->id = htmlspecialchars(strip_tags($this->id));    
+    $this->updatedOn = htmlspecialchars(strip_tags($this->updatedOn));
+    $this->updatedBy = htmlspecialchars(strip_tags($this->updatedBy));
+
+
+    //bind values with stmt
+    $stmt->bindParam(":address", $this->address);
+    $stmt->bindParam(":city", $this->city);
+    $stmt->bindParam(":id", $this->id);
+    $stmt->bindParam(":pincode", $this->pincode);
+    $stmt->bindParam(":updatedBy", $this->updatedBy);
+    $stmt->bindParam(":updatedOn", $this->updatedOn);
+
+    
+    // execute query
+    if ($stmt->execute()){
+        return true;
+    }
+
+    return false;
+}
+
+
+
+
 
     function countSellar()
     {
