@@ -63,6 +63,7 @@ $result = json_decode($response);
                   </svg></a>
                 <figure>
                   <a href="products.php" title="Product Title">
+                  <!-- <img src="admin/productimages/<?php echo $result->records[$i]->skuId ."/".$result->records[$i]->skuId."1.PNG";?>" alt="Product Thumbnail" class="tab-image"> -->
                   <img src="admin/productimages/<?php echo $result->records[$i]->skuId ."/".$result->records[$i]->skuId."1.PNG";?>" alt="Product Thumbnail" class="tab-image">
                     <!-- <img src="images/thumb-tomatoes.png" alt="Product Thumbnail" class="tab-image"> -->
                   </a>
@@ -71,7 +72,8 @@ $result = json_decode($response);
                 <span class="qty">1 Unit</span><span class="rating"><svg width="24" height="24" class="text-primary">
                     <use xlink:href="#star-solid"></use>
                   </svg> 4.5</span>
-                <span class="price">$18.00</span>
+                <!-- <span class="price">$18.00</span> -->
+                <span class="price"><?php echo $result->records[$i]->price ?></span>
                 <!-- <div class="d-flex align-items-center justify-content-between">
                   <div class="input-group product-qty">
                     <span class="input-group-btn">

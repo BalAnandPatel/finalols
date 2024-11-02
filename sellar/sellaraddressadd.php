@@ -50,18 +50,40 @@ $result = json_decode($response);
 								<h3>Update Address</h3>
 							</div>
 							<div class="module-body">
-								<form class="form-horizontal row-fluid" name="insertproduct" method="post" enctype="multipart/form-data" action="action/insertSellarPost.php">
+								<form class="form-horizontal row-fluid" name="insertproduct" method="post" enctype="multipart/form-data" action="action/sellar_address_post.php">
+
+								<?php
+                // print_r($result);
+				$cnt=0;
+                // print_r($result['records']);
+                for($i=0; $i<sizeof($result->records);$i++)
+                { //print_r($result->records[$i]);
+                ?>	
+
+								<div class="control-group">
+										<label class="control-label" for="basicinput">Sellar Id</label>
+										<div class="controls">
+											<input type="text" name="id" placeholder="Address" class="span8 tip" value="<?php echo $result->records[$i]->id;?>" readonly>
+										</div>
+									</div>
+
+									<div class="control-group">
+										<label class="control-label" for="basicinput">Sellar Name</label>
+										<div class="controls">
+											<input type="text"  placeholder="Address" class="span8 tip" required value="<?php echo $result->records[$i]->sellarName;?>" readonly>
+										</div>
+									</div>
 
 									<div class="control-group">
 										<label class="control-label" for="basicinput">Adress</label>
 										<div class="controls">
-											<input type="text" name="address" placeholder="Address" class="span8 tip" required>
+											<input type="text" name="address" placeholder="Address" class="span8 tip" required >
 										</div>
 									</div>
 									<div class="control-group">
 										<label class="control-label" for="basicinput">Pin</label>
 										<div class="controls">
-											<input type="text" name="pin" placeholder="Pin" class="span8 tip" required>
+											<input type="text" name="pincode" placeholder="Pin" class="span8 tip" required>
 										</div>
 									</div>
 									<div class="control-group">
@@ -70,6 +92,8 @@ $result = json_decode($response);
 											<input type="text" name="city" placeholder="City" class="span8 tip" required>
 										</div>
 									</div>
+									<?php $cnt = $cnt + 1;
+											} ?>
 									<div class="control-group">
 										<div class="controls">
 											<button type="submit" name="submit" class="btn">Update</button>
@@ -79,6 +103,50 @@ $result = json_decode($response);
 							</div>
 
 						</div>
+
+						<div class="module">
+								<div class="module-head">
+									<h3>Manage Bank Details</h3>
+								</div>
+								<div class="module-body table">
+									<table cellpadding="0" cellspacing="0" border="0" class="datatable-1 table table-bordered table-striped	 display" width="100%">
+										<thead>
+											<tr>
+												<th>#</th>
+												<th>Name</th>
+												<th>Sellar Id</th>
+												<th>Address</th>
+												<th>City</th>
+												<th>Pincode</th>
+												<th>Updated On</th>
+												<th>Updated By</th>
+											</tr>
+										</thead>
+										<tbody>
+
+										<?php
+                // print_r($result);
+				$cnt=0;
+                // print_r($result['records']);
+                for($i=0; $i<sizeof($result->records);$i++)
+                { //print_r($result->records[$i]);
+                ?>	
+												<tr>
+													<td><?php echo htmlentities($cnt); ?></td>
+													<td><?php echo $result->records[$i]->sellarName;?></td>
+													<td><?php echo $result->records[$i]->sellarId;?></td>								<td><?php echo $result->records[$i]->bankName;?></td>
+													<td><?php echo $result->records[$i]->address;?></td>
+													<td><?php echo $result->records[$i]->city;?></td>
+													<td><?php echo $result->records[$i]->pincode;?></td>
+													<td><?php echo $result->records[$i]->updatedOn;?></td>
+													<td><?php echo $result->records[$i]->updatedBy;?></td>
+												</tr>
+											<?php $cnt = $cnt + 1;
+											} ?>
+
+									</table>
+								</div>
+							</div>
 						
 					</div><!--/.content-->
 				</div><!--/.span9-->

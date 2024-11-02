@@ -54,21 +54,22 @@ $result = json_decode($response);
                 ?>
                   <div class="col">
                     <div class="product-item">
-                      <span class="badge bg-success position-absolute m-3"><?php echo $result->records[$i]->productPrice;?></span>
+                      <span class="badge bg-success position-absolute m-3"><?php echo $result->records[$i]->price;?></span>
                       <a href="#" class="btn-wishlist"><svg width="24" height="24">
                           <use xlink:href="#heart"></use>
                         </svg></a>
                       <figure>
                         <a href="products.php" title="Product Title">
                           <img src="images/thumb-bananas.png" alt="Product Thumbnail" class="tab-image">
+
                         </a>
                       </figure>
                       <h3><?php echo $result->records[$i]->productName;?></h3>
-                      <span class="qty"><?php echo $result->records[$i]->productPrice;?></span><span class="rating"><svg width="24" height="24"
+                      <span class="qty"><?php echo $result->records[$i]->price;?></span><span class="rating"><svg width="24" height="24"
                           class="text-primary">
                           <use xlink:href="#star-solid"></use>
                         </svg> 4.5</span>
-                      <span class="price"><?php echo $result->records[$i]->productPrice;?></span>
+                      <span class="price"><?php echo $result->records[$i]->price;?></span>
                       <div class="d-flex align-items-center justify-content-between">
                         <div class="input-group product-qty">
                           <span class="input-group-btn">

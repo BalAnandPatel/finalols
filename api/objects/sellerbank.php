@@ -102,6 +102,7 @@ class Sellerbank
          " . $this->sellarbankdetails . "
      SET
         bankName=:bankName,
+        accountNo=:accountNo,
         ifscCode=:ifscCode,
         upiId=:upiId,
         updatedOn=:updatedOn,
@@ -119,6 +120,7 @@ class Sellerbank
 
         //bind values with stmt
         $stmt->bindParam(":bankName", $this->bankName);
+        $stmt->bindParam(":accountNo", $this->accountNo);
         $stmt->bindParam(":ifscCode", $this->ifscCode);
         $stmt->bindParam(":updatedOn", $this->updatedOn);
         $stmt->bindParam(":updatedBy", $this->updatedBy);
